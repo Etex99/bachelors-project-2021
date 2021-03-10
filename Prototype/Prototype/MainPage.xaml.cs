@@ -13,6 +13,7 @@ namespace Prototype
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = Main.GetInstance();
         }
     }
 }

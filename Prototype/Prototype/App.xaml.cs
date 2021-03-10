@@ -8,8 +8,7 @@ namespace Prototype
     {
         public App()
         {
-            InitializeComponent();
-
+			InitializeComponent();
             MainPage = new MainPage();
         }
 
