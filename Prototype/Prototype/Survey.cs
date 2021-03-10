@@ -7,7 +7,7 @@ namespace Prototype
     public class Survey
     {
         //private string introMessage;
-        //private emojis = new List<(int emojiID, int impact, string[] activities)>;
+        //private List<int, int, List<string>> emojis;
         //private string roomCode;
 
         public void setIntroMessage(string)
