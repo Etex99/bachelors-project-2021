@@ -25,21 +25,25 @@ namespace Prototype
         public void setEmoji(int index, int id)
         {
             Console.WriteLine("$DEBUG: setting an emoji for the survey");
+            //emojis[index][0] = id;
         }
 
         public void setEmojiImpact(int index, int value)
         {
             Console.WriteLine("$DEBUG: setting an impact for emoji");
+            //emojis[index][1] = value;
         }
 
         public void addActivity(int index, string value)
         {
             Console.WriteLine("$DEBUG: adding activity for emoji");
+            //emojis[index][2].Add(value);
         }
 
-        public void removeActivity(int index, string)
+        public void removeActivity(int index, string value)
         {
             Console.WriteLine("$DEBUG: removing activity from certain emoji in the survey");
+            //emojis[index][2].Remove(value);
         }
 
         public List<int, int, List<string>> getEmojis()
