@@ -3,39 +3,40 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Prototype
-
-public class SurveyManager
 {
-    //private Survey survey;
-    //private List<string> surveyTemplates;
-
-    public bool saveSurvey(Survey, string)
+    public class SurveyManager
     {
+        private Survey survey;
+        private List<string> surveyTemplates;
 
-    }
+        public bool SaveSurvey(Survey survey, string name)
+        {
+            return true;
+        }
 
-    public Survey loadSurvey(string)
-    {
+        public Survey LoadSurvey(string name)
+        {
+            return new Survey();
+        }
 
-    }
+        public List<string> GetTemplates(string fileName)
+        {
+            return surveyTemplates;
+        }
 
-    public List<string> getTemplates(string)
-    {
+        public void DeleteSurvey(string name)
+        {
 
-    }
+        }
 
-    public void deleteSurvey(string)
-    {
+        public Survey GetSurvey()
+        {
+            return new Survey();
+        }
 
-    }
+        public void ResetSurvey()
+        {
 
-    public Survey getSurvey()
-    {
-
-    }
-
-    public void resetSurvey()
-    {
-
+        }
     }
 }
