@@ -14,7 +14,7 @@ namespace Prototype
         {
             
         }
-        public getIntroMessage()
+        public string getIntroMessage()
         {
             return this.introMessage;
         }
@@ -35,7 +35,7 @@ namespace Prototype
         {
             
         }
-        public getEmojis()
+        public List<int, int, List<string>> getEmojis()
         {
             return this.emojis;
         }
