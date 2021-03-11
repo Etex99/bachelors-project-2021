@@ -14,6 +14,7 @@ namespace Prototype
         {
             
         }
+
         public string getIntroMessage()
         {
             return this.introMessage;
@@ -23,18 +24,22 @@ namespace Prototype
         {
             
         }
+
         public void setEmojiImpact(int index, int value)
         {
             
         }
+
         public void addActivity(int index, string value)
         {
             
         }
+
         public void removeActivity(int index, string)
         {
             
         }
+
         public List<int, int, List<string>> getEmojis()
         {
             return this.emojis;
