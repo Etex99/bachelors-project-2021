@@ -1,19 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using Xamarin.Forms;
 
 namespace Prototype
 {
     public partial class MainPage : ContentPage
     {
+        string _fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
+
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = Main.GetInstance();
+
+
         }
-    }
+
+
+
+        async void LuoUusiClicked(object sender, EventArgs e)
+        {
+            // siirrytään "luo uus kysely" sivulle
+            await Navigation.PushAsync(new LuoKyselyJohdatus()); ;
+        }
+
+    
+        }
 }
