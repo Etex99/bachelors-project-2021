@@ -9,8 +9,8 @@ namespace Prototype
     public class SurveyManager
     {
         private Survey survey;
-        private List<string> surveyTemplates;
-        private string folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        private string[] surveyTemplates;
+        private readonly string folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         public bool SaveSurvey(Survey survey, string name)
         {
@@ -36,13 +36,14 @@ namespace Prototype
 
         public string[] GetTemplates()
         {
-            string[] surveyTemplates = Directory.GetFiles(folder);
+            surveyTemplates = Directory.GetFiles(folder);
             return surveyTemplates;
         }
 
         public void DeleteSurvey(string name)
         {
-
+            string path = Path.Combine(folder, "test.txt" /*name*/);
+            Directory.Delete(path);
         }
 
         public Survey GetSurvey()
@@ -52,7 +53,7 @@ namespace Prototype
 
         public void ResetSurvey()
         {
-
+            survey = new Survey();
         }
     }
 }
