@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Xamarin.Forms;
+using System.Text.Json;
+using System.IO;
 
 namespace Prototype
 {
@@ -8,19 +10,33 @@ namespace Prototype
     {
         private Survey survey;
         private List<string> surveyTemplates;
+        private string folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         public bool SaveSurvey(Survey survey, string name)
         {
+            string jsonString = JsonSerializer.Serialize(survey);
+            if(Device.RuntimePlatform == Device.Android)
+            {
+                string path = Path.Combine(folder, "test.txt" /*name*/);
+                File.WriteAllText(path, jsonString);
+            }
             return true;
         }
 
         public Survey LoadSurvey(string name)
         {
-            return new Survey();
+            if(Device.RuntimePlatform == Device.Android)
+            {
+                string path = Path.Combine(folder, "test.txt" /*name*/);
+                string jsontext = File.ReadAllText(path);
+                survey = JsonSerializer.Deserialize<Survey>(jsontext);
+            }
+            return survey;
         }
 
-        public List<string> GetTemplates(string fileName)
+        public string[] GetTemplates()
         {
+            string[] surveyTemplates = Directory.GetFiles(folder);
             return surveyTemplates;
         }
 
