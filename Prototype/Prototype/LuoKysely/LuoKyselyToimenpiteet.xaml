@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Prototype.LuoKyselyToimenpiteet"
+             Title="Luo kysely 3/3">
+
+    <StackLayout Margin="20">
+        <Label Margin="0,0,0,15"
+               Text="Aseta toimenpiteet"
+               TextColor="Black"
+               FontSize="20"/>
+
+
+
+        <Button Text="Jatka"
+                Clicked="JatkaButtonClicked" />
+        
+    </StackLayout>
+</ContentPage>

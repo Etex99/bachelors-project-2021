@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Prototype.LuoKyselyLopetus"
+             Title="Joku hieno nimi">
+
+
+    <StackLayout Margin="20">
+        <Label Margin="0,0,0,15"
+               Text="Aseta avainkoodi"
+               TextColor="Black"
+               FontSize="20"/>
+
+
+        <Editor x:Name="editor"
+                Margin="0,0,0,15"
+                BackgroundColor="WhiteSmoke"
+                Placeholder="Avainkoodi"
+                HeightRequest="150" />
+
+
+
+       <!-- <Button Text="Jaa Kysely"
+                    Clicked="JaaButtonClicked" /> -->
+
+        <Button  Text="Tallenna luonnos ja poistu"
+                 Clicked="TallennaJaPoistuClicked"/>
+
+     </StackLayout>
+</ContentPage>
