@@ -21,7 +21,7 @@
                 CornerRadius="100"
                 HorizontalOptions="Center"
                 WidthRequest="150"
-                HeightRequest="60"/>
+                HeightRequest="50"/>
 
  
     </StackLayout>

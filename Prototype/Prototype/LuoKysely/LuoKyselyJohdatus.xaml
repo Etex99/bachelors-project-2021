@@ -19,7 +19,7 @@
                 HeightRequest="150" />
 
 
-        <Grid Margin="0,320,0,0">
+        <Grid Margin="0,340,0,0">
             <Button Grid.Column="1" 
                     Text="Jatka"
                     Clicked="JatkaButtonClicked" 

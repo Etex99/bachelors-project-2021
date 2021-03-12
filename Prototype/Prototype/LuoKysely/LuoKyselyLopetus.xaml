@@ -6,6 +6,7 @@
 
 
     <StackLayout Margin="20">
+        
 
         <Label Margin="0,10,0,15"
                Text="Niemä kyselysi"
@@ -39,11 +40,11 @@
        
             <Button  Text="Tallenna luonnos ja poistu"
                      Clicked="TallennaJaPoistuClicked" 
-                     Margin="0,250,0,0"
+                     Margin="0,270,0,0"
                      CornerRadius="100"
                      HorizontalOptions="Center"
                      WidthRequest="300"
-                     HeightRequest="60"
+                     HeightRequest="55"
                      />
 
 
