@@ -8,10 +8,16 @@ namespace Prototype
 {
     public class SurveyManager
     {
+        private static SurveyManager instance;
         private Survey survey;
         private string[] surveyTemplates;
-        private readonly string folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        private readonly string folder;
 
+        private SurveyManager() {
+            survey = new Survey();
+            folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        }
+        
         public bool SaveSurvey(Survey survey, string name = "test.txt")
         {
             string jsonString = JsonSerializer.Serialize(survey);
@@ -55,5 +61,13 @@ namespace Prototype
         {
             survey = new Survey();
         }
+
+        public static SurveyManager GetInstance() {
+            if (instance != null) {
+                return instance;
+			}
+            instance = new SurveyManager();
+            return instance;
+		}
     }
 }
