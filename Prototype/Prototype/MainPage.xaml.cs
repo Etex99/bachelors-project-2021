@@ -11,6 +11,7 @@ namespace Prototype
         {
             NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
+            BindingContext = Main.GetInstance();
 
 
         }
