@@ -10,6 +10,7 @@ namespace Prototype
 
         public MainPage()
         {
+            NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
 
 
@@ -20,9 +21,15 @@ namespace Prototype
         async void LuoUusiClicked(object sender, EventArgs e)
         {
             // siirrytään "luo uus kysely" sivulle
-            await Navigation.PushAsync(new LuoKyselyJohdatus()); ;
+            await Navigation.PushAsync(new LuoKyselyJohdatus()); 
         }
 
-    
+        async void TallennetutKyselytClicked(object sender, EventArgs e)
+        {
+            // siirrytään "Tallenetut Kyselyt" sivulle
+            await Navigation.PushAsync(new TallennetutKyselyt()); 
         }
+
+
+    }
 }
