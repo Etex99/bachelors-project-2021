@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Prototype.MainPage"
+             Title="J.E.N.T" >
+
+
+
+    <StackLayout Margin="20" VerticalOptions="CenterAndExpand">
+        
+ 
+        <Button Text="Luo uusi kysely"
+                Font="Bold,19"
+                Clicked="LuoUusiClicked"
+                Margin="0,0,0,30"
+                CornerRadius="15"
+                HeightRequest="65"/>
+
+        <Button Text="Tallennetut kyselyt"
+                Font="Bold,19"
+                Clicked="TallennetutKyselytClicked" 
+                Margin="0,0,0,30"
+                CornerRadius="15"
+                HeightRequest="65"/>
+
+        <Button Text="Liity kyselyyn"
+                Font="Bold,19"
+                Margin="0,0,0,30"  
+                CornerRadius="15"
+                HeightRequest="65"/>
+        
+        
+        
+    </StackLayout>
+
+</ContentPage>
