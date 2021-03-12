@@ -9,11 +9,30 @@
                Text="Aseta toimenpiteet"
                TextColor="Black"
                FontSize="20"/>
+        <CollectionView ItemsSource="{Binding Emojit}"  >
 
-        <Label Text="Tähän lista toimenpiteistä!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <CollectionView.ItemTemplate >
+                <DataTemplate >
+                    <Grid Padding="10"
+                      RowDefinitions="Auto, *"
+                      ColumnDefinitions="Auto, *">
+                        <Image Grid.RowSpan="2"
+                           Source="{Binding ImageSource}"
+                           Aspect="AspectFill"
+                           HeightRequest="60"
+                           WidthRequest="60" />
+                        <Label Grid.Column="1"
+                           Text="{Binding Name}"
+                           FontAttributes="Bold" />
+                        <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding Button}"
+                           VerticalOptions="Start" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
 
+        </CollectionView>
 
         <Button Text="Jatka"
                 Clicked="JatkaButtonClicked" 

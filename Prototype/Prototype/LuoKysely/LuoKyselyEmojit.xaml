@@ -2,18 +2,41 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Prototype.LuoKyselyEmojit"
-             Title="Luo Kysely 2/3">
+             Title="Luo kysely 2/3">
 
 
     <StackLayout Margin="20">
+
         <Label Margin="0,0,0,15"
                Text="Aseta emojien vakavuusaste"
                TextColor="Black"
                FontSize="20"/>
 
-        <Label Text="Tähän lista emojeista!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <CollectionView ItemsSource="{Binding Emojit}"  >
+
+            <CollectionView.ItemTemplate >
+              <DataTemplate >
+                <Grid Padding="10"
+                      RowDefinitions="Auto, *"
+                      ColumnDefinitions="Auto, *">
+                    <Image Grid.RowSpan="2"
+                           Source="{Binding ImageSource}"
+                           Aspect="AspectFill"
+                           HeightRequest="60"
+                           WidthRequest="60" />
+                    <Label Grid.Column="1"
+                           Text="{Binding Name}"
+                           FontAttributes="Bold" />
+                    <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding Location}"
+                           VerticalOptions="Start" />
+                </Grid>
+              </DataTemplate>
+           </CollectionView.ItemTemplate>
+            
+        </CollectionView>
+
 
 
         <Button Text="Jatka"
