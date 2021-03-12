@@ -13,21 +13,21 @@
                 Font="Bold,19"
                 Clicked="LuoUusiClicked"
                 Margin="0,0,0,30"
-                CornerRadius="10"
-                HeightRequest="70"/>
+                CornerRadius="15"
+                HeightRequest="65"/>
 
         <Button Text="Tallennetut kyselyt"
                 Font="Bold,19"
                 Clicked="TallennetutKyselytClicked" 
                 Margin="0,0,0,30"
-                CornerRadius="10"
-                HeightRequest="70"/>
+                CornerRadius="15"
+                HeightRequest="65"/>
 
         <Button Text="Liity kyselyyn"
                 Font="Bold,19"
                 Margin="0,0,0,30"  
-                CornerRadius="10"
-                HeightRequest="70"/>
+                CornerRadius="15"
+                HeightRequest="65"/>
         
         
         
