@@ -2,21 +2,35 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Prototype.MainPage"
-             Title="J.E.N.T">
-    
-   
+             Title="J.E.N.T" >
 
-    <StackLayout Margin="20" >
 
+
+    <StackLayout Margin="20" VerticalOptions="CenterAndExpand">
+        
  
         <Button Text="Luo uusi kysely"
-                    Clicked="LuoUusiClicked"/>
+                Font="Bold,20"
+                Clicked="LuoUusiClicked"
+                Margin="0,0,0,30"
+                CornerRadius="10"
+                HeightRequest="70"/>
 
-        <Button Text="Tallenetut kyselyt"
-                    />
+        <Button Text="Tallennetut kyselyt"
+                Font="Bold,20"
+                Clicked="TallennetutKyselytClicked" 
+                Margin="0,0,0,30"
+                CornerRadius="10"
+                HeightRequest="70"/>
 
         <Button Text="Liity kyselyyn"
-                    />
+                Font="Bold,20"
+                Margin="0,0,0,30"  
+                CornerRadius="10"
+                HeightRequest="70"/>
+        
+        
+        
     </StackLayout>
 
 </ContentPage>
