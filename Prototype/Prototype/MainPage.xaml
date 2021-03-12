@@ -10,21 +10,21 @@
         
  
         <Button Text="Luo uusi kysely"
-                Font="Bold,20"
+                Font="Bold,19"
                 Clicked="LuoUusiClicked"
                 Margin="0,0,0,30"
                 CornerRadius="10"
                 HeightRequest="70"/>
 
         <Button Text="Tallennetut kyselyt"
-                Font="Bold,20"
+                Font="Bold,19"
                 Clicked="TallennetutKyselytClicked" 
                 Margin="0,0,0,30"
                 CornerRadius="10"
                 HeightRequest="70"/>
 
         <Button Text="Liity kyselyyn"
-                Font="Bold,20"
+                Font="Bold,19"
                 Margin="0,0,0,30"  
                 CornerRadius="10"
                 HeightRequest="70"/>
