@@ -12,6 +12,7 @@
         <Color x:Key="PrimaryColor">Black</Color> 
         <Color x:Key="SecondaryColor">black</Color>
         <Color x:Key="TertiaryColor">Silver</Color>
+        <Color x:Key="QuaternaryColor">Gray</Color>
 
         <Style TargetType ="NavigationPage">
             <Setter Property="BarBackgroundColor" Value="{StaticResource AppPrimaryColor}"></Setter>
@@ -34,7 +35,11 @@
                     Value="{StaticResource AppPrimaryColor}" />
             <Setter Property="TextColor"
                     Value="{StaticResource SecondaryColor}" />
-            
+            <Setter Property="BorderColor"
+                    Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="BorderWidth"
+                    Value="2"/>
+           
         </Style>
     </Application.Resources>
 </Application>
