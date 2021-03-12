@@ -6,7 +6,6 @@ namespace Prototype
 {
     public partial class MainPage : ContentPage
     {
-        string _fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
 
         public MainPage()
         {
