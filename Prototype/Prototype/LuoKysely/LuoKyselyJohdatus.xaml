@@ -17,14 +17,19 @@
                 BackgroundColor="WhiteSmoke"
                 Placeholder="Esimerkiksi: Päiväni oli tänään..."
                 HeightRequest="150" />
-       
-        
-   
-            <Button Text="Jatka"
-                    Clicked="JatkaButtonClicked" />
+
+
+        <Grid Margin="0,320,0,0">
+            <Button Grid.Column="1" 
+                    Text="Jatka"
+                    Clicked="JatkaButtonClicked" 
+                    CornerRadius="100"/>
             
-            <Button  Text="Peruuta"
-                    Clicked="PeruutaButtonClicked"/>
-    
+            <Button 
+                    Text="Peruuta"
+                    Clicked="PeruutaButtonClicked"
+                    BackgroundColor="{StaticResource QuinaryColor}"
+                    CornerRadius="100"/>
+        </Grid>
     </StackLayout>
 </ContentPage>

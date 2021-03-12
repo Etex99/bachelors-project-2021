@@ -11,10 +11,17 @@
                TextColor="Black"
                FontSize="20"/>
 
+        <Label Text="Tähän lista emojeista!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
 
 
         <Button Text="Jatka"
-                Clicked="JatkaButtonClicked" />
+                Clicked="JatkaButtonClicked" 
+                CornerRadius="100"
+                HorizontalOptions="Center"
+                WidthRequest="150"
+                HeightRequest="60"/>
 
  
     </StackLayout>
