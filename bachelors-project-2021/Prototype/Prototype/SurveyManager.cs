@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
 using System.Text.Json;
 using System.IO;
 
@@ -19,24 +17,20 @@ namespace Prototype
         }
         
         public bool SaveSurvey(Survey survey, string name = "test.txt")
-        {
+        {   
             string jsonString = JsonSerializer.Serialize(survey);
-            if(Device.RuntimePlatform == Device.Android)
-            {
-                string path = Path.Combine(folder, name);
-                File.WriteAllText(path, jsonString);
-            }
+            string path = Path.Combine(folder, name);
+            File.WriteAllText(path, jsonString);
+
             return true;
         }
 
         public Survey LoadSurvey(string name = "test.txt")
         {
-            if(Device.RuntimePlatform == Device.Android)
-            {
-                string path = Path.Combine(folder, name);
-                string jsontext = File.ReadAllText(path);
-                survey = JsonSerializer.Deserialize<Survey>(jsontext);
-            }
+            string path = Path.Combine(folder, name);
+            string jsontext = File.ReadAllText(path);
+            survey = JsonSerializer.Deserialize<Survey>(jsontext);
+
             return survey;
         }
 
@@ -54,7 +48,7 @@ namespace Prototype
 
         public Survey GetSurvey()
         {
-            return new Survey();
+            return survey;
         }
 
         public void ResetSurvey()
