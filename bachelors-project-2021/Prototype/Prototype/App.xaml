@@ -13,6 +13,7 @@
         <Color x:Key="SecondaryColor">black</Color>
         <Color x:Key="TertiaryColor">Silver</Color>
         <Color x:Key="QuaternaryColor">Gray</Color>
+        <Color x:Key="QuinaryColor">Orange</Color>
 
         <Style TargetType ="NavigationPage">
             <Setter Property="BarBackgroundColor" Value="{StaticResource AppPrimaryColor}"></Setter>
