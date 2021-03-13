@@ -25,50 +25,50 @@ namespace Prototype
 
             Emojit.Add(new Emoji
             {
-                Buttons = "",
-                Name = "Emojiiiii",
+                
+                Name = "",
                 ImageSource = "Smiley.png"
             });
 
             Emojit.Add(new Emoji
             {
-                Buttons = "",
-                Name = "Toinen Emojiiiii",
+               
+                Name = "",
                 ImageSource = "Smiley.png"
             });
 
             Emojit.Add(new Emoji
             {
-                Buttons = "",
-                Name = "Kolmas Emojiiiii",
+              
+                Name = "",
                 ImageSource = "Smiley.png"
             });
 
             Emojit.Add(new Emoji
             {
-                Buttons = "",
-                Name = "Neljäs Emojiiiii",
+                
+                Name = "",
                 ImageSource = "Smiley.png"
             });
 
             Emojit.Add(new Emoji
             {
-                Buttons = "",
-                Name = "Viides Emojiiiii",
+                
+                Name = "",
                 ImageSource = "Smiley.png"
             });
 
             Emojit.Add(new Emoji
             {
-                Buttons = "",
-                Name = "Kuudes Emojiiiii",
+               
+                Name = "",
                 ImageSource = "Smiley.png"
             });
 
             Emojit.Add(new Emoji
             {
-                Buttons = "",
-                Name = "Seitsemäs Emojiiiii",
+                
+                Name = "",
                 ImageSource = "Smiley.png"
             });
 

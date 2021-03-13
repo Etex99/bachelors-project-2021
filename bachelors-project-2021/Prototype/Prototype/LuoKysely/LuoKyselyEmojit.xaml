@@ -19,19 +19,40 @@
                 <Grid Padding="10"
                       RowDefinitions="Auto, *"
                       ColumnDefinitions="Auto, *">
-                    <Image Grid.RowSpan="2"
+
+
+                        <!-- Kuva ei jostain syystä näy...-->
+                        <Image Grid.RowSpan="2"
                            Source="{Binding ImageSource}"
                            Aspect="AspectFill"
                            HeightRequest="60"
                            WidthRequest="60" />
-                    <Label Grid.Column="1"
+
+                        <Label Grid.Column="1"
                            Text="{Binding Name}"
                            FontAttributes="Bold" />
-                    <Label Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding Location}"
-                           VerticalOptions="Start" />
-                </Grid>
+
+                        <!-- Green-->
+                        <RadioButton Grid.Row="1"
+                                      Grid.Column="1"
+                                      Content="G"
+                                      TextColor="Green"
+                                 
+                                />
+
+                        <!-- Orange-->
+                        <RadioButton Grid.Row="1" 
+                                      Grid.Column="2"
+                                      Content="O"
+                                      TextColor="Orange"
+                                />
+                        <!-- Red-->
+                        <RadioButton Grid.Row="1"
+                                     Grid.Column="3"
+                                     Content="R"
+                                     TextColor="Red"
+                                />
+                    </Grid>
               </DataTemplate>
            </CollectionView.ItemTemplate>
             

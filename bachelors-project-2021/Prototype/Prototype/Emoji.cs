@@ -10,7 +10,6 @@ namespace Prototype
 		public string Name = "default";
 		public int Impact = 0;
 		public List<string> activities = null;
-		public string Buttons { get; set; }
 		public string ImageSource { get; set; } = "missing.txt";
 
 		public Emoji()
@@ -26,7 +25,7 @@ namespace Prototype
 			this.activities = activities;
 			this.ImageSource = ImageSource;
 		}
-
+		 
 		public override string ToString()
 		{
 			string value = "";
