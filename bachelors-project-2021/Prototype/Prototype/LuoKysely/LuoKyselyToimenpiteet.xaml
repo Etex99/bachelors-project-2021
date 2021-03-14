@@ -16,18 +16,27 @@
                     <Grid Padding="10"
                       RowDefinitions="Auto, *"
                       ColumnDefinitions="Auto, *">
+                        
+                        <!-- Kuva näkyy JOS kuvan lähteen (linkin) laittaa Jokin ongelma drawable kansion kanssa (ei näytä sinne ladattua kuvaa)-->
                         <Image Grid.RowSpan="2"
-                           Source="{Binding ImageSource}"
+                           Source="{Binding ImageSource}"     
                            Aspect="AspectFill"
                            HeightRequest="60"
                            WidthRequest="60" />
+
                         <Label Grid.Column="1"
                            Text="{Binding Name}"
                            FontAttributes="Bold" />
-                        <Label Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding Button}"
-                           VerticalOptions="Start" />
+                        
+                        
+                        <!-- "Lisää toimenpide" Placeholder-->
+                        <!-- En oo vielä keksiny miten tehdään drop down menu johon voi lisätä toimenpiteitä-->
+
+                        <Entry Grid.Column="1"
+                                Placeholder="Lisää toimenpide"
+                               />
+
+
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
