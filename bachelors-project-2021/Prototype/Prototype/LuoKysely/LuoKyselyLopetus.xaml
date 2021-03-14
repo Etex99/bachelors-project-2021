@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Prototype.LuoKyselyLopetus"
-             Title="Joku hieno nimi">
+             Title="Melkein valmista...">
 
 
     <StackLayout Margin="20">
@@ -26,7 +26,7 @@
 
 
         <Editor x:Name="KeyEditor"
-                Margin="0,0,0,15"
+                Margin="0,0,0,240"
                 BackgroundColor="WhiteSmoke"
                 Placeholder="Avainkoodi"
                 HeightRequest="50" />
@@ -40,7 +40,7 @@
        
             <Button  Text="Tallenna luonnos ja poistu"
                      Clicked="TallennaJaPoistuClicked" 
-                     Margin="0,270,0,0"
+                     Margin="0,10,0,0"
                      CornerRadius="100"
                      HorizontalOptions="Center"
                      WidthRequest="300"
