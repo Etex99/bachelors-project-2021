@@ -12,15 +12,30 @@ namespace Prototype
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TallennetutKyselyt : ContentPage
     {
+        public string selectedSurvey;
+        public IList<string> Surveys { get; set; }
         public TallennetutKyselyt()
         {
             InitializeComponent();
+            SurveyManager manager = SurveyManager.GetInstance();
+
+            Surveys = new List<string>(manager.GetTemplates());
+
+            BindingContext = this;
+        }
+
+        void OnListSelection(object sender, SelectionChangedEventArgs e)
+        {
+            selectedSurvey = e.CurrentSelection[0] as string;
         }
 
         async void AvaaClicked(object sender, EventArgs e)
         {
-            // siirrytään tallennettuun kyselyyn
-          //  await Navigation.PushAsync(new ());
+            string surveyName = selectedSurvey + ".txt";
+            SurveyManager manager = SurveyManager.GetInstance();
+
+            manager.LoadSurvey(surveyName);
+
         }
     }
 }

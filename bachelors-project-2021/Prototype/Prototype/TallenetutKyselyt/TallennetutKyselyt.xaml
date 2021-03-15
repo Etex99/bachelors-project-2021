@@ -3,12 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Prototype.TallennetutKyselyt"
              Title="Tallenetut kyselyt">
-   
 
-        <StackLayout>
-            <Label Text="Tähän lista tallenetuista kyselyistä!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+
+    <StackLayout>
+        <CollectionView ItemsSource="{Binding Surveys}"
+                        SelectionMode="Single"
+                        SelectionChanged="OnListSelection">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="1">
+                        <Label Grid.Row="0"
+                               Text="{Binding}"
+                               FontSize="30"
+                               HorizontalOptions="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
 
         <Button Text="Avaa"
@@ -20,7 +31,7 @@
                  HeightRequest="50"/>
 
 
-        </StackLayout>
+    </StackLayout>
 
 
 </ContentPage>

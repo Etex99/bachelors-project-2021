@@ -37,6 +37,13 @@ namespace Prototype
         public string[] GetTemplates()
         {
             surveyTemplates = Directory.GetFiles(folder);
+            int i = 0;
+            foreach (string name in surveyTemplates)
+            {
+                string filename = name.Substring(name.LastIndexOf('/') + 1);
+                surveyTemplates[i] = filename.Substring(0, filename.LastIndexOf('.'));
+                i++;
+            }
             return surveyTemplates;
         }
 
