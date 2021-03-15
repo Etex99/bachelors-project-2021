@@ -17,31 +17,31 @@ namespace Prototype
 
 			Const.activities.TryGetValue(0, out activities);
 			activities = activities.GetRange(0, 3);
-			emojis.Add(new Emoji(0, "Mood 0", 0, activities, "emoji0.txt"));
+			emojis.Add(new Emoji(0, "Mood 0", 0, activities, "emoji0.png"));
 
 			Const.activities.TryGetValue(1, out activities);
 			activities = activities.GetRange(0, 3);
-			emojis.Add(new Emoji(1, "Mood 1", 0, activities, "emoji1.txt"));
+			emojis.Add(new Emoji(1, "Mood 1", 0, activities, "emoji1.png"));
 
 			Const.activities.TryGetValue(2, out activities);
 			activities = activities.GetRange(0, 3);
-			emojis.Add(new Emoji(2, "Mood 2", 0, activities, "emoji2.txt"));
+			emojis.Add(new Emoji(2, "Mood 2", 0, activities, "emoji2.png"));
 
 			Const.activities.TryGetValue(3, out activities);
 			activities = activities.GetRange(0, 3);
-			emojis.Add(new Emoji(3, "Mood 3", 0, activities, "emoji3.txt"));
+			emojis.Add(new Emoji(3, "Mood 3", 0, activities, "emoji3.png"));
 
 			Const.activities.TryGetValue(4, out activities);
 			activities = activities.GetRange(0, 3);
-			emojis.Add(new Emoji(4, "Mood 4", 0, activities, "emoji4.txt"));
+			emojis.Add(new Emoji(4, "Mood 4", 0, activities, "emoji4.png"));
 
 			Const.activities.TryGetValue(5, out activities);
 			activities = activities.GetRange(0, 3);
-			emojis.Add(new Emoji(5, "Mood 5", 0, activities, "emoji5.txt"));
+			emojis.Add(new Emoji(5, "Mood 5", 0, activities, "emoji5.png"));
 
 			Const.activities.TryGetValue(6, out activities);
 			activities = activities.GetRange(0, 3);
-			emojis.Add(new Emoji(6, "Mood 6", 0, activities, "emoji6.txt"));
+			emojis.Add(new Emoji(6, "Mood 6", 0, activities, "emoji6.png"));
 
 			RoomCode = null;
 		}
