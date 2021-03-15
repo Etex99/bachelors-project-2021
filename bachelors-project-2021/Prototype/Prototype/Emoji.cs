@@ -8,16 +8,16 @@ namespace Prototype
 	{
 		public int ID = 0;
 		public string Name = "default";
-		public int Impact = 0;
+		public string Impact = "default";
 		public List<string> activities = null;
-		public string ImageSource { get; set; } = "missing.txt";
+		public string ImageSource { get; set; } = "missing.png";
 
 		public Emoji()
 		{
 			activities = new List<string>() { "foo", "bar" };
 		}
 
-		public Emoji(int ID, string Name, int impact, List<string> activities, string ImageSource)
+		public Emoji(int ID, string Name, string impact, List<string> activities, string ImageSource)
 		{
 			this.ID = ID;
 			this.Name = Name;
