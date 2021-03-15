@@ -19,7 +19,7 @@ namespace Prototype
             InitializeComponent();
             SurveyManager manager = SurveyManager.GetInstance();
 
-            Surveys = new List<string>(manager.GetTemplates());
+            Surveys = manager.GetTemplates();
 
             BindingContext = this;
         }
@@ -33,7 +33,6 @@ namespace Prototype
         {
             string surveyName = selectedSurvey + ".txt";
             SurveyManager manager = SurveyManager.GetInstance();
-
             manager.LoadSurvey(surveyName);
 
         }

@@ -18,6 +18,12 @@ namespace Prototype
         }
         async void TallennaJaPoistuClicked(object sender, EventArgs e)
         {
+            SurveyManager man = SurveyManager.GetInstance();
+            //save survey code
+            man.GetSurvey().RoomCode = KeyEditor.Text;
+            //save survey
+            man.SaveSurvey(NameEditor.Text + ".txt");
+            
             // siirrytään etusivulle 
             await Navigation.PushAsync(new MainPage()); ;
         }

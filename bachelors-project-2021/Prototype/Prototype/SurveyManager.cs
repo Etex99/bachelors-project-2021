@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Prototype
 {
@@ -19,7 +20,7 @@ namespace Prototype
         public bool SaveSurvey(string name = "test.txt")
         {   
             string jsonString = JsonSerializer.Serialize(survey);
-            string path = Path.Combine(folder, name);
+            string path = Path.Combine(folder, name.ToLower());
             File.WriteAllText(path, jsonString);
 
             return true;
@@ -27,24 +28,25 @@ namespace Prototype
 
         public Survey LoadSurvey(string name = "test.txt")
         {
-            string path = Path.Combine(folder, name);
+            string path = Path.Combine(folder, name.ToLower());
             string jsontext = File.ReadAllText(path);
             survey = JsonSerializer.Deserialize<Survey>(jsontext);
 
             return survey;
         }
 
-        public string[] GetTemplates()
+        public List<string> GetTemplates()
         {
             surveyTemplates = Directory.GetFiles(folder);
-            int i = 0;
+            List<string> surveyNames = new List<string>();
+
             foreach (string name in surveyTemplates)
             {
                 string filename = name.Substring(name.LastIndexOf('/') + 1);
-                surveyTemplates[i] = filename.Substring(0, filename.LastIndexOf('.'));
-                i++;
+                filename = filename.Substring(0, filename.LastIndexOf("."));
+                surveyNames.Add(filename);
             }
-            return surveyTemplates;
+            return surveyNames;
         }
 
         public void DeleteSurvey(string name = "test.txt")
