@@ -16,7 +16,7 @@ namespace Prototype
             folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         }
         
-        public bool SaveSurvey(Survey survey, string name = "test.txt")
+        public bool SaveSurvey(string name = "test.txt")
         {   
             string jsonString = JsonSerializer.Serialize(survey);
             string path = Path.Combine(folder, name);
