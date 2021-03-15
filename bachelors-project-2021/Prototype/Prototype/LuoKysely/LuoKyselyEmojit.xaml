@@ -23,13 +23,13 @@
 
                         <!-- Kuva näkyy JOS kuvan lähteen (linkin) laittaa Jokin ongelma drawable kansion kanssa (ei näytä sinne ladattua kuvaa)-->
                         <Image Grid.RowSpan="2"
-                           Source="{Binding ImageSource}"     
+                           Source="{Binding Item.ImageSource}"     
                            Aspect="AspectFill"
                            HeightRequest="60"
                            WidthRequest="60" />
 
                         <Label Grid.Column="1"
-                           Text="{Binding Name}"
+                           Text="{Binding Item.Name}"
                            FontAttributes="Bold" />
 
                         <!-- En ole vielä keksinyt miten itse radiobuttonin värin voisi vaihtaa-->
@@ -39,6 +39,8 @@
                                       Grid.Column="1"
                                       Content="G"
                                       TextColor="Green"
+                                      Value="positive"
+                                      IsChecked="{Binding IsPositive}"
                                  
                                 />
 
@@ -47,12 +49,16 @@
                                       Grid.Column="2"
                                       Content="O"
                                       TextColor="Orange"
+                                      Value="neutral"
+                                      IsChecked="{Binding IsNeutral}"
                                 />
                         <!-- Red-->
                         <RadioButton Grid.Row="1"
                                      Grid.Column="3"
                                      Content="R"
                                      TextColor="Red"
+                                     Value="negative"
+                                     IsChecked="{Binding IsNegative}"
                                 />
                     </Grid>
               </DataTemplate>
