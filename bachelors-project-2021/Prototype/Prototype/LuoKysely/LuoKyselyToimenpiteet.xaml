@@ -19,13 +19,13 @@
                         
                         <!-- Kuva näkyy JOS kuvan lähteen (linkin) laittaa Jokin ongelma drawable kansion kanssa (ei näytä sinne ladattua kuvaa)-->
                         <Image Grid.RowSpan="2"
-                           Source="{Binding ImageSource}"     
+                           Source="{Binding Item.ImageSource}"     
                            Aspect="AspectFill"
                            HeightRequest="60"
                            WidthRequest="60" />
 
                         <Label Grid.Column="1"
-                           Text="{Binding Name}"
+                           Text="{Binding Item.Name}"
                            FontAttributes="Bold" />
                         
                         
