@@ -4,9 +4,9 @@ namespace Prototype
 {
 	public class Survey
 	{
-		public string introMessage = "default";
-		public List<Emoji> emojis;
-		public string RoomCode = "default";
+		public string introMessage { get; set; } = "default";
+		public List<Emoji> emojis { get; set; }
+		public string RoomCode { get; set; } = "default";
 		
 		//default survey consists of first intro entry, 7 emojis with various impact each with 3 first entries of activities.
 		public Survey() {

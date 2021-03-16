@@ -6,10 +6,10 @@ namespace Prototype
 {
 	public class Emoji
 	{
-		public int ID = 0;
-		public string Name = "default";
-		public string Impact = "default";
-		public List<string> activities = null;
+		public int ID {get; set;} = 0;
+		public string Name { get; set; } = "default";
+		public string Impact { get; set; } = "default";
+		public List<string> activities { get; set; } = null;
 		public string ImageSource { get; set; } = "missing.png";
 
 		public Emoji()
