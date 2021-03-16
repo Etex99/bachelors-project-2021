@@ -6,16 +6,17 @@
 
 
     <StackLayout>
-        <CollectionView ItemsSource="{Binding Surveys}"
+        <CollectionView Margin="20"
+                        ItemsSource="{Binding Surveys}"
                         SelectionMode="Single"
                         SelectionChanged="OnListSelection">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="1">
-                        <Label Grid.Row="0"
+                        <Label 
                                Text="{Binding}"
-                               FontSize="30"
-                               HorizontalOptions="Center"/>
+                               FontSize="22"
+                               HorizontalOptions="Start"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
