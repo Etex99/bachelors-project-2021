@@ -46,6 +46,7 @@ namespace Prototype
 			RoomCode = null;
 		}
 
+		//toString method for getting the info of the survey in a string for data purposes
 		public override string ToString() {
 			string value = "";
 
