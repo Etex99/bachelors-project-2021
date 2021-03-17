@@ -7,7 +7,7 @@
 
     <StackLayout Margin="20">
 
-
+        <!-- Valitse johdanto placeholder... En vielä keksiny miten yhdistää backendin kanssa-->
 
         <Picker x:Name="picker"
                 Title="Aseta johdatus"
