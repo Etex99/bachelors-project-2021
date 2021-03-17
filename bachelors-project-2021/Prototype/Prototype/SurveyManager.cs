@@ -7,7 +7,7 @@ namespace Prototype
 {
     public class SurveyManager
     {
-        private static SurveyManager instance;
+        private static SurveyManager instance = null;
         private Survey survey;
         private string[] surveyTemplates;
         private readonly string folder;
