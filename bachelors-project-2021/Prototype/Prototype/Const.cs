@@ -65,5 +65,10 @@ namespace Prototype
 				"emoji 6 activity 5"
 			}}
 		};
+	
+		public static class Network {
+			public static int ServerUDPClientPort = 43256;
+			public static int ClientUDPClientPort = 43257;
+		}
 	}
 }
