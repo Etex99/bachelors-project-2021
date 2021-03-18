@@ -18,6 +18,9 @@
 	
 	
   <ItemGroup>
+    <EmbeddedResource Update="TallennetutKyselyt\KyselynTarkastelu.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="LuoKysely\LuoKyselyEmojit.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
