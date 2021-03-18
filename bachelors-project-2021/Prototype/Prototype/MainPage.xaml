@@ -25,6 +25,7 @@
 
         <Button Text="Liity kyselyyn"
                 Font="Bold,19"
+                Clicked="LiityKyselyynClicked"
                 Margin="0,0,0,30"  
                 CornerRadius="15"
                 HeightRequest="65"/>
