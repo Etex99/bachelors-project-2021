@@ -29,6 +29,11 @@ namespace Prototype
             // siirrytään "Tallenetut Kyselyt" sivulle
             await Navigation.PushAsync(new TallennetutKyselyt()); 
         }
+        async void LiityKyselyynClicked(object sender, EventArgs e)
+        {
+            // siirrytään "Liity Kyselyyn" sivulle
+            await Navigation.PushAsync(new EmojinValinta());
+        }
 
 
     }
