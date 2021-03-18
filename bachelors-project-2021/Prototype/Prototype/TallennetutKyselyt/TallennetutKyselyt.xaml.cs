@@ -35,6 +35,12 @@ namespace Prototype
             SurveyManager manager = SurveyManager.GetInstance();
             manager.LoadSurvey(surveyName);
 
+
+            //navigoinnissa ei ole vielä mitenkään yhdistetty valittua kyselyä kyselyn tarkastelusivulle
+            await Navigation.PushAsync(new KyselynTarkastelu());
+
         }
+
+
     }
 }

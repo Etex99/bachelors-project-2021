@@ -8,7 +8,7 @@
         <!-- Colors -->
         <Color x:Key="AppPrimaryColor">Gold</Color>
         <!-- Vaihtoehtoja: khaki, Gold, -->
-        <Color x:Key="AppBackgroundColor">LightYellow</Color>
+        <Color x:Key="AppBackgroundColor">White</Color>
         <Color x:Key="PrimaryColor">Black</Color> 
         <Color x:Key="SecondaryColor">black</Color>
         <Color x:Key="TertiaryColor">Silver</Color>

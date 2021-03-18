@@ -2,20 +2,21 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Prototype.TallennetutKyselyt"
-             Title="Tallenetut kyselyt">
+             Title="Tallennetut kyselyt">
 
 
     <StackLayout>
-        <CollectionView ItemsSource="{Binding Surveys}"
+        <CollectionView Margin="20"
+                        ItemsSource="{Binding Surveys}"
                         SelectionMode="Single"
                         SelectionChanged="OnListSelection">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="1">
-                        <Label Grid.Row="0"
+                        <Label 
                                Text="{Binding}"
-                               FontSize="30"
-                               HorizontalOptions="Center"/>
+                               FontSize="22"
+                               HorizontalOptions="Start"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -23,7 +24,7 @@
 
 
         <Button Text="Avaa"
-                 Clicked="AvaaClicked"
+                Clicked="AvaaClicked" 
                  Margin="0,0,0,20"
                  CornerRadius="100"
                  HorizontalOptions="Center"

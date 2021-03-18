@@ -19,22 +19,43 @@
                         
                         <!-- Kuva näkyy JOS kuvan lähteen (linkin) laittaa Jokin ongelma drawable kansion kanssa (ei näytä sinne ladattua kuvaa)-->
                         <Image Grid.RowSpan="2"
-                           Source="{Binding ImageSource}"     
+                           Source="{Binding Item.ImageSource}"     
                            Aspect="AspectFill"
                            HeightRequest="60"
                            WidthRequest="60" />
 
                         <Label Grid.Column="1"
-                           Text="{Binding Name}"
+                           Text="{Binding Item.Name}"
                            FontAttributes="Bold" />
                         
                         
-                        <!-- "Lisää toimenpide" Placeholder-->
-                        <!-- En oo vielä keksiny miten tehdään drop down menu johon voi lisätä toimenpiteitä-->
+                        <!-- "Lisää toimenpide" drop down menuPlaceholder-->
+                        <!-- Ei vielä tietoa voiko tehdä multiple select... En vielä keksiny miten yhdistää backendin kanssa-->
+                        <!-- toinen vaihtoehto jos tekisi popup jonka sisällä listview... -->
 
-                        <Entry Grid.Column="1"
-                                Placeholder="Lisää toimenpide"
-                               />
+                        <Picker x:Name="picker"
+                                Grid.Column="1"
+                                Title="Aseta johdatus"
+                                FontSize="22"
+                                Margin="0,10,0,0"
+                                TitleColor="Black"
+                >
+                            <Picker.ItemsSource>
+
+
+                                <x:Array Type="{x:Type x:String}">
+
+                                    <x:String>toimenpide1</x:String>
+                                    <x:String>toimenpide2</x:String>
+                                    <x:String>toimenpide3</x:String>
+                                    <x:String>toimenpide4</x:String>
+                                    <x:String>toimenpide5</x:String>
+                                    <x:String>toimenpide6</x:String>
+
+                                </x:Array>
+                            </Picker.ItemsSource>
+
+                        </Picker>
 
 
                     </Grid>
