@@ -30,17 +30,27 @@ namespace Prototype
             await Navigation.PushAsync(new TallennetutKyselyt()); 
         }
 
-        async void LiityKyselyynClicked(object sender, EventArgs e)
+       void LiityKyselyynClicked(object sender, EventArgs e)
         {
-            // Kysytään kyselyn avainkoodi, placeholder(Ei ole mitenkään yhdistetty backendin kanssa) Peruuta ei toimi --> menee aina seuraavalle sivulle
-            string result = await DisplayPromptAsync("Avainkoodi", "aseta sinulle annetun kyselyn koodi", "OK", "Peruuta");
+            // Kysytään kyselyn avainkoodi, placeholder(Ei ole mitenkään yhdistetty backendin kanssa)
+           popupSelection.IsVisible = true;
 
-            // siirrytään "Liity Kyselyyn" sivulle
-            await Navigation.PushAsync(new EmojinValinta());
             
             
         }
 
+     
 
+       void Peruuta_Clicked(object sender, EventArgs e)
+        {
+            popupSelection.IsVisible = false;
+        }
+
+        void Ok_Clicked(object sender, EventArgs e)
+        {
+            // siirrytään "Liity Kyselyyn" sivulle
+            Navigation.PushAsync(new EmojinValinta());
+
+        }
     }
 }

@@ -4,34 +4,83 @@
              x:Class="Prototype.MainPage"
              Title="J.E.N.T" >
 
+    <AbsoluteLayout
+        Padding="0"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
 
+        <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                     AbsoluteLayout.LayoutFlags="All" 
+                     >
 
-    <StackLayout Margin="20" VerticalOptions="CenterAndExpand">
-        
- 
-        <Button Text="Luo uusi kysely"
-                Font="Bold,19"
-                Clicked="LuoUusiClicked"
-                Margin="0,0,0,30"
-                CornerRadius="15"
-                HeightRequest="65"/>
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <Button Text="Luo uusi kysely"
+                    Font="Bold,19"
+                    Clicked="LuoUusiClicked"
+                    Margin="0,0,0,30"
+                    CornerRadius="15"
+                    HeightRequest="65"/>
 
-        <Button Text="Tallennetut kyselyt"
-                Font="Bold,19"
-                Clicked="TallennetutKyselytClicked" 
-                Margin="0,0,0,30"
-                CornerRadius="15"
-                HeightRequest="65"/>
+                <Button Text="Tallennetut kyselyt"
+                    Font="Bold,19"
+                    Clicked="TallennetutKyselytClicked" 
+                    Margin="0,0,0,30"
+                    CornerRadius="15"
+                    HeightRequest="65"/>
 
-        <Button Text="Liity kyselyyn"
-                Font="Bold,19"
-                Clicked="LiityKyselyynClicked"
-                Margin="0,0,0,30"  
-                CornerRadius="15"
-                HeightRequest="65"/>
-        
-        
-        
-    </StackLayout>
+                <Button Text="Liity kyselyyn"
+                    Font="Bold,19"
+                    Clicked="LiityKyselyynClicked"
+                    Margin="0,0,0,30"  
+                    CornerRadius="15"
+                    HeightRequest="65" />
+            </StackLayout>
+        </StackLayout>
 
+        <!--  Popup Avainkoodille -->
+        <!--  Popup Area  -->
+        <ContentView
+                x:Name="popupSelection"
+                Padding="10,0"
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="#C0808080"
+                IsVisible="false">
+
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <StackLayout
+                    BackgroundColor="White"
+                    HeightRequest="200"
+                    Orientation="Vertical"
+                    WidthRequest="300">
+                    <Label Text="Avainkoodi" FontSize="24" TextColor="Black" Margin="20,10,10,0" HorizontalOptions="Center" />
+                    <Entry Margin="20,10,20,10" 
+                           Placeholder="Anna avainkoodi"
+                           FontSize="22"/>
+                        
+                    <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
+                      <Grid Margin="0,0,0,0">
+                        <Button Grid.Column="1"
+                              
+                                 CornerRadius="100"
+                                 WidthRequest="130"
+                                 Text="Ok"  
+                                Clicked="Ok_Clicked"/>
+                        <Button                               
+                                Text="Peruuta" 
+                                BackgroundColor="{StaticResource QuinaryColor}"
+                                CornerRadius="100"
+                                 WidthRequest="130"
+                                Clicked="Peruuta_Clicked" />
+                    </Grid>
+
+                    </AbsoluteLayout>
+                </StackLayout>
+
+                </StackLayout>
+
+            </ContentView>
+        <!--  Popup Area  ends -->
+
+    </AbsoluteLayout>
 </ContentPage>
