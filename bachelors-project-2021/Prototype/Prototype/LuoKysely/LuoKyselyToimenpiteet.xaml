@@ -4,72 +4,144 @@
              x:Class="Prototype.LuoKyselyToimenpiteet"
              Title="Luo kysely 3/3">
 
+ 
+
     <StackLayout Margin="20">
+        
         <Label Margin="0,0,0,15"
                Text="Aseta toimenpiteet"
                TextColor="Black"
                FontSize="20"/>
-        <CollectionView ItemsSource="{Binding Emojit}"  >
+
+        <CollectionView 
+            HorizontalOptions="Center" 
+            VerticalOptions="Center"
+            HeightRequest="470" 
+            ItemsSource="{Binding Emojit} "  >
 
             <CollectionView.ItemTemplate >
                 <DataTemplate >
-                    <Grid Padding="10"
+                    <Grid Padding="1"
                       RowDefinitions="Auto, *"
                       ColumnDefinitions="Auto, *">
-                        
-                        <!-- Kuva näkyy JOS kuvan lähteen (linkin) laittaa Jokin ongelma drawable kansion kanssa (ei näytä sinne ladattua kuvaa)-->
-                        <Image Grid.RowSpan="2"
+
+
+                        <Image Grid.RowSpan="1"
                            Source="{Binding Item.ImageSource}"     
                            Aspect="AspectFill"
                            HeightRequest="60"
                            WidthRequest="60" />
 
-                        <Label Grid.Column="1"
+                        <!-- Onko emojien nimille kuinka suuri tarve tässä?-->
+
+                        <!-- <Label Grid.Column="1"
                            Text="{Binding Item.Name}"
-                           FontAttributes="Bold" />
+                           FontAttributes="Bold" /> -->
+
+                     <!-- Button for drop down menu -->
                         
-                        
-                        <!-- "Lisää toimenpide" drop down menuPlaceholder-->
-                        <!-- Ei vielä tietoa voiko tehdä multiple select... En vielä keksiny miten yhdistää backendin kanssa-->
-                        <!-- toinen vaihtoehto jos tekisi popup jonka sisällä listview... -->
-
-                        <Picker x:Name="picker"
-                                Grid.Column="1"
-                                Title="Aseta johdatus"
-                                FontSize="22"
-                                Margin="0,10,0,0"
-                                TitleColor="Black"
-                >
-                            <Picker.ItemsSource>
-
-
-                                <x:Array Type="{x:Type x:String}">
-
-                                    <x:String>toimenpide1</x:String>
-                                    <x:String>toimenpide2</x:String>
-                                    <x:String>toimenpide3</x:String>
-                                    <x:String>toimenpide4</x:String>
-                                    <x:String>toimenpide5</x:String>
-                                    <x:String>toimenpide6</x:String>
-
-                                </x:Array>
-                            </Picker.ItemsSource>
-
-                        </Picker>
+                        <Button Grid.Column="1"
+                            
+                                Margin="20,20,20,0"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
+                                WidthRequest="300"
+                                HeightRequest="50"
+                                Clicked="btnPopupButton_Clicked"
+                 
+                                Text="Valitse toimenpide"
+                            />
 
 
                     </Grid>
+
+                    
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 
         </CollectionView>
 
-        <Button Text="Jatka"
+
+
+
+
+        <!-- "Lisää toimenpide" drop down menu -->
+        <!-- "Ongelma: EI yhteydessä eri painikkeeseen. Eli ihan sama mitä painiketta painaa, valinnat ovat aina samat
+              Pitäisi jotenkin saada tämä sisällytettyä samaan Gridiin kuin button, jotta tämä ratkeaisi... en tiedä vielä miten. Ehkä erilainen popup ratkaisu-->
+
+        <!--  Popup Area  -->
+
+        <ContentView 
+                    HorizontalOptions="CenterAndExpand" 
+                    VerticalOptions="CenterAndExpand"
+                    x:Name="popupSelection" 
+                    WidthRequest="290"
+                    HeightRequest="400"
+                    Padding="1"
+                    BackgroundColor="WhiteSmoke" 
+                    IsVisible="false">
+
+            <StackLayout 
+                    HorizontalOptions="StartAndExpand" 
+                    VerticalOptions="StartAndExpand"  
+                    HeightRequest="400" >
+                
+                <StackLayout           
+                    HeightRequest="400"
+                    Orientation="Vertical"
+                    WidthRequest="260">
+
+                    <CollectionView x:Name="Collection" 
+                                    ItemsSource= "{Binding activities}"
+                                    SelectionMode="Multiple" 
+                                    SelectionChanged="OnSelectionChanged" >
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="1"
+                                RowDefinitions="Auto, *"
+                                ColumnDefinitions="Auto, *"
+                                        >
+
+                                    <Label Grid.Column="1"
+                                               Text="{Binding activity}" 
+                                               TextColor="Black"
+                                               FontSize="20"/>
+
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+    
+                    <AbsoluteLayout Margin="15"  
+                                    VerticalOptions ="EndAndExpand" 
+                                    HorizontalOptions="CenterAndExpand">
+                        <Button  
+                            CornerRadius="100"                        
+                            WidthRequest="150"
+                            Text="Sulje"
+                            Clicked="Sulje_Clicked"/>
+                    </AbsoluteLayout>
+                </StackLayout>
+
+            </StackLayout>
+
+        </ContentView>
+
+        <!--  Popup Area end  -->
+        <!-- "Lisää toimenpide" Drop down menu end -->
+
+
+
+        <!-- "Jatka" Button -->
+        <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
+            <Button Text="Jatka"
                 Clicked="JatkaButtonClicked" 
                 CornerRadius="100"
                 HorizontalOptions="Center"
                 WidthRequest="150"
                 HeightRequest="50"/>
+        </AbsoluteLayout>
         
     </StackLayout>
 </ContentPage>

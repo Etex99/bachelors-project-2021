@@ -12,7 +12,22 @@ namespace Prototype
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LuoKyselyToimenpiteet : ContentPage
     {
+        //Testausta varten
+        public IList<CollectionItemTwo> activities { get; private set; }
+
+        public class CollectionItemTwo
+        {
+            public string activity { get; set; }
+
+            public override string ToString()
+            {
+                return activity;
+            }
+        }
+
+        //emojit
         public IList<CollectionItem> Emojit { get; private set; }
+
 
         public class CollectionItem
         {
@@ -27,7 +42,28 @@ namespace Prototype
         public LuoKyselyToimenpiteet()
         {
             InitializeComponent();
-        
+
+            //Testausta varten
+            activities = new List<CollectionItemTwo>();
+
+            activities.Add(new CollectionItemTwo
+            {
+                activity = "Testi1 "
+            });
+
+            activities.Add(new CollectionItemTwo
+            {
+                activity = "Testi2 "
+            });
+
+            activities.Add(new CollectionItemTwo
+            {
+                activity = "Testi3 "
+            });
+
+       
+
+
             //Emojien alustus 
 
             Emojit = new List<CollectionItem>();
@@ -46,7 +82,22 @@ namespace Prototype
 
         }
 
+        private void btnPopupButton_Clicked(object sender, EventArgs e)
+        {
+            popupSelection.IsVisible = true;
 
+        }
+
+        private void Sulje_Clicked(object sender, EventArgs e)
+        {
+            popupSelection.IsVisible = false;
+        }
+
+
+        void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CollectionItem selectedItem = e.CurrentSelection[0] as CollectionItem;
+        }
 
         async void JatkaButtonClicked(object sender, EventArgs e)
         {
