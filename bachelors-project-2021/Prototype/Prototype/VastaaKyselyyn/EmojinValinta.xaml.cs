@@ -14,6 +14,7 @@ namespace Prototype
     {
         public IList<Emoji> Emojis { get; set; }
         public IList<string> Images { get; set; }
+        private string answer;
         public EmojinValinta()
         {
             InitializeComponent();
@@ -30,7 +31,14 @@ namespace Prototype
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            Console.WriteLine((sender as Button).ClassId.ToString());
+            Button emoji = sender as Button;
+            answer = emoji.ClassId.ToString();
+            Console.WriteLine(answer);
+        }
+
+        private void Vastaa_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new EmojiYhteenveto());
         }
     }
 }
