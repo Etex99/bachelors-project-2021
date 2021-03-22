@@ -4,9 +4,14 @@
              x:Class="Prototype.LuoKyselyToimenpiteet"
              Title="Luo kysely 3/3">
 
- 
 
-    <StackLayout Margin="20">
+    <AbsoluteLayout
+        Padding="0"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+        <StackLayout Margin="20"
+                       AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All">
         
         <Label Margin="0,0,0,15"
                Text="Aseta toimenpiteet"
@@ -14,33 +19,32 @@
                FontSize="20"/>
 
         <CollectionView 
-            HorizontalOptions="Center" 
-            VerticalOptions="Center"
+            HorizontalOptions="CenterAndExpand" 
+            VerticalOptions="CenterAndExpand"
+          
             HeightRequest="470" 
             ItemsSource="{Binding Emojit} "  >
 
             <CollectionView.ItemTemplate >
                 <DataTemplate >
-                    <Grid Padding="1"
+                        <Grid Padding="2"
                       RowDefinitions="Auto, *"
                       ColumnDefinitions="Auto, *">
 
 
-                        <Image Grid.RowSpan="1"
+                            <Image Grid.RowSpan="1"
                            Source="{Binding Item.ImageSource}"     
                            Aspect="AspectFill"
                            HeightRequest="60"
                            WidthRequest="60" />
 
-                        <!-- Onko emojien nimille kuinka suuri tarve tässä?-->
+                         
+                            <!-- Dropdown menu placeholder-->
 
-                        <!-- <Label Grid.Column="1"
-                           Text="{Binding Item.Name}"
-                           FontAttributes="Bold" /> -->
 
-                     <!-- Button for drop down menu -->
-                        
-                        <Button Grid.Column="1"
+
+                            <!-- Button for drop down menu -->
+                            <Button Grid.Column="1"
                             
                                 Margin="20,20,20,0"
                                 VerticalOptions="Center"
@@ -49,16 +53,17 @@
                                 HeightRequest="50"
                                 Clicked="btnPopupButton_Clicked"
                  
-                                Text="Valitse toimenpide"
-                            />
+                                Text="Valitse toimenpide"    /> 
+                         
 
+                        </Grid>
 
-                    </Grid>
-
-                    
-                </DataTemplate>
+                    </DataTemplate>
+                
+                
             </CollectionView.ItemTemplate>
 
+                    
         </CollectionView>
 
 
@@ -67,68 +72,63 @@
 
         <!-- "Lisää toimenpide" drop down menu -->
         <!-- "Ongelma: EI yhteydessä eri painikkeeseen. Eli ihan sama mitä painiketta painaa, valinnat ovat aina samat
-              Pitäisi jotenkin saada tämä sisällytettyä samaan Gridiin kuin button, jotta tämä ratkeaisi... en tiedä vielä miten. Ehkä erilainen popup ratkaisu-->
+              Pitäisi jotenkin saada tämä sisällytettyä samaan Collectionviewiin kuin button, jotta tämä ratkeaisi... ei vielää tietoa  miten. Ehkä erilainen popup ratkaisu-->
 
         <!--  Popup Area  -->
 
-        <ContentView 
-                    HorizontalOptions="CenterAndExpand" 
-                    VerticalOptions="CenterAndExpand"
-                    x:Name="popupSelection" 
-                    WidthRequest="290"
-                    HeightRequest="400"
-                    Padding="1"
-                    BackgroundColor="WhiteSmoke" 
-                    IsVisible="false">
+          
+        <Frame
+           
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
+            x:Name="popupSelection"
+            HasShadow="True"
+             WidthRequest="290"
+            HeightRequest="400"
+            Padding="1"
+            BackgroundColor="WhiteSmoke" 
+            IsVisible="false">
 
-            <StackLayout 
-                    HorizontalOptions="StartAndExpand" 
-                    VerticalOptions="StartAndExpand"  
-                    HeightRequest="400" >
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" >
+                    <StackLayout
                 
-                <StackLayout           
                     HeightRequest="400"
                     Orientation="Vertical"
                     WidthRequest="260">
+                        
+                        <CollectionView x:Name="Collection" 
+                        ItemsSource= "{Binding Activities}"
+                        SelectionMode= "Multiple" 
+                        SelectionChanged="OnSelectionChanged" >
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                               
 
-                    <CollectionView x:Name="Collection" 
-                                    ItemsSource= "{Binding activities}"
-                                    SelectionMode="Multiple" 
-                                    SelectionChanged="OnSelectionChanged" >
-
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Padding="1"
-                                RowDefinitions="Auto, *"
-                                ColumnDefinitions="Auto, *"
-                                        >
-
-                                    <Label Grid.Column="1"
+                                        <Label Grid.Column="1"
                                                Text="{Binding activity}" 
                                                TextColor="Black"
                                                FontSize="20"/>
 
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-    
-                    <AbsoluteLayout Margin="15"  
-                                    VerticalOptions ="EndAndExpand" 
-                                    HorizontalOptions="CenterAndExpand">
+                             
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        
+                    <AbsoluteLayout Margin="15"  VerticalOptions ="End" HorizontalOptions="Center">
                         <Button  
-                            CornerRadius="100"                        
-                            WidthRequest="150"
+                             CornerRadius="100"
+                            
+                             WidthRequest="150"
                             Text="Sulje"
                             Clicked="Sulje_Clicked"/>
                     </AbsoluteLayout>
                 </StackLayout>
 
-            </StackLayout>
+                </StackLayout>
 
-        </ContentView>
+            </Frame> 
 
-        <!--  Popup Area end  -->
+            <!--  Popup Area end  -->
         <!-- "Lisää toimenpide" Drop down menu end -->
 
 
@@ -144,4 +144,6 @@
         </AbsoluteLayout>
         
     </StackLayout>
+
+    </AbsoluteLayout>
 </ContentPage>
