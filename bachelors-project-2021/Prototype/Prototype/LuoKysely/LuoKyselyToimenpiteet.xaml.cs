@@ -13,7 +13,7 @@ namespace Prototype
     public partial class LuoKyselyToimenpiteet : ContentPage
     {
         //Testausta varten
-        public IList<CollectionItemTwo> activities { get; private set; }
+        public IList<CollectionItemTwo> Activities { get; private set; }
 
         public class CollectionItemTwo
         {
@@ -43,20 +43,27 @@ namespace Prototype
         {
             InitializeComponent();
 
-            //Testausta varten
-            activities = new List<CollectionItemTwo>();
+            //Popup testausta
 
-            activities.Add(new CollectionItemTwo
+           
+
+
+
+
+            //Testausta varten
+            Activities = new List<CollectionItemTwo>();
+
+            Activities.Add(new CollectionItemTwo
             {
                 activity = "Testi1 "
             });
 
-            activities.Add(new CollectionItemTwo
+            Activities.Add(new CollectionItemTwo
             {
                 activity = "Testi2 "
             });
 
-            activities.Add(new CollectionItemTwo
+            Activities.Add(new CollectionItemTwo
             {
                 activity = "Testi3 "
             });
@@ -81,22 +88,27 @@ namespace Prototype
             BindingContext = this;
 
         }
+      
 
-        private void btnPopupButton_Clicked(object sender, EventArgs e)
+        void btnPopupButton_Clicked(object sender, EventArgs e)
         {
-            popupSelection.IsVisible = true;
+         
+
+          popupSelection.IsVisible = true;
 
         }
 
         private void Sulje_Clicked(object sender, EventArgs e)
         {
-            popupSelection.IsVisible = false;
+          popupSelection.IsVisible = false;
+           
         }
 
 
         void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CollectionItem selectedItem = e.CurrentSelection[0] as CollectionItem;
+           
         }
 
         async void JatkaButtonClicked(object sender, EventArgs e)

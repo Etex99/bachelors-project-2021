@@ -21,15 +21,16 @@
                      HeightRequest="50"
                     Clicked="btnPopupButton_Clicked"
                  
-                    Text="Valitse johdatonlause"
+                    Text="Valitse johdatonlause" 
                    />
 
        
             <!--  Popup Area  -->
-        <ContentView 
+        <Frame
             HorizontalOptions="Center" 
             VerticalOptions="Center"
             x:Name="popupSelection"
+            HasShadow="True"
              WidthRequest="290"
             HeightRequest="400"
             Padding="1"
@@ -64,7 +65,7 @@
                             </CollectionView.ItemTemplate>
                         </CollectionView>
                         
-                    <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
+                    <AbsoluteLayout Margin="15"  VerticalOptions ="End" HorizontalOptions="Center">
                         <Button  
                              CornerRadius="100"
                             
@@ -76,7 +77,7 @@
 
                 </StackLayout>
 
-            </ContentView>
+            </Frame>
 
         
         <!-- Peruuta ja Jatka painikkeet-->

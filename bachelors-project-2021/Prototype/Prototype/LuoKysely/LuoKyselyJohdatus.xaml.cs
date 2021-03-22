@@ -63,18 +63,22 @@ namespace Prototype
         private void btnPopupButton_Clicked(object sender, EventArgs e)
         {
             popupSelection.IsVisible = true;
+            
 
         }
 
         private void Sulje_Clicked(object sender, EventArgs e)
         {
             popupSelection.IsVisible = false;
+       
+
         }
 
 
         void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CollectionItem selectedItem = e.CurrentSelection[0] as CollectionItem;
+           
         }
 
 
