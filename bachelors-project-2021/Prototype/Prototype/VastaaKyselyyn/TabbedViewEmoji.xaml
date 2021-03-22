@@ -9,7 +9,6 @@
     <TabbedPage.BarTextColor>
         Black
     </TabbedPage.BarTextColor>
-    <TabbedPage horizontal
     <local:EmojiYhteenveto/>
     <local:EmojiLisätiedot/>
 </TabbedPage>
