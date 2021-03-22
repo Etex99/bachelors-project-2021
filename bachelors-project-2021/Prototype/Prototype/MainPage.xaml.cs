@@ -48,9 +48,18 @@ namespace Prototype
 
         void Ok_Clicked(object sender, EventArgs e)
         {
-            // siirrytään "Liity Kyselyyn" sivulle
+            // siirrytään "Liity Kyselyyn" sivulle jos annettu koodi on ok
+
+            if (entry.Text=="KOODI") { 
             Navigation.PushAsync(new EmojinValinta());
 
+
+            popupSelection.IsVisible = false;
+            }
+
+            else DisplayAlert("Virheellinen avainkoodi", "Syöttämälläsi avainkoodilla ei löydy avointa kyselyä", "OK");
         }
     }
-}
+    }
+    
+

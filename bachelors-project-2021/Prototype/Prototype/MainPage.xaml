@@ -54,7 +54,8 @@
                     Orientation="Vertical"
                     WidthRequest="300">
                     <Label Text="Avainkoodi" FontSize="24" TextColor="Black" Margin="20,10,10,0" HorizontalOptions="Center" />
-                    <Entry Margin="20,10,20,10" 
+                    <Entry x:Name="entry"
+                          Margin="20,10,20,10" 
                            Placeholder="Anna avainkoodi"
                            FontSize="22"/>
                         
