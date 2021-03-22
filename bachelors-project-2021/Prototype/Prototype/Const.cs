@@ -68,7 +68,8 @@ namespace Prototype
 	
 		public static class Network {
 			public static int ServerUDPClientPort = 43256;
-			public static int ClientUDPClientPort = 43257;
+			public static int ServerTCPListenerPort = 43257;
+			public static int ClientUDPClientPort = 43258;
 		}
 	}
 }
