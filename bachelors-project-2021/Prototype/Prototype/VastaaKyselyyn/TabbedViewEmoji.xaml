@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Prototype;assembly=Prototype"
+             x:Class="Prototype.TabbedViewEmoji">
+    <TabbedPage.BarBackgroundColor>
+        Silver
+    </TabbedPage.BarBackgroundColor>
+    <TabbedPage.BarTextColor>
+        Black
+    </TabbedPage.BarTextColor>
+    <TabbedPage horizontal
+    <local:EmojiYhteenveto/>
+    <local:EmojiLisätiedot/>
+</TabbedPage>
