@@ -38,7 +38,7 @@ namespace Prototype
 
         private void Vastaa_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new EmojiYhteenveto());
+            Navigation.PushAsync(new TabbedViewEmoji());
         }
     }
 }

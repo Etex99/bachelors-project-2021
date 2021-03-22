@@ -4,12 +4,11 @@ using Xamarin.Forms.Xaml;
 namespace Prototype
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class YhteenvetoShell : Shell
+    public partial class TabbedViewEmoji : TabbedPage
     {
-        public YhteenvetoShell()
+        public TabbedViewEmoji()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(EmojiYhteenveto), typeof(EmojiYhteenveto));
         }
     }
 }

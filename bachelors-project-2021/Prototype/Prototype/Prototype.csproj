@@ -20,6 +20,9 @@
     <Compile Update="VastaaKyselyyn\EmojinValinta.xaml.cs">
       <DependentUpon>EmojinValinta.xaml</DependentUpon>
     </Compile>
+    <Compile Update="VastaaKyselyyn\TabbedViewEmoji.xaml.cs">
+      <DependentUpon>TabbedViewEmoji.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 	
 	
@@ -51,7 +54,7 @@
     <EmbeddedResource Update="VastaaKyselyyn\EmojiYhteenveto.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="VastaaKyselyyn\YhteenvetoShell.xaml">
+    <EmbeddedResource Update="VastaaKyselyyn\TabbedViewEmoji.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>  
   </ItemGroup>
