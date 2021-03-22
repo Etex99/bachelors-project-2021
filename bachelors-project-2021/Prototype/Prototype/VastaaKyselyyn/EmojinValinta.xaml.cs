@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,6 +12,7 @@ namespace Prototype
         public IList<Emoji> Emojis { get; set; }
         public IList<string> Images { get; set; }
         private string answer;
+
         public EmojinValinta()
         {
             InitializeComponent();
