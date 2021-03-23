@@ -10,11 +10,15 @@ using Xamarin.Forms.Xaml;
 namespace Prototype
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EmojiYhteenveto : ContentPage
+    public partial class YhteenvetoClient : ContentPage
     {
-        public EmojiYhteenveto()
+        public YhteenvetoClient()
         {
             InitializeComponent();
+        }
+        async void PoistuClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new MainPage());
         }
     }
 }

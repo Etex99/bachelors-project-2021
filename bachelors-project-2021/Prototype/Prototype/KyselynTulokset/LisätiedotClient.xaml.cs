@@ -10,11 +10,15 @@ using Xamarin.Forms.Xaml;
 namespace Prototype
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EmojiLisätiedot : ContentPage
+    public partial class LisätiedotClient : ContentPage
     {
-        public EmojiLisätiedot()
+        public LisätiedotClient()
         {
             InitializeComponent();
+        }
+        async void PoistuClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new MainPage());
         }
     }
 }

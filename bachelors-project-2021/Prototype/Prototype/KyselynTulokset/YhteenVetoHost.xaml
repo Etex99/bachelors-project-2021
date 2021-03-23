@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Prototype.YhteenVetoHost"
+             Title="Yhteenveto">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Margin="20, 50, 20, 50">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="emoji0.png"
+                       Grid.Column="3"
+                       Grid.Row="0"
+                       Scale="3"/>
+                <Image Source="emoji1.png"
+                       Grid.Column="0"
+                       Grid.Row="1"
+                       Scale="1.75"/>
+                <Image Source="emoji2.png"
+                       Grid.Column="3"
+                       Grid.Row="2"
+                       Scale="1.4"/>
+                <Image Source="emoji3.png"
+                       Grid.Column="1"
+                       Grid.Row="3"
+                       Scale="1.2"/>
+            </Grid>
+            <Button Text="Lopeta Kysely"
+                    Margin="0, 0, 0, 20"
+                    Clicked="LopetaClicked"
+                    CornerRadius="15"
+                    VerticalOptions="End"
+                    HorizontalOptions="Center"
+                    BackgroundColor="Gold"/>
+            <Button Text="Jatka harjoitukseen"
+                    Margin="0, 0, 0, 20"
+                    Clicked="JatkaClicked"
+                    CornerRadius="15"
+                    VerticalOptions="End"
+                    HorizontalOptions="Center"
+                    BackgroundColor="Gold"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
