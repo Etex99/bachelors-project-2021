@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,16 +9,36 @@ namespace Prototype
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LuoKyselyToimenpiteet : ContentPage
     {
+        public IList<CollectionItem> Items { get; set; }
+        public class CollectionItem
+        {
+            public Emoji Emoji { get; set; }
+            public IList<string> ActivityChoises { get; set; }
+            public ObservableCollection<object> Selected { get; set; }
 
-        public IList<Emoji> Emojit { get; set; }
+			public CollectionItem(Emoji emoji, IList<string> activities)
+			{
+				Emoji = emoji;
+				ActivityChoises = activities;
 
+                Selected = new ObservableCollection<object>();
+				foreach (var item in emoji.activities)
+				{
+                    Selected.Add(ActivityChoises[ActivityChoises.IndexOf(item)]);
+				}
+			}
+        }
 
         public LuoKyselyToimenpiteet()
         {
             InitializeComponent();
 
-			//Emojien alustus 
-			Emojit = SurveyManager.GetInstance().GetSurvey().emojis;
+            //alustus
+            Items = new List<CollectionItem>();   
+			foreach (var item in SurveyManager.GetInstance().GetSurvey().emojis)
+			{
+                Items.Add(new CollectionItem(item, Const.activities[item.ID]));
+			}
 
             BindingContext = this;
         }
@@ -45,20 +62,31 @@ namespace Prototype
 			}
         }
 
-
+        /*
         void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-			if (sender is CollectionView cv && cv.SelectionChangedCommandParameter is IList<string> activities)
+			if (sender is CollectionView cv && cv.SelectionChangedCommandParameter is CollectionItem item)
 			{
-                activities = e.CurrentSelection as IList<string>;
+                
 			}
         }
+        */
 
         async void JatkaButtonClicked(object sender, EventArgs e)
         {
             //asetetaan emojit survey olioon
-            List<Emoji> temp = new List<Emoji>();
-            SurveyManager.GetInstance().GetSurvey().emojis = temp;
+            List<Emoji> tempEmojis = new List<Emoji>();
+			foreach (var item in Items)
+			{
+                List<string> tempActivities = new List<string>();
+				foreach (var selection in item.Selected)
+				{
+                    tempActivities.Add(selection as string);
+				}
+                item.Emoji.activities = tempActivities;
+                tempEmojis.Add(item.Emoji);
+			}
+            SurveyManager.GetInstance().GetSurvey().emojis = tempEmojis;            
 
             // siirrytään "Luo kysely -lopetus" sivulle 
             await Navigation.PushAsync(new LuoKyselyLopetus()); ;
