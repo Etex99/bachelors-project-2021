@@ -12,103 +12,46 @@ namespace Prototype
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LuoKyselyToimenpiteet : ContentPage
     {
-        //Testausta varten
-        public IList<CollectionItemTwo> Activities { get; private set; }
 
-        public class CollectionItemTwo
-        {
-            public string activity { get; set; }
-
-            public override string ToString()
-            {
-                return activity;
-            }
-        }
-
-        //emojit
-        public IList<CollectionItem> Emojit { get; private set; }
-
-
-        public class CollectionItem
-        {
-            public Emoji Item { get; set; } = null;
-            public bool IsNegative { get; set; } = false;
-            public bool IsNeutral { get; set; } = false;
-            public bool IsPositive { get; set; } = false;
-        }
-
+        public IList<Emoji> Emojit { get; set; }
 
 
         public LuoKyselyToimenpiteet()
         {
             InitializeComponent();
 
-            //Popup testausta
-
-           
-
-
-
-
-            //Testausta varten
-            Activities = new List<CollectionItemTwo>();
-
-            Activities.Add(new CollectionItemTwo
-            {
-                activity = "Testi1 "
-            });
-
-            Activities.Add(new CollectionItemTwo
-            {
-                activity = "Testi2 "
-            });
-
-            Activities.Add(new CollectionItemTwo
-            {
-                activity = "Testi3 "
-            });
-
-       
-
-
-            //Emojien alustus 
-
-            Emojit = new List<CollectionItem>();
-            List<Emoji> temp = SurveyManager.GetInstance().GetSurvey().emojis;
-
-            foreach (var item in temp)
-            {
-                CollectionItem i = new CollectionItem();
-                i.Item = item;
-              
-                Emojit.Add(i);
-            }
-
+			//Emojien alustus 
+			Emojit = SurveyManager.GetInstance().GetSurvey().emojis;
 
             BindingContext = this;
-
         }
       
 
         void btnPopupButton_Clicked(object sender, EventArgs e)
         {
-         
-
-          popupSelection.IsVisible = true;
-
+            // :DDD
+            if (sender is Button b && b.Parent is Grid g && g.Children[2] is Frame f)
+			{
+                f.IsVisible = true;
+			}
         }
 
         private void Sulje_Clicked(object sender, EventArgs e)
         {
-          popupSelection.IsVisible = false;
-           
+            // :DDD
+            if (sender is Button b && b.Parent.Parent.Parent is Frame f)
+			{
+                f.IsVisible = false;
+			}
         }
 
 
         void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CollectionItem selectedItem = e.CurrentSelection[0] as CollectionItem;
-           
+			if (sender is CollectionView cv && cv.SelectionChangedCommandParameter is IList<string> activities)
+			{
+                activities = e.CurrentSelection as IList<string>;
+			}
         }
 
         async void JatkaButtonClicked(object sender, EventArgs e)

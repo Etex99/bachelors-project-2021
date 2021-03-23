@@ -9,7 +9,7 @@ namespace Prototype
 		public int ID {get; set;} = 0;
 		public string Name { get; set; } = "default";
 		public string Impact { get; set; } = "default";
-		public List<string> activities { get; set; } = null;
+		public IList<string> activities { get; set; } = null;
 		public string ImageSource { get; set; } = "missing.png";
 
 		public Emoji()
