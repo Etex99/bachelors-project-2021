@@ -17,16 +17,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="KyselynTulokset\YhteenvetoClient.xaml.cs">
+      <DependentUpon>YhteenvetoClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="KyselynTulokset\LisätiedotClient.xaml.cs">
+      <DependentUpon>LisätiedotClient.xaml</DependentUpon>
+    </Compile>
     <Compile Update="VastaaKyselyyn\EmojinValinta.xaml.cs">
       <DependentUpon>EmojinValinta.xaml</DependentUpon>
     </Compile>
-    <Compile Update="VastaaKyselyyn\TabbedViewEmoji.xaml.cs">
-      <DependentUpon>TabbedViewEmoji.xaml</DependentUpon>
+    <Compile Update="KyselynTulokset\TabbedViewClient.xaml.cs">
+      <DependentUpon>TabbedViewClient.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 	
 	
   <ItemGroup>
+    <EmbeddedResource Update="KyselynTulokset\LisätiedotHost.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="KyselynTulokset\TabbedViewHost.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="KyselynTulokset\YhteenVetoHost.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="TallennetutKyselyt\KyselynTarkastelu.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -45,16 +60,16 @@
     <EmbeddedResource Update="TallennetutKyselyt\TallennetutKyselyt.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="VastaaKyselyyn\EmojiLisätiedot.xaml">
+    <EmbeddedResource Update="KyselynTulokset\LisätiedotClient.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="VastaaKyselyyn\EmojinValinta.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="VastaaKyselyyn\EmojiYhteenveto.xaml">
+    <EmbeddedResource Update="KyselynTulokset\YhteenvetoClient.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="VastaaKyselyyn\TabbedViewEmoji.xaml">
+    <EmbeddedResource Update="KyselynTulokset\TabbedViewClient.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>  
   </ItemGroup>

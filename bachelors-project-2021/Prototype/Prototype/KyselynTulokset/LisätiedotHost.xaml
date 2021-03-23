@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Prototype.LisätiedotHost"
+             Title="Lisätiedot">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Margin="20, 50, 20, 50">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.85*"/>
+                    <RowDefinition Height="0.15*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.25*"/>
+                </Grid.ColumnDefinitions>
+                <Rectangle WidthRequest="50" 
+                           HeightRequest="50"
+                           Stroke="blue"
+                           Fill="blue"
+                           Grid.Column="0"
+                           ScaleY="0.85"
+                           AnchorY="1"/>
+                <Image Source="emoji0.png"
+                       Grid.Row="1"/>
+                <Rectangle WidthRequest="50" 
+                           HeightRequest="50"
+                           Stroke="red"
+                           Fill="red"
+                           Grid.Column="1"
+                           ScaleY="0.7"
+                           AnchorY="1"/>
+                <Image Source="emoji1.png"
+                       Grid.Row="1"
+                       Grid.Column="1"/>
+                <Rectangle WidthRequest="50" 
+                           HeightRequest="50"
+                           Stroke="green"
+                           Fill="green"
+                           Grid.Column="2"
+                           ScaleY="0.5"
+                           AnchorY="1"/>
+                <Image Source="emoji2.png"
+                       Grid.Row="1"
+                       Grid.Column="2"/>
+                <Rectangle WidthRequest="50" 
+                           HeightRequest="50"
+                           Stroke="gold"
+                           Fill="gold"
+                           Grid.Column="3"
+                           ScaleY="0.2"
+                           AnchorY="1"/>
+                <Image Source="emoji3.png"
+                       Grid.Row="1"
+                       Grid.Column="3"/>
+            </Grid>
+            <Button Text="Lopeta Kysely"
+                    Margin="0, 0, 0, 20"
+                    Clicked="LopetaClicked"
+                    CornerRadius="15"
+                    VerticalOptions="End"
+                    HorizontalOptions="Center"
+                    BackgroundColor="Gold"/>
+            <Button Text="Jatka harjoitukseen"
+                    Margin="0, 0, 0, 20"
+                    Clicked="JatkaClicked"
+                    CornerRadius="15"
+                    VerticalOptions="End"
+                    HorizontalOptions="Center"
+                    BackgroundColor="Gold"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
