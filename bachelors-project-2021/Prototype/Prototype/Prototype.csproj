@@ -33,6 +33,15 @@
 	
 	
   <ItemGroup>
+    <EmbeddedResource Update="AktiviteettiÄänestys\AktiviteettiäänestysTulokset.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AktiviteettiÄänestys\AktiviteettiäänestysEka.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AktiviteettiÄänestys\AktiviteettiäänestysToka.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="KyselynTulokset\LisätiedotHost.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
