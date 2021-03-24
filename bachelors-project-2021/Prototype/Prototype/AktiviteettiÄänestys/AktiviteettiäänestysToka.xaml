@@ -2,12 +2,85 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Prototype.AktiviteettiäänestysToka"
-             itle="Aktiviteetti äänestys 2/2">
+             Title="Aktiviteetti äänestys 2/2">
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Äänestyksen toinen osa"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout >
+            
+            
+            <!--  "Drop down" menu painike -->
+
+
+            <Button Margin="20,20,20,0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="300"
+                     HeightRequest="50"
+                    Clicked="btnPopupButton_Clicked"
+                 
+                    Text="Äänestä aktiviteettia" 
+                   />
+
+
+            <!--  Popup Area  -->
+            
+            <Frame  Grid.Column="1"
+                    Grid.Row="1"             
+                    x:Name="popupSelection"
+                    AbsoluteLayout.LayoutBounds="0, 0, 1,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    HeightRequest="460"
+                    Padding="1"
+                    HasShadow="True"
+                    WidthRequest="300"
+                    BorderColor="Gray"
+                    
+                    BackgroundColor="WhiteSmoke" 
+                    IsVisible="false">
+
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
+					         Orientation="Vertical"
+                             WidthRequest="200">
+
+                    <CollectionView x:Name="Collection"
+                                    ItemsSource= "{Binding Items}"
+                                    SelectionMode= "Single" 
+                                    SelectedItems="{Binding Selected, Mode=TwoWay}">
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+
+                                <Label  Text="Binding activities not working yet" 
+                                        Margin="5"
+                                        TextColor="Black"
+                                        FontSize="20"/>
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <AbsoluteLayout Margin="15"  VerticalOptions ="End" HorizontalOptions="Center">
+                        <Button  
+                        CornerRadius="100"
+                        WidthRequest="150"
+                        Text="Sulje"
+                        Clicked="Sulje_Clicked"/>
+                    </AbsoluteLayout>
+
+                </StackLayout>
+
+            </Frame>
+
+            <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
+                <Button Grid.Column="1" 
+                    Text="Jatka"
+                    Clicked="JatkaButtonClicked" 
+                    CornerRadius="100"
+                    WidthRequest="150"/>
+            </AbsoluteLayout>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
