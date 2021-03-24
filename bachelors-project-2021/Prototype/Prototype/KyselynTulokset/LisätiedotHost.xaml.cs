@@ -22,7 +22,7 @@ namespace Prototype
         }
         async void JatkaClicked(object sender, EventArgs e)
         {
-            //Aloittaa aktiviteetti äänestyksen
+            await Navigation.PushAsync(new AktiviteettiäänestysEka());
         }
     }
 }
