@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Prototype
 {
     public partial class MainPage : ContentPage
     {
-
         public MainPage()
         {
             NavigationPage.SetHasBackButton(this, false);
@@ -16,6 +17,27 @@ namespace Prototype
 
         }
 
+        void InfoClicked(object sender, EventArgs e)
+        {
+            InfoPopUp.IsVisible = true;
+        }
+
+        void OpenMojiClicked(object sender, EventArgs e)
+        {
+            Uri OpenMoji = new Uri("https://openmoji.org/");
+            Launcher.OpenAsync(OpenMoji);
+        }
+
+        void LicenseClicked(object sender, EventArgs e)
+        {
+            Uri License = new Uri("https://creativecommons.org/licenses/by-sa/4.0/legalcode");
+            Launcher.OpenAsync(License);
+        }
+
+        void InfoOKClicked(object sender, EventArgs e)
+        {
+            InfoPopUp.IsVisible = false;
+        }
 
 
         async void LuoUusiClicked(object sender, EventArgs e)
