@@ -32,7 +32,7 @@
                        Grid.Column="3"
                        Grid.Row="2"
                        Scale="1.4"/>
-                <Image Source="emoji3.png"
+                <Image Source="emoji3.png" 
                        Grid.Column="1"
                        Grid.Row="3"
                        Scale="1.2"/>
@@ -44,6 +44,17 @@
                     VerticalOptions="End"
                     HorizontalOptions="Center"
                     BackgroundColor="Orange"/>
+
+            
+            <!--Tämä painike on ihan vaan sitä varten että pääsee näkemään äänestyksen näytöt -->
+            <Button Text="Äänestys (TESTAUSTA)"
+                    Margin="0, 0, 0, 20"
+                    Clicked="TestaustaClicked"
+                    CornerRadius="15"
+                    VerticalOptions="End"
+                    HorizontalOptions="Center"
+                    BackgroundColor="Orange"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
