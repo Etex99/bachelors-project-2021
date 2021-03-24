@@ -44,17 +44,6 @@
                     VerticalOptions="End"
                     HorizontalOptions="Center"
                     BackgroundColor="Orange"/>
-
-            
-            <!--Tämä painike on ihan vaan sitä varten että pääsee näkemään äänestyksen näytöt -->
-            <Button Text="Äänestys (TESTAUSTA)"
-                    Margin="0, 0, 0, 20"
-                    Clicked="TestaustaClicked"
-                    CornerRadius="15"
-                    VerticalOptions="End"
-                    HorizontalOptions="Center"
-                    BackgroundColor="Orange"/>
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
