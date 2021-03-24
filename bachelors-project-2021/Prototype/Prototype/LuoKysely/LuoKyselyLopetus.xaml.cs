@@ -27,5 +27,13 @@ namespace Prototype
             // siirrytään etusivulle 
             await Navigation.PushAsync(new MainPage()); ;
         }
+
+        async void JaaClicked(object sender, EventArgs e)
+        {
+           
+
+            // siirrytään Yhteenveto Host
+            await Navigation.PushAsync(new YhteenVetoHost()); ;
+        }
     }
 }
