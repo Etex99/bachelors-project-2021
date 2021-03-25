@@ -19,7 +19,7 @@ namespace Prototype
         }
 
         //Method for saving the survey with name of user's choosing
-        public bool SaveSurvey(string name = "test.txt")
+        public bool SaveSurvey(string name)
         {   
             string jsonString = JsonSerializer.Serialize(survey);
             string path = Path.Combine(folder, name.ToLower());
@@ -29,7 +29,7 @@ namespace Prototype
         }
 
         //Method for loading the survey by selecting the file with name
-        public Survey LoadSurvey(string name = "test.txt")
+        public Survey LoadSurvey(string name)
         {
             string path = Path.Combine(folder, name.ToLower());
             string jsontext = File.ReadAllText(path);
@@ -49,15 +49,16 @@ namespace Prototype
                 string filename = name.Substring(name.LastIndexOf('/') + 1);
                 filename = filename.Substring(0, filename.LastIndexOf("."));
                 surveyNames.Add(filename);
+                Console.WriteLine(filename);
             }
             return surveyNames;
         }
 
         //Method for deleting survey by using the name of existing survey
-        public void DeleteSurvey(string name = "test.txt")
+        public void DeleteSurvey(string name)
         {
             string path = Path.Combine(folder, name);
-            Directory.Delete(path);
+            File.Delete(path);
         }
 
         //Method for getting the survey 
