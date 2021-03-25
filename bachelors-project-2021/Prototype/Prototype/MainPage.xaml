@@ -106,14 +106,8 @@
                            HorizontalOptions="Center">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="All emojis designed by "/>
-                                <Span Text="OpenMoji"
-                                      TextColor="Blue"
-                                      TextDecorations="Underline"/>
-                                <Span Text=" - the open-source emoji and icon project. License:"/>
-                                <Span Text="CC BY-SA 4.0"
-                                      TextColor="Blue"
-                                      TextDecorations="Underline"/>
+                                <Span Text="All emojis designed by OpenMoji"/>
+                                <Span Text=" - the open-source emoji and icon project. License: CC BY-SA 4.0"/>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
