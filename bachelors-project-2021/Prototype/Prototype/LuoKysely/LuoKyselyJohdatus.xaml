@@ -21,7 +21,7 @@
                      HeightRequest="50"
                     Clicked="btnPopupButton_Clicked"
                  
-                    Text="Valitse johdatonlause" 
+                    Text="Valitse johdatuslause" 
                    />
 
        
