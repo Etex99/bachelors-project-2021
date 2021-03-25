@@ -98,15 +98,16 @@
 
         <Grid  Margin="0,30,0,0">
                 <Button Grid.Column="1" 
-                    Text="Jaa kysely"
-                    Clicked="JaaClicked" 
-                    CornerRadius="100"/>
+                        Text="Jaa kysely"
+                        Clicked="JaaClicked"
+                        HeightRequest="65"
+                        CornerRadius="100"/>
 
-                <Button 
-                    Text="Muokkaa"
-                    Clicked="MuokkaaClicked"
-                    BackgroundColor="{StaticResource QuinaryColor}"
-                    CornerRadius="100"/>
+                <Button Text="Muokkaa"
+                        Clicked="MuokkaaClicked"
+                        BackgroundColor="{StaticResource QuinaryColor}"
+                        HeightRequest="65"
+                        CornerRadius="100"/>
             </Grid>
 
         </StackLayout>
