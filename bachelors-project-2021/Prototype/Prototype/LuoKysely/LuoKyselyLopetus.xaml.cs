@@ -23,17 +23,49 @@ namespace Prototype
             man.GetSurvey().RoomCode = KeyEditor.Text;
             //save survey
             man.SaveSurvey(NameEditor.Text + ".txt");
-            
+
             // siirrytään etusivulle 
             await Navigation.PushAsync(new MainPage()); ;
         }
 
-        async void JaaClicked(object sender, EventArgs e)
+        void JaaClicked(object sender, EventArgs e)
         {
-           
 
-            // siirrytään Yhteenveto Host
+            // Kysytään kyselyn tallentamisesta
+            popupSelection.IsVisible = true;
+
+
+        }
+
+        void X_Clicked(object sender, EventArgs e)
+        {
+
+           // Suljetaan popup
+            popupSelection.IsVisible = false;
+
+        }
+
+        async void Ei_Clicked(object sender, EventArgs e)
+        {
+            // siirrytään yhteenveto Host sivulle, ei tallenneta kyselyä
             await Navigation.PushAsync(new YhteenVetoHost()); ;
+        }
+
+        async void Kyllä_Clicked(object sender, EventArgs e)
+        {
+
+            //kyselyn tallennus!
+
+            SurveyManager man = SurveyManager.GetInstance();
+            //save survey code
+            man.GetSurvey().RoomCode = KeyEditor.Text;
+            //save survey
+            man.SaveSurvey(NameEditor.Text + ".txt");
+
+            // siirrytään yhteenveto Host sivulle 
+            await Navigation.PushAsync(new YhteenVetoHost()); ;
+
+
         }
     }
 }
