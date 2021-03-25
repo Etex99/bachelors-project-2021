@@ -4,65 +4,132 @@
              x:Class="Prototype.LuoKyselyLopetus"
              Title="Melkein valmista...">
 
-
-    <StackLayout Margin="20">
+    <AbsoluteLayout
+        Padding="0"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
         
-
-        <Label Margin="0,10,0,15"
-               Text="Nimeä kyselysi"
-               TextColor="Black"
-               FontSize="20"/>
-
-        <Editor x:Name="NameEditor"
-                Margin="0,0,0,35"
-                BackgroundColor="WhiteSmoke"
-                Placeholder="Nimi"
-                HeightRequest="50" />
-
-        <Label Margin="0,10,0,15"
-               Text="Aseta avainkoodi"
-               TextColor="Black"
-               FontSize="20"/>
+        <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                     AbsoluteLayout.LayoutFlags="All" 
+                     >
+            <StackLayout Margin="20"
+                          HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand">
 
 
-        <Editor x:Name="KeyEditor"
-                Margin="0,0,0,10"
-                BackgroundColor="WhiteSmoke"
-                Placeholder="Avainkoodi"
-                HeightRequest="50" />
+                <Label Margin="0,10,0,15"
+                           Text="Nimeä kyselysi"
+                           TextColor="Black"
+                           FontSize="20"/>
+
+                <Editor x:Name="NameEditor"
+                            Margin="0,0,0,35"
+                            BackgroundColor="WhiteSmoke"
+                            Placeholder="Nimi"
+                            HeightRequest="50" />
+
+                <Label Margin="0,10,0,15"
+                           Text="Aseta avainkoodi"
+                           TextColor="Black"
+                           FontSize="20"/>
+
+
+                <Editor x:Name="KeyEditor"
+                            Margin="0,0,0,10"
+                            BackgroundColor="WhiteSmoke"
+                            Placeholder="Avainkoodi"
+                            HeightRequest="50" />
 
 
 
+                <Grid HorizontalOptions="Center"
+                      VerticalOptions="EndAndExpand">
+                    <Button  Grid.Row="1"
+                             Text="Tallenna luonnos ja poistu"
+                             Clicked="TallennaJaPoistuClicked" 
+                             Margin="0,10,0,0"
+                             CornerRadius="10"                           
+                             WidthRequest="300"
+                             HeightRequest="55"
+                         />
+
+                            <!-- Tästä painikkeest pääsee tilapäisesti kyselyn yhteenveto näytölle (Host) -->
+                    <Button Text="Jaa kysely"
+                             Clicked="JaaClicked"                     
+                             FontAttributes="Bold"
+                             Margin="0,10,0,0"
+                             CornerRadius="10"
+                             WidthRequest="300"
+                             HeightRequest="55"
+                             />
+
+                </Grid>
+
+            </StackLayout>
+        </StackLayout>
+
+
+        <!--  Popup kyselyn tallentamiselle jakamisen yhteydessä-->
+        <!--  Popup Area  -->
+        <ContentView
+                x:Name="popupSelection"
+                Padding="10,0"
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="#C0808080"
+                IsVisible="false">
+
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <StackLayout
+                    BackgroundColor="White"
+                    HeightRequest="200"
+                    Orientation="Vertical"
+                    WidthRequest="300">
+
+                    <!--  X button placeholder -->
+                    <ImageButton Source="https://www.rawshorts.com/freeicons/wp-content/uploads/2017/01/black_prodpictxmark_1484336297-1.png"
+                                  HeightRequest="30"
+                                  WidthRequest="30" 
+                                  VerticalOptions="Start"
+                                  BackgroundColor="White"
+                                  HorizontalOptions="End"
+                                  Clicked="X_Clicked"/>
+
+                    <Label Text="Tallennetaanko kysely?" 
+                           FontSize="24" 
+                           TextColor="Black" 
+                           Margin="0" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="CenterAndExpand"/>
+
+                   
+
+                    <AbsoluteLayout Margin="20"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
+                        <Grid Margin="0,0,0,0">
+                            <Button Grid.Column="1"                              
+                                 CornerRadius="100"
+                                 WidthRequest="130"                                   
+                                 Text="Kyllä"  
+                                Clicked="Kyllä_Clicked"/>
+                            <Button                               
+                                Text="Ei" 
+                                BackgroundColor="{StaticResource QuinaryColor}"
+                                CornerRadius="100"
+                                 WidthRequest="130"
+                                Clicked="Ei_Clicked" />
+                        </Grid>
+
+                    </AbsoluteLayout>
+                </StackLayout>
+
+            </StackLayout>
+
+        </ContentView>
+        <!--  Popup Area  ends -->
 
 
 
-        <AbsoluteLayout VerticalOptions="EndAndExpand" HorizontalOptions="Center">
-            <Grid>
-            <Button Grid.Row="1"
-                     Text="Tallenna luonnos ja poistu"
-                     Clicked="TallennaJaPoistuClicked" 
-                     Margin="0,10,0,0"
-                     CornerRadius="10"
-                     HorizontalOptions="Center"
-                     WidthRequest="300"
-                     HeightRequest="55"
-                     />
-
-
-            <!-- Tästä painikkeest pääsee tilapäisesti kyselyn yhteenveto näytölle (Host) -->
-            <Button Text="Jaa kysely"
-                     Clicked="JaaClicked"                     
-                     FontAttributes="Bold"
-                     Margin="0,10,0,0"
-                     CornerRadius="10"
-                     HorizontalOptions="Center"
-                     WidthRequest="300"
-                     HeightRequest="55"
-                     />
-
-            </Grid>
-        </AbsoluteLayout>
-
-
-    </StackLayout>
+    </AbsoluteLayout>
+    
+    
 </ContentPage>
