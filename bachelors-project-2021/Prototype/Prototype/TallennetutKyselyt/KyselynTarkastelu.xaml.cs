@@ -15,6 +15,12 @@ namespace Prototype
 
 
         public IList<CollectionItem> Emojit { get; private set; }
+        public static string surveyName;
+
+        public static void SetSurveyName(string name)
+        {
+            surveyName = name;
+        }
 
         public class CollectionItem
         {
@@ -71,9 +77,8 @@ namespace Prototype
 
        void PoistaClicked(object sender, EventArgs e)
         {
-      
-            // Poistetaan kysely 
-
+            SurveyManager.GetInstance().DeleteSurvey(surveyName);
+            Navigation.PushAsync(new TallennetutKyselyt());
         }
     }
 }
