@@ -12,20 +12,29 @@
     </ContentPage.ToolbarItems>
 
 
-    <StackLayout Margin="20">
+    <AbsoluteLayout
+        Padding="0"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
 
+        <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                     AbsoluteLayout.LayoutFlags="All" 
+                     >
+            <StackLayout Margin="20"
+                          HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand">
 
-            <Label Margin="0,10,0,10"
-               Text="*Kyselyn nimi*"
-               TextColor="Black"
-               FontSize="20"/>
+                <Label Margin="0,10,0,10"
+                    Text="*Kyselyn nimi*"
+                    TextColor="Black"
+                    FontSize="20"/>
 
-            <Label Margin="0,10,0,10"
-               Text="*Kyselyn avainkoodi*"
-               TextColor="Black"
-               FontSize="20"/>
+                <Label Margin="0,10,0,10"
+                        Text="*Kyselyn avainkoodi*"
+                        TextColor="Black"
+                        FontSize="20"/>
 
-            <CollectionView ItemsSource="{Binding Emojit}"
+                <CollectionView ItemsSource="{Binding Emojit}"
                    HeightRequest="400" >
 
                 <CollectionView.ItemTemplate >
@@ -36,58 +45,55 @@
 
 
                             <!-- Emojit placeholder-->
-                            <Image Grid.RowSpan="1"
-                           Source="{Binding Item.ImageSource}"     
-                           Aspect="AspectFill"
-                           HeightRequest="60"
-                           WidthRequest="60" />
+                                <Image Grid.RowSpan="1"
+                                       Source="{Binding Item.ImageSource}"     
+                                       Aspect="AspectFill"
+                                       HeightRequest="60"
+                                       WidthRequest="60" />
 
-                            <!-- TILAPÄINEN drop down menu ratkaisu (placeholder) toimenpiteitä varten-->
+                                <!-- TILAPÄINEN drop down menu ratkaisu (placeholder) toimenpiteitä varten-->
 
-                            <Picker x:Name="picker"
-                                    Grid.ColumnSpan="3"
-                                    Grid.Column="2"
-                                    Title="Toimenpiteet"
-                                    FontSize="20"
-                                    HorizontalOptions="CenterAndExpand"
-                                    WidthRequest="270"
+                                        <Picker x:Name="picker"
+                                                Grid.ColumnSpan="3"
+                                                Grid.Column="2"
+                                                Title="Toimenpiteet"
+                                                FontSize="20"
+                                                HorizontalOptions="CenterAndExpand"
+                                                WidthRequest="270"
                               
-                                TitleColor="Black"
-                >
-                                <Picker.ItemsSource>
+                                            TitleColor="Black"
+                            >
+                                            <Picker.ItemsSource>
 
-                                    <x:Array Type="{x:Type x:String}">
+                                                <x:Array Type="{x:Type x:String}">
 
-                                        <x:String>toimenpide1</x:String>
-                                        <x:String>toimenpide2</x:String>
-                                        <x:String>toimenpide3</x:String>
-                                        <x:String>toimenpide4</x:String>
-                                        <x:String>toimenpide5</x:String>
-                                        <x:String>toimenpide6</x:String>
+                                                    <x:String>toimenpide1</x:String>
+                                                    <x:String>toimenpide2</x:String>
+                                                    <x:String>toimenpide3</x:String>
+                                                    <x:String>toimenpide4</x:String>
+                                                    <x:String>toimenpide5</x:String>
+                                                    <x:String>toimenpide6</x:String>
 
-                                    </x:Array>
-                                </Picker.ItemsSource>
-                            </Picker>
+                                                </x:Array>
+                                            </Picker.ItemsSource>
+                                        </Picker>
 
 
 
-                            <!-- En ole vielä keksinyt miten itse radiobuttonin värin voisi vaihtaa-->
-
-                      
-
-                            <!-- Green-->
-                            <RadioButton Grid.Row="0"
-                                      Grid.Column="1"
-                                      Grid.ColumnSpan="1"
-                                      Content="G"
-                                      TextColor="Green"
-                                      Value="positive"
-                                      IsChecked="{Binding IsPositive}"
+                                <!-- En ole vielä keksinyt miten itse radiobuttonin värin voisi vaihtaa tai miten sivulle saa aina kyselyn luonnin aikana valitun radiobuttonin-->
+                                <!-- Green-->
+                                <RadioButton Grid.Row="0"
+                                          Grid.Column="1"
+                                          Grid.ColumnSpan="1"
+                                          Content="G"
+                                          TextColor="Green"
+                                          Value="positive"
+                                          IsChecked="{Binding IsPositive}"
                                  
-                                />
+                                    />
                             
                          
-                        </Grid>
+                            </Grid>
                         
                         
                         
@@ -96,20 +102,82 @@
 
             </CollectionView>
 
-        <Grid  Margin="0,30,0,0">
-                <Button Grid.Column="1" 
-                        Text="Jaa kysely"
-                        Clicked="JaaClicked"
-                        HeightRequest="65"
-                        CornerRadius="100"/>
+                    <Grid  Margin="0,30,0,0">
+                            <Button Grid.Column="1" 
+                                    Text="Jaa kysely"
+                                    Clicked="JaaClicked"
+                                    HeightRequest="65"
+                                    CornerRadius="100"/>
 
-                <Button Text="Muokkaa"
-                        Clicked="MuokkaaClicked"
-                        BackgroundColor="{StaticResource QuinaryColor}"
-                        HeightRequest="65"
-                        CornerRadius="100"/>
-            </Grid>
+                            <Button Text="Muokkaa"
+                                    Clicked="MuokkaaClicked"
+                                    BackgroundColor="{StaticResource QuinaryColor}"
+                                    HeightRequest="65"
+                                    CornerRadius="100"/>
+                        </Grid>
 
         </StackLayout>
-    
+        </StackLayout>
+
+
+        <!--  Popup kyselyn poistamiselle-->
+        <!--  Popup Area  -->
+        <ContentView
+                x:Name="popupSelection"
+                Padding="10,0"
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="#C0808080"
+                IsVisible="false">
+
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <StackLayout
+                    BackgroundColor="White"
+                    HeightRequest="200"
+                    Orientation="Vertical"
+                    WidthRequest="300">
+
+                    <!--  X button placeholder -->
+                    <ImageButton Source="https://www.rawshorts.com/freeicons/wp-content/uploads/2017/01/black_prodpictxmark_1484336297-1.png"
+                                  HeightRequest="30"
+                                  WidthRequest="30" 
+                                  VerticalOptions="Start"
+                                  BackgroundColor="White"
+                                  HorizontalOptions="End"
+                                  Clicked="X_Clicked"/>
+
+                    <Label Text="Poistetaanko kysely?" 
+                           FontSize="24" 
+                           TextColor="Black" 
+                           Margin="0" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="CenterAndExpand"/>
+
+
+
+                    <AbsoluteLayout Margin="20"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
+                        <Grid Margin="0,0,0,0">
+                            <Button Grid.Column="1"                              
+                                 CornerRadius="100"
+                                 WidthRequest="130"                                   
+                                 Text="Kyllä"  
+                                Clicked="Kyllä_Clicked"/>
+                            <Button                               
+                                Text="Ei" 
+                                BackgroundColor="{StaticResource QuinaryColor}"
+                                CornerRadius="100"
+                                 WidthRequest="130"
+                                Clicked="Ei_Clicked" />
+                        </Grid>
+
+                    </AbsoluteLayout>
+                </StackLayout>
+
+            </StackLayout>
+
+        </ContentView>
+        <!--  Popup Area  ends -->
+        
+        
+    </AbsoluteLayout>
 </ContentPage>

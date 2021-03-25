@@ -77,8 +77,33 @@ namespace Prototype
 
        void PoistaClicked(object sender, EventArgs e)
         {
+            popupSelection.IsVisible = true;
+
+        }
+
+        void X_Clicked(object sender, EventArgs e)
+        {
+
+            // Suljetaan popup
+            popupSelection.IsVisible = false;
+
+        }
+
+        void Ei_Clicked(object sender, EventArgs e)
+        {
+            // siirrytään yhteenveto Host sivulle, ei tallenneta kyselyä
+             popupSelection.IsVisible = false;
+        }
+
+        async void Kyllä_Clicked(object sender, EventArgs e)
+        {
+
+            //kyselyn Poistaminen!
             SurveyManager.GetInstance().DeleteSurvey(surveyName);
-            Navigation.PushAsync(new TallennetutKyselyt());
+            // siirrytään Tallenetut kyselyt sivulle 
+           
+            await Navigation.PushAsync(new TallennetutKyselyt());
+
         }
     }
 }
