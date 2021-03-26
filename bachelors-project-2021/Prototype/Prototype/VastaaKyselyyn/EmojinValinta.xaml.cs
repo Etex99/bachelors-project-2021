@@ -41,6 +41,7 @@ namespace Prototype
             emoji.BorderColor = Color.Gold;
             answer = emoji.ClassId.ToString();
             Console.WriteLine(answer);
+            Vastaus.IsEnabled = true;
         }
 
         private void Vastaa_Clicked(object sender, EventArgs e)

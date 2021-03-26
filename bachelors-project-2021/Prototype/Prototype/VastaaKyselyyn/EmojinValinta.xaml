@@ -82,9 +82,11 @@
             </Grid>
             <Button Text="Vastaa"
                     Font="Bold, 19"
+                    x:Name="Vastaus"
                     Clicked="Vastaa_Clicked"
                     CornerRadius="15"
                     HeightRequest="65"
+                    IsEnabled="False"
                     HorizontalOptions="Center"
                     WidthRequest="150"/>
         </StackLayout>
