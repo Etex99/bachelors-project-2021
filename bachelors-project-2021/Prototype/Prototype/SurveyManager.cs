@@ -32,9 +32,15 @@ namespace Prototype
         public Survey LoadSurvey(string name)
         {
             string path = Path.Combine(folder, name.ToLower());
-            string jsontext = File.ReadAllText(path);
-            survey = JsonSerializer.Deserialize<Survey>(jsontext);
-
+            try
+            {
+                string jsontext = File.ReadAllText(path);
+                survey = JsonSerializer.Deserialize<Survey>(jsontext);
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("File not found");
+            }
             return survey;
         }
         
@@ -57,8 +63,15 @@ namespace Prototype
         //Method for deleting survey by using the name of existing survey
         public void DeleteSurvey(string name)
         {
-            string path = Path.Combine(folder, name);
-            File.Delete(path);
+            try
+            {
+                string path = Path.Combine(folder, name);
+                File.Delete(path);
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("File not found");
+            }
         }
 
         //Method for getting the survey 
