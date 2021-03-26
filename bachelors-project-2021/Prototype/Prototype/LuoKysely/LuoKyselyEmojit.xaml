@@ -37,26 +37,29 @@
                         <!-- Green-->
                         <RadioButton Grid.Row="1"
                                       Grid.Column="1"
-                                      Content="G"
+                                      Content=":)"
                                       TextColor="Green"
+                                      BackgroundColor="LightGreen"
                                       Value="positive"
                                       IsChecked="{Binding IsPositive}"
                                  
                                 />
 
                         <!-- Orange-->
-                        <RadioButton Grid.Row="1" 
+                        <RadioButton Grid.Row="1"
                                       Grid.Column="2"
-                                      Content="O"
-                                      TextColor="Orange"
+                                      Content=":|"
+                                      TextColor="OrangeRed"
+                                      BackgroundColor="Orange"
                                       Value="neutral"
                                       IsChecked="{Binding IsNeutral}"
                                 />
                         <!-- Red-->
                         <RadioButton Grid.Row="1"
                                      Grid.Column="3"
-                                     Content="R"
-                                     TextColor="Red"
+                                     Content=":("
+                                     TextColor="DarkRed"
+                                     BackgroundColor="Red"
                                      Value="negative"
                                      IsChecked="{Binding IsNegative}"
                                 />
