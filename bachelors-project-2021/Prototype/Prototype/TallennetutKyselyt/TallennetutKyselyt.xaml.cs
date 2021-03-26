@@ -28,6 +28,14 @@ namespace Prototype
         void OnListSelection(object sender, SelectionChangedEventArgs e)
         {
             SelectedSurvey = e.CurrentSelection[0] as string;
+
+            //button enabled only when there is survey selected
+
+            if (SelectedSurvey!= null )
+                TButton.IsEnabled = true;
+
+            else
+                TButton.IsEnabled = false;
         }
 
         async void AvaaClicked(object sender, EventArgs e)

@@ -23,13 +23,15 @@
         </CollectionView>
 
 
-        <Button Text="Avaa"
-                Clicked="AvaaClicked" 
+        <Button  x:Name="TButton"
+                 Text="Avaa"
+                 Clicked="AvaaClicked" 
                  Margin="0,0,0,20"
                  CornerRadius="100"
                  HorizontalOptions="Center"
                  WidthRequest="150"
-                 HeightRequest="50"/>
+                 HeightRequest="50"
+                 IsEnabled="False"/>
 
 
     </StackLayout>
