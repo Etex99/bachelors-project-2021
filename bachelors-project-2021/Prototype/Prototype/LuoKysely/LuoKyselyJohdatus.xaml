@@ -14,14 +14,14 @@
         <!--  "Drop down" menu painike -->
 
 
-        <Button Margin="20,20,20,0"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    WidthRequest="300"
-                     HeightRequest="50"
-                    Clicked="btnPopupButton_Clicked"
-                 
-                    Text="Valitse johdatuslause" 
+        <Button x:Name="JButton"
+                Margin="20,20,20,0"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="300"
+                HeightRequest="50"
+                Clicked="btnPopupButton_Clicked"
+                Text="Valitse johdatuslause" 
                    />
 
        

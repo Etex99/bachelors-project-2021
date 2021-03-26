@@ -78,7 +78,14 @@ namespace Prototype
         void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CollectionItem selectedItem = e.CurrentSelection[0] as CollectionItem;
-           
+
+            //Change the text of the button based on selected intro message
+            
+            if (selectedItem != null)
+                JButton.Text = selectedItem.introMessage;
+
+            else
+                JButton.Text = "Valitse johdatuslause";
         }
 
 
