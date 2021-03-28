@@ -84,7 +84,7 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Emoji0.png" />
+    <AndroidResource Include="Resources\drawable\emoji0.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Prototype\Prototype.csproj">
@@ -93,22 +93,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Emoji1.png" />
+    <AndroidResource Include="Resources\drawable\emoji1.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Emoji2.png" />
+    <AndroidResource Include="Resources\drawable\emoji2.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Emoji3.png" />
+    <AndroidResource Include="Resources\drawable\emoji3.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Emoji4.png" />
+    <AndroidResource Include="Resources\drawable\emoji4.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Emoji5.png" />
+    <AndroidResource Include="Resources\drawable\emoji5.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Emoji6.png" />
+    <AndroidResource Include="Resources\drawable\emoji6.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
