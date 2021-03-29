@@ -82,17 +82,16 @@
 
                                 <!-- En ole vielä keksinyt miten itse radiobuttonin värin voisi vaihtaa tai miten sivulle saa aina kyselyn luonnin aikana valitun radiobuttonin-->
                                 <!-- Green-->
-                                <RadioButton Grid.Row="0"
-                                          Grid.Column="1"
-                                          Grid.ColumnSpan="1"
-                                          Content="G"
-                                          TextColor="Green"
-                                          Value="positive"
-                                          IsChecked="{Binding IsPositive}"
+                                <RadioButton Grid.Row="1"
+                                      Grid.Column="1"
+                                      Content=":)"
+                                      TextColor="Green"
+                                      BackgroundColor="LightGreen"
+                                      Value="positive"
+                                      IsChecked="{Binding IsPositive}"
                                  
-                                    />
-                            
-                         
+                                />
+
                             </Grid>
                         
                         
