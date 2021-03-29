@@ -83,15 +83,14 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\emoji0.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Prototype\Prototype.csproj">
       <Project>{BC01F7E4-4267-4767-8607-062144702B2B}</Project>
       <Name>Prototype</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\emoji0.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\emoji1.png" />

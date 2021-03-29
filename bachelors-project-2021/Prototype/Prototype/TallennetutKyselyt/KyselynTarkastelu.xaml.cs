@@ -102,7 +102,7 @@ namespace Prototype
             SurveyManager.GetInstance().DeleteSurvey(surveyName);
             // siirrytään Tallenetut kyselyt sivulle 
            
-            await Navigation.PushAsync(new TallennetutKyselyt());
+            await Navigation.PopToRootAsync();
 
         }
     }
