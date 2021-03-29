@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Text.Json;
 using System.IO;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Prototype
 {
@@ -21,7 +21,7 @@ namespace Prototype
         //Method for saving the survey with name of user's choosing
         public bool SaveSurvey(string name)
         {   
-            string jsonString = JsonSerializer.Serialize(survey);
+            string jsonString = JsonConvert.SerializeObject(survey);
             string path = Path.Combine(folder, name.ToLower());
             File.WriteAllText(path, jsonString);
 
@@ -35,7 +35,7 @@ namespace Prototype
             try
             {
                 string jsontext = File.ReadAllText(path);
-                survey = JsonSerializer.Deserialize<Survey>(jsontext);
+                survey = JsonConvert.DeserializeObject<Survey>(jsontext);
             }
             catch (FileNotFoundException)
             {
