@@ -5,10 +5,11 @@ using System.Net.Sockets;
 using System.Net;
 using System.Threading.Tasks;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace Prototype
 {
-	class SurveyHost
+	public class SurveyHost
 	{
 		public enum HostState
 		{
@@ -36,27 +37,19 @@ namespace Prototype
 			tokenSource = new CancellationTokenSource();
 			token = tokenSource.Token;
 		}
-		
+
 		//Main sequence of running the survey
-		public async void RunSurvey() {
-			
+		public void RunSurvey()
+		{
+
 			//Phase 1 - making client connections and collecting emojis
-			try
-			{
-				currentTasks = new List<Task>();
-				currentTasks.Add(Task.Run(ReplyBroadcast, token));
-				currentTasks.Add(Task.Run(AcceptClient, token));
+			Task task1 = ReplyBroadcast();
+			Task task2 = AcceptClient();
+			Task.WaitAll(new Task[] { task1, task2 });
 
-				await Task.WhenAll(currentTasks.ToArray());
-
-			}
-			catch (OperationCanceledException)
-			{
-				Console.WriteLine("ReplyBroadcast task was cancelled");
-				Console.WriteLine("AcceptClient task was cancelled");
-			}
 			//Phase 2 - time after the survey has concluded in which users view results and host decides whether activity vote starts
-			
+			Console.WriteLine($"Results: {data}");
+			//Send results to all clients
 
 		}
 
@@ -77,7 +70,7 @@ namespace Prototype
 		}
 
 		//replies to broadcasts in the network which contain the correct roomCode
-		private void ReplyBroadcast() {
+		private async Task ReplyBroadcast() {
 
 			UdpClient listener = new UdpClient(Const.Network.ServerUDPClientPort);
 			Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -99,6 +92,7 @@ namespace Prototype
 							s.Close();
 							token.ThrowIfCancellationRequested();
 						}
+						await Task.Delay(1000);
 					} while (broadcast.Status != TaskStatus.RanToCompletion);
 
 					string message = Encoding.ASCII.GetString(broadcast.Result.Buffer, 0, broadcast.Result.Buffer.Length);
@@ -112,9 +106,18 @@ namespace Prototype
 						IPEndPoint ep = new IPEndPoint(broadcast.Result.RemoteEndPoint.Address, Const.Network.ClientUDPClientPort);
 
 						//reply
+						Console.WriteLine($"Replying... EP: {ep}");
 						s.SendTo(sendbuf, ep);
-					};
+					}
+					else
+					{
+						Console.WriteLine("Received invalid Room Code");
+					}
 				}
+			}
+			catch (OperationCanceledException)
+			{
+				Console.WriteLine("ReplyBroadcast task was cancelled");
 			}
 			catch (SocketException e)
 			{
@@ -129,15 +132,16 @@ namespace Prototype
 			}
 		}
 
-		private void AcceptClient() {
-
-			TcpListener listener = new TcpListener(IPAddress.Any, Const.Network.ServerTCPListenerPort);
+		private async Task AcceptClient() {
 
 			try
 			{
+				TcpListener listener = new TcpListener(IPAddress.Any, Const.Network.ServerTCPListenerPort);
 				listener.Start();
+
 				while (true)
 				{
+					Console.WriteLine("Waiting to accept tcp client");
 					Task<TcpClient> newClient = listener.AcceptTcpClientAsync();
 
 					//Allow cancellation of task between adding each client
@@ -148,23 +152,16 @@ namespace Prototype
 							listener.Stop();
 							token.ThrowIfCancellationRequested();
 						}
+						await Task.WhenAny(new Task[] { Task.Delay(1000), newClient });
 					} while (newClient.Status != TaskStatus.RanToCompletion);
 
-					//Child task to get emoji response from new client
-					Task childtask = Task.Run(() =>
+					//Child task to communicate with new client
+					Task childtask = Task.Run( async () =>
 					{
 						TcpClient client = newClient.Result;
 
-						//prepare message for survey emojis
-						string message = "";
-						foreach (var item in survey.emojis)
-						{
-							message += item.ID;
-							message += ",";
-						}
-						//remove trailing comma
-						message = message.Substring(0, message.Length - 1);
-
+						//prepare message for sending survey
+						string message = JsonConvert.SerializeObject(survey);
 						Console.WriteLine($"DEBUG: message: {message}");
 						byte[] bytes = Encoding.ASCII.GetBytes(message);
 
@@ -175,7 +172,7 @@ namespace Prototype
 							ns.Write(bytes, 0, bytes.Length);
 
 							//try get reply
-							byte[] buffer = new byte[4]; //this is enough for expected 1 int 
+							byte[] buffer = new byte[256];
 							Task<int> emojiReply = ns.ReadAsync(buffer, 0, buffer.Length);
 
 							//allow cancellation of task here.
@@ -186,17 +183,22 @@ namespace Prototype
 									client.Close();
 									token.ThrowIfCancellationRequested();
 								}
+								await Task.WhenAny(new Task[] { Task.Delay(1000), emojiReply });
 							} while (emojiReply.Status != TaskStatus.RanToCompletion);
 
 							//process reply
-							string reply = Encoding.ASCII.GetString(bytes, 0, emojiReply.Result);
+							string reply = Encoding.ASCII.GetString(buffer, 0, emojiReply.Result);
+							Console.WriteLine($"Bytes read: {emojiReply.Result}");
 							Console.WriteLine($"Client sent: {reply}");
-
+							
 							//add to surveydata
 							data.AddEmojiResults(int.Parse(reply));
 
 							//add this client to list of clients
 							clients.Add(client);
+						}
+						catch (OperationCanceledException) {
+							Console.WriteLine("Cancelling task, Client was dropped for being slow poke");
 						}
 						catch (Exception e)
 						{
@@ -209,11 +211,14 @@ namespace Prototype
 					}, token);
 				}				
 			}
+			catch (OperationCanceledException)
+			{
+				Console.WriteLine("AcceptClient task was cancelled");
+			}
 			catch (SocketException e)
 			{
 				Console.WriteLine("Socket exception occured in AcceptClient...");
 				Console.WriteLine(e);
-				throw;
 			}
 		}
 	}
