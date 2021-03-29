@@ -43,7 +43,7 @@ namespace Prototype
 			activities = activities.GetRange(0, 3);
 			emojis.Add(new Emoji(6, "Mood 6", "neutral", activities, "emoji6.png"));
 
-			RoomCode = null;
+			RoomCode = "1234";
 		}
 
 		//toString method for getting the info of the survey in a string for data purposes
