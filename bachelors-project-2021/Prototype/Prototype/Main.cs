@@ -20,7 +20,7 @@ namespace Prototype
 
 		//private SurveyManager survey;
 		//private SurveyClient client;
-		//private SurveyHost host;
+		public SurveyHost host = new SurveyHost(); //HUOM TESTAUSTA VARTEN TEHTY SYSTEEMI, KORJAA!!!
 		
 		private Main() {
 			state = MainState.Default;
