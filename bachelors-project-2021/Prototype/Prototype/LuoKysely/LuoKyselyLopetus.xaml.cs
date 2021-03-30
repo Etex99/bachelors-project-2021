@@ -48,7 +48,7 @@ namespace Prototype
         async void Ei_Clicked(object sender, EventArgs e)
         {
             // siirrytään yhteenveto Host sivulle, ei tallenneta kyselyä
-            await Navigation.PushAsync(new YhteenVetoHost()); ;
+            await Navigation.PushAsync(new OdotetaanVastauksia());
         }
 
         async void Kyllä_Clicked(object sender, EventArgs e)
@@ -63,7 +63,7 @@ namespace Prototype
             man.SaveSurvey(NameEditor.Text + ".txt");
 
             // siirrytään yhteenveto Host sivulle 
-            await Navigation.PushAsync(new YhteenVetoHost()); ;
+            await Navigation.PushAsync(new OdotetaanVastauksia()); ;
 
 
         }

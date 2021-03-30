@@ -63,19 +63,18 @@ namespace Prototype
             BindingContext = this;
         }
 
-         void JaaClicked(object sender, EventArgs e)
+        async void JaaClicked(object sender, EventArgs e)
         {
 
-            //Jaetaan kysely 
+            await Navigation.PushAsync(new OdotetaanVastauksia());
         }
-
-      void MuokkaaClicked(object sender, EventArgs e)
+        void MuokkaaClicked(object sender, EventArgs e)
         {
 
             // Siirrytään kyselyn muokkaukseen 
         }
 
-       void PoistaClicked(object sender, EventArgs e)
+        void PoistaClicked(object sender, EventArgs e)
         {
             popupSelection.IsVisible = true;
 
