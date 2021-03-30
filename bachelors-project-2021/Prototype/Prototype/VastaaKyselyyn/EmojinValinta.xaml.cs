@@ -11,7 +11,7 @@ namespace Prototype
     {
         public IList<Emoji> Emojis { get; set; }
         public IList<string> Images { get; set; }
-        private string answer;
+        private int answer;
 
         public EmojinValinta()
         {
@@ -39,13 +39,15 @@ namespace Prototype
 
             Button emoji = sender as Button;
             emoji.BorderColor = Color.Gold;
-            answer = emoji.ClassId.ToString();
+            answer = int.Parse(emoji.ClassId.ToString());
             Console.WriteLine(answer);
             Vastaus.IsEnabled = true;
         }
 
         private void Vastaa_Clicked(object sender, EventArgs e)
         {
+            Main.GetInstance().host.data.AddEmojiResults(answer);
+            Console.WriteLine(Main.GetInstance().host.data.ToString());
             Navigation.PushAsync(new TabbedViewClient());
         }
     }
