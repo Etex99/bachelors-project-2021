@@ -19,6 +19,7 @@ namespace Prototype
         async void LopetaClicked(object sender, EventArgs e)
         {
             //Sulkee kyselyn kaikilta osallisujilta (linjat poikki höhö XD)
+            await Navigation.PopToRootAsync();
         }
         async void JatkaClicked(object sender, EventArgs e)
         {

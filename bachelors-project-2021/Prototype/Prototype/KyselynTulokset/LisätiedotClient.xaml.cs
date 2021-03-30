@@ -18,7 +18,7 @@ namespace Prototype
         }
         async void PoistuClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MainPage());
+            await Navigation.PopToRootAsync();
         }
     }
 }
