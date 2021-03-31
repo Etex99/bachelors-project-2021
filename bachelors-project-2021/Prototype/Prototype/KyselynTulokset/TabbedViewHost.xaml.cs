@@ -15,6 +15,7 @@ namespace Prototype
         public TabbedViewHost()
         {
             InitializeComponent();
+            NavigationPage.SetHasBackButton(this, false);
         }
     }
 }

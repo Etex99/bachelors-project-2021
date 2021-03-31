@@ -9,6 +9,8 @@ namespace Prototype
         public TabbedViewClient()
         {
             InitializeComponent();
+
+            NavigationPage.SetHasBackButton(this, false);
         }
     }
 }

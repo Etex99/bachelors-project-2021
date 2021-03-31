@@ -16,6 +16,7 @@ namespace Prototype
         public EmojinValinta()
         {
             InitializeComponent();
+            NavigationPage.SetHasBackButton(this, false);
 
             Emojis = SurveyManager.GetInstance().GetSurvey().emojis; //Change to survey provided by host
             Images = new List<string>();

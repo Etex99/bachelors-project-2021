@@ -39,6 +39,7 @@ namespace Prototype
 
         public AktiviteettiäänestysEka()
         {
+            NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
             //alustus
             Items = new List<CollectionItem>();

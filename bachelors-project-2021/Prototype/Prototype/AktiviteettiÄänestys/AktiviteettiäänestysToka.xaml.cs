@@ -41,7 +41,7 @@ namespace Prototype
         public AktiviteettiäänestysToka()
         {
             InitializeComponent();
-
+            NavigationPage.SetHasBackButton(this, false);
 
             // Copy paste go brrrrrrrRRRRR
 
