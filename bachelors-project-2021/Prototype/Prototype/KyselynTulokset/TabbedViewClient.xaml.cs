@@ -1,5 +1,6 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System;
 
 namespace Prototype
 {
@@ -11,6 +12,14 @@ namespace Prototype
             InitializeComponent();
 
             NavigationPage.SetHasBackButton(this, false);
+
+
+            //Siirrytään aktiviteettin äänestykseen 10sec kuluttua. (timer testi) 
+            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
+            {
+                Navigation.PushAsync(new AktiviteettiäänestysEka());
+                return false;
+            });
         }
     }
 }
