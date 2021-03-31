@@ -23,7 +23,10 @@ namespace Prototype
         }
         async void JatkaClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AktiviteettiäänestysEka());
+            //Siirrytään odottamaan äänestyksen tuloksia (HOST)
+            await Navigation.PushAsync(new TulostenOdotus());
+
+            //Hox, Clientin pitää päästä vastaamaan kyselyy, ei hostin
         }
     }
 }
