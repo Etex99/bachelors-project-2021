@@ -72,6 +72,9 @@
     <EmbeddedResource Update="KyselynTulokset\LisätiedotClient.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="AktiviteettiÄänestys\TulostenOdotus.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="VastaaKyselyyn\EmojinValinta.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
