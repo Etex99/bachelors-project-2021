@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -36,6 +38,27 @@ namespace Prototype
 
         void InfoOKClicked(object sender, EventArgs e)
         {
+            //commented out testing for ActivityVote
+            /*
+            Main.GetInstance().host.data.AddEmojiResults(0);
+            Main.GetInstance().host.data.AddEmojiResults(1);
+            Main.GetInstance().host.data.AddEmojiResults(1);
+            Main.GetInstance().host.data.AddEmojiResults(1);
+            Main.GetInstance().host.data.AddEmojiResults(2);
+            Main.GetInstance().host.data.AddEmojiResults(2);
+            Main.GetInstance().host.data.AddEmojiResults(3);
+            Main.GetInstance().host.data.AddEmojiResults(4);
+            Main.GetInstance().host.data.AddEmojiResults(4);
+
+            Console.WriteLine(Main.GetInstance().host.data.ToString());
+
+            Emoji emoji = new Emoji();
+            Survey survey = new Survey();
+            ActivityVote aVote = new ActivityVote();
+            aVote.calcVote1Candidates(survey.emojis, Main.GetInstance().host.data.emojiResults);
+            Console.WriteLine(survey.ToString());
+            Console.WriteLine(aVote.ToString());*/
+
             InfoPopUp.IsVisible = false;
         }
 
