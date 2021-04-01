@@ -25,17 +25,34 @@ namespace Prototype
                 Console.WriteLine("key: {0}, value: {1}", item.Key, item.Value);
                 sorted.Add(item.Key, item.Value);
             }
-
+            
+            //adding each sorted key (emojiID) and Emoji class ectivites with the same ID to vote1Candidates dictionary
             foreach (int key in sorted.Keys)
             {
                 vote1Candidates.Add(key, emojis[key].activities);
-                Console.WriteLine(emojis[key].activities.ToString());
             }
             return vote1Candidates;
         }
 
         public List<string> calcVote2Candidates(Dictionary<string, int> vote1Results)
         {
+            //for getting a sorted list out of vote1Results
+            Dictionary<string, int> sorted = new Dictionary<string, int>();
+            foreach (KeyValuePair<string, int> item in vote1Results.OrderByDescending(key => key.Value))
+            {
+                Console.WriteLine("key: {0}, value: {1}", item.Key, item.Value);
+                sorted.Add(item.Key, item.Value);
+            }
+            
+            //adding each sorted key (previously voted activities) to vote2Candidates list
+            foreach (string key in sorted.Keys)
+            {
+                vote2Candidates.Add(key);
+            }
+            if(vote2Candidates.Count > 4)
+            {
+                vote2Candidates = vote2Candidates.GetRange(0, 4);
+            }
             return vote2Candidates;
         }
 
@@ -43,6 +60,7 @@ namespace Prototype
         {
             string value = "";
 
+            /*
             foreach (var item in vote1Candidates)
             {
                 value += $"ID: {item.Key.ToString()}, ";
@@ -52,6 +70,12 @@ namespace Prototype
                     value += $"{activity} ";
                 }
                 value += "]";
+                value += "\n";
+            }*/
+
+            foreach(var item in vote2Candidates)
+            {
+                value += $"Activity: {item}";
                 value += "\n";
             }
             return value;
