@@ -38,7 +38,7 @@ namespace Prototype
 
         void InfoOKClicked(object sender, EventArgs e)
         {
-            //commented out testing for ActivityVote
+            //commented out testing for ActivityVote vote1candidates
             /*
             Main.GetInstance().host.data.AddEmojiResults(0);
             Main.GetInstance().host.data.AddEmojiResults(1);
@@ -58,6 +58,25 @@ namespace Prototype
             aVote.calcVote1Candidates(survey.emojis, Main.GetInstance().host.data.emojiResults);
             Console.WriteLine(survey.ToString());
             Console.WriteLine(aVote.ToString());*/
+            
+            //commented out testing for ActivityVote vote2candidates
+            /*
+            Main.GetInstance().host.data.AddVote1Results("foo");
+            Main.GetInstance().host.data.AddVote1Results("bar");
+            Main.GetInstance().host.data.AddVote1Results("bar");
+            Main.GetInstance().host.data.AddVote1Results("this");
+            Main.GetInstance().host.data.AddVote1Results("this");
+            Main.GetInstance().host.data.AddVote1Results("this");
+            Main.GetInstance().host.data.AddVote1Results("foo");
+            Main.GetInstance().host.data.AddVote1Results("bar");
+            Main.GetInstance().host.data.AddVote1Results("this");
+
+            Console.WriteLine(Main.GetInstance().host.data.ToString());
+
+            ActivityVote aVote = new ActivityVote();
+            aVote.calcVote2Candidates(Main.GetInstance().host.data.vote1Results);
+            Console.WriteLine(aVote.ToString());
+            */
 
             InfoPopUp.IsVisible = false;
         }
