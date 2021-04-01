@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -104,5 +105,31 @@ namespace Prototype
             await Navigation.PopToRootAsync();
 
         }
+
+
+        void btnPopupButton_Clicked(object sender, EventArgs e)
+        {
+            // :DDD
+            if (sender is Button b && b.Parent is Grid g && g.Children[2] is Frame f)
+            {
+                if (f.IsVisible == false) { 
+              
+                    f.IsVisible = true;
+                }
+
+                else if (f.IsVisible == true)
+                {
+
+                    f.IsVisible = false;
+                }
+
+
+            }
+
+               
+         }
+
+            
+        }
+
     }
-}
