@@ -20,22 +20,38 @@
                     <ColumnDefinition Width="0.2*"/>
                     <ColumnDefinition Width="0.2*"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="emoji0.png"
-                       Grid.Column="3"
-                       Grid.Row="0"
-                       Scale="3"/>
-                <Image Source="emoji1.png"
-                       Grid.Column="0"
-                       Grid.Row="1"
-                       Scale="1.75"/>
-                <Image Source="emoji2.png"
-                       Grid.Column="3"
-                       Grid.Row="2"
-                       Scale="1.4"/>
-                <Image Source="emoji3.png"
+                <Image Source="{Binding resultImages[0]}"
                        Grid.Column="1"
-                       Grid.Row="3"
-                       Scale="1.2"/>
+                       Scale="{Binding resultScale[0]}"/>
+                
+                <Image Source="{Binding resultImages[1]}"
+                       Grid.Column="3"
+                       Scale="{Binding resultScale[1]}"/>
+                
+                <Image Source="{Binding resultImages[2]}"
+                       Grid.Column="0"
+                       Grid.Row="2"
+                       Scale="{Binding resultScale[2]}"/>
+                
+                <Image Source="{Binding resultImages[3]}" 
+                       Grid.Column="2"
+                       Grid.Row="2"
+                       Scale="{Binding resultScale[3]}"/>
+                
+                <Image Source="{Binding resultImages[4]}" 
+                       Grid.Column="4"
+                       Grid.Row="2"
+                       Scale="{Binding resultScale[4]}"/>
+                
+                <Image Source="{Binding resultImages[5]}" 
+                       Grid.Column="1"
+                       Grid.Row="4"
+                       Scale="{Binding resultScale[5]}"/>
+                
+                <Image Source="{Binding resultImages[6]}" 
+                       Grid.Column="3"
+                       Grid.Row="4"
+                       Scale="{Binding resultScale[6]}"/>
             </Grid>
             <Button Text="Lopeta Kysely"
                     Margin="0, 0, 0, 20"
