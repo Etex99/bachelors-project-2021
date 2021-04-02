@@ -12,6 +12,13 @@ namespace Prototype
 		public SurveyData() {
 			emojiResults = new Dictionary<int, int>();
 			vote1Results = new Dictionary<string, int>();
+			emojiResults.Add(0, 0);
+			emojiResults.Add(1, 0);
+			emojiResults.Add(2, 0);
+			emojiResults.Add(3, 0);
+			emojiResults.Add(4, 0);
+			emojiResults.Add(5, 0);
+			emojiResults.Add(6, 0);
 		}
 		
 		//Adds a single emoji answer to results
@@ -22,8 +29,6 @@ namespace Prototype
 				emojiResults[emoji] = count;
 				return;
 			}
-			//emoji did not exist yet
-			emojiResults.Add(emoji, 1);
 		}
 		public void AddVote1Results(string activity)
         {
@@ -56,7 +61,7 @@ namespace Prototype
 			s = s.Substring(0, s.Length - 1);
 			s += "}";*/
 			string s = "{vote1Results: ";
-			foreach (var item in v)
+			foreach (var item in vote1Results)
 			{
 				s += "[";
 				s += item.Key;
