@@ -23,6 +23,7 @@ namespace Prototype
             Device.StartTimer(TimeSpan.FromSeconds(10), () =>
             {   
                 Navigation.PushAsync(new AktiviteettiäänestysTulokset());
+               
                 return false;
             });
         }

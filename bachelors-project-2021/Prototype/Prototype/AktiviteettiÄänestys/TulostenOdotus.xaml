@@ -4,14 +4,23 @@
              x:Class="Prototype.TulostenOdotus">
     <ContentPage.Content>
         
-        <StackLayout Margin="20">
+        <StackLayout >
             
             
-            <Label Text="ODOTETAAN ÄÄNESTYKSEN TULOKSIA"
-                   FontSize="18"
-                   
-                   VerticalOptions="CenterAndExpand" 
+            <Label Text="ODOTETAAN TULOKSIA..."
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   Margin="0,70,0,0"
+                   TextColor="DarkOrange"
+                   VerticalOptions="StartAndExpand" 
                    HorizontalOptions="Center" />
+
+            <ActivityIndicator  IsRunning="true"
+                                VerticalOptions="StartAndExpand"
+                                HorizontalOptions="Center"
+                                Scale="2.5"
+                                Color="Gold"/>
+            
         </StackLayout>
         
     </ContentPage.Content>
