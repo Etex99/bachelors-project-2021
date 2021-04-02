@@ -47,18 +47,19 @@ namespace Prototype
             Main.GetInstance().host.data.AddEmojiResults(2);
             Main.GetInstance().host.data.AddEmojiResults(2);
             Main.GetInstance().host.data.AddEmojiResults(3);
-            Main.GetInstance().host.data.AddEmojiResults(4);
-            Main.GetInstance().host.data.AddEmojiResults(4);
+            Main.GetInstance().host.data.AddEmojiResults(3);
+            Main.GetInstance().host.data.AddEmojiResults(3);
 
             Console.WriteLine(Main.GetInstance().host.data.ToString());
 
             Emoji emoji = new Emoji();
             Survey survey = new Survey();
             ActivityVote aVote = new ActivityVote();
-            aVote.calcVote1Candidates(survey.emojis, Main.GetInstance().host.data.emojiResults);
+            aVote.calcVote1Candidates(survey.emojis, Main.GetInstance().host.data.GetEmojiResults());
             Console.WriteLine(survey.ToString());
-            Console.WriteLine(aVote.ToString());*/
-            
+            Console.WriteLine(aVote.ToString());
+            */
+
             //commented out testing for ActivityVote vote2candidates
             /*
             Main.GetInstance().host.data.AddVote1Results("foo");
