@@ -24,14 +24,19 @@ namespace Prototype
 			{
 				byte[] message = Encoding.ASCII.GetBytes(RoomCode);
 
-				Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-				UdpClient listener = new UdpClient(Const.Network.ClientUDPClientPort);
+				Socket sendOut = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+				sendOut.EnableBroadcast = true;
+
+				UdpClient listener = new UdpClient() { EnableBroadcast = true };
+				listener.Client.Bind(new IPEndPoint(IPAddress.Any, Const.Network.ClientUDPClientPort));
+				
 				Task<UdpReceiveResult> reply = listener.ReceiveAsync();
 
 				for (int i = 0; i < 3; i++)
 				{	
 					//broadcast and wait
-					s.SendTo(message, new IPEndPoint(IPAddress.Parse("192.168.1.255"), Const.Network.ServerUDPClientPort));
+					int bytesSent = sendOut.SendTo(message, new IPEndPoint(IPAddress.Broadcast, Const.Network.ServerUDPClientPort));
+					Console.WriteLine($"Bytes sent: {bytesSent}");
 					await Task.Delay(1000);
 
 					//did we get a reply?

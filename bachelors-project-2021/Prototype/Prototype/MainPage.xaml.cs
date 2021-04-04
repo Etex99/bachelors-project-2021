@@ -56,8 +56,6 @@ namespace Prototype
         {
             // Kysytään kyselyn avainkoodi, placeholder(Ei ole mitenkään yhdistetty backendin kanssa)
            popupSelection.IsVisible = true;
-
-            
             
         }
 
@@ -68,18 +66,14 @@ namespace Prototype
             popupSelection.IsVisible = false;
         }
 
-        void Ok_Clicked(object sender, EventArgs e)
+        async void Ok_Clicked(object sender, EventArgs e)
         {
             // siirrytään "Liity Kyselyyn" sivulle jos annettu koodi on ok
-
-            if (entry.Text=="KOODI") { 
-            Navigation.PushAsync(new EmojinValinta());
-
-
-            popupSelection.IsVisible = false;
+            if (await Main.GetInstance().JoinSurvey(entry.Text)) { 
+                await Navigation.PushAsync(new EmojinValinta());
+                popupSelection.IsVisible = false;
             }
-
-            else DisplayAlert("Virheellinen avainkoodi", "Syöttämälläsi avainkoodilla ei löydy avointa kyselyä", "OK");
+            else await DisplayAlert("Virheellinen avainkoodi", "Syöttämälläsi avainkoodilla ei löydy avointa kyselyä", "OK");
         }
     }
     }

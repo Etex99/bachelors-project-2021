@@ -20,6 +20,7 @@ namespace Prototype
         private void JatkaTuloksiin(object sender, EventArgs e)
         {
             Navigation.PushAsync(new TabbedViewHost());
+            Main.GetInstance().host.CloseSurvey();
         }
     }
 }

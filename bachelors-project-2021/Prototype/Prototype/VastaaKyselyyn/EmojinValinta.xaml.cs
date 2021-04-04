@@ -44,9 +44,10 @@ namespace Prototype
             Vastaus.IsEnabled = true;
         }
 
-        private void Vastaa_Clicked(object sender, EventArgs e)
+        private async void Vastaa_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new OdotetaanVastauksia());
+            await Main.GetInstance().client.SendResult(answer);
+            await Navigation.PushAsync(new OdotetaanVastauksia());
         }
     }
 }

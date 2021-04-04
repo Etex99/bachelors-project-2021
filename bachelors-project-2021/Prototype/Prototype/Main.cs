@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Prototype
 {	
@@ -16,38 +17,36 @@ namespace Prototype
 			Hosting = 3,
 			Participating = 4
 		}
-		private MainState state;
-
-		//private SurveyManager survey;
-		//private SurveyClient client;
-		//private SurveyHost host;
+		public MainState state;
+		public SurveyClient client = null;
+		public SurveyHost host = null;
 		
 		private Main() {
 			state = MainState.Default;
 		}
 		
 		public void BrowseSurveys() {
-			Console.WriteLine($"DEBUG: Browsing surveys from file location: [insert folder path here]");
+			Console.WriteLine($"DEBUG: Browsing surveys");
 			state = MainState.Browsing;
 		}
 
 		public void EditSurvey() {
-			Console.WriteLine($"DEBUG: Editing selected survey: [insert name of surveymanager survey here]");
+			Console.WriteLine($"DEBUG: Editing selected survey");
 			state = MainState.Editing;
 		}
 
-		public void JoinSurvey(string RoomCode) {
+		public async Task<bool> JoinSurvey(string RoomCode) {
 			Console.WriteLine($"DEBUG: Attempting new client instance with RoomCode: {RoomCode}");
 			state = MainState.Participating;
-			//client = new SurveyClient(RoomCode);
-			//...
-
+			client = new SurveyClient();
+			return await Task.Run(() => client.LookForHost(RoomCode));
 		}
 
 		public void HostSurvey() {
-			Console.WriteLine($"DEBUG: Creating new host instance with selected survey: [insert name of surveymanager survey here]");
-			//host = new SurveyHost(surveyMan.GetSurvey());
-			//...
+			Console.WriteLine($"DEBUG: Creating new host instance with selected survey");
+			state = MainState.Hosting;
+			host = new SurveyHost();
+			Task.Run(() => host.RunSurvey());
 		}
 
 		public MainState GetMainState() {

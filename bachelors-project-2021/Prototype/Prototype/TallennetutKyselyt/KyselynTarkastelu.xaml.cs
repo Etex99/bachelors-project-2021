@@ -63,10 +63,12 @@ namespace Prototype
             BindingContext = this;
         }
 
-         void JaaClicked(object sender, EventArgs e)
+         async void JaaClicked(object sender, EventArgs e)
         {
-
+            //siirrytään OdotetaanVastauksia sivulle
+            await Navigation.PushAsync(new OdotetaanVastauksia());
             //Jaetaan kysely 
+            Main.GetInstance().HostSurvey();
         }
 
       void MuokkaaClicked(object sender, EventArgs e)
