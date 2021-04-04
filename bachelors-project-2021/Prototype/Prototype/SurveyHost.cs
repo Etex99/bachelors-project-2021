@@ -22,7 +22,7 @@ namespace Prototype
 		public HostState State { get; private set; } = HostState.AwaitingAnswers;
 
 		private Survey survey;
-		private SurveyData data;
+        internal SurveyData data;
 		private List<TcpClient> clients;
 
 		//Threading

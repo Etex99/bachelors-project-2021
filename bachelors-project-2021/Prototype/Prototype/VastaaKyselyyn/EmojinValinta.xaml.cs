@@ -11,11 +11,12 @@ namespace Prototype
     {
         public IList<Emoji> Emojis { get; set; }
         public IList<string> Images { get; set; }
-        private string answer;
+        private int answer;
 
         public EmojinValinta()
         {
             InitializeComponent();
+            NavigationPage.SetHasBackButton(this, false);
 
             Emojis = SurveyManager.GetInstance().GetSurvey().emojis; //Change to survey provided by host
             Images = new List<string>();
@@ -39,15 +40,15 @@ namespace Prototype
 
             Button emoji = sender as Button;
             emoji.BorderColor = Color.Gold;
-            answer = emoji.ClassId.ToString();
+            answer = int.Parse(emoji.ClassId.ToString());
             Console.WriteLine(answer);
             Vastaus.IsEnabled = true;
         }
 
         private async void Vastaa_Clicked(object sender, EventArgs e)
         {
-            await Main.GetInstance().client.SendResult(answer);
-            await Navigation.PushAsync(new OdotetaanVastauksia());
+            await Main.GetInstance().client.SendResult(answer.ToString());
+            await Navigation.PushAsync(new TabbedViewClient());
         }
     }
 }

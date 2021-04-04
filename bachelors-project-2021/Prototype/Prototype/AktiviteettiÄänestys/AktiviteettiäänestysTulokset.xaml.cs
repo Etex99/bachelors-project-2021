@@ -15,6 +15,7 @@ namespace Prototype
         public AktiviteettiäänestysTulokset()
         {
             InitializeComponent();
+            NavigationPage.SetHasBackButton(this, false);
         }
 
         async void PoistuClicked(object sender, EventArgs e)

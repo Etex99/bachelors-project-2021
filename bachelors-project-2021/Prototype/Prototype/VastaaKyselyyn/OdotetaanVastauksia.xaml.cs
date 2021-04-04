@@ -15,6 +15,9 @@ namespace Prototype
         public OdotetaanVastauksia()
         {
             InitializeComponent();
+
+            //Ei enää mahdollista päästä takaisin kysleyn luontiin painamalla navigoinnin backbuttonia 
+            NavigationPage.SetHasBackButton(this, false);
         }
 
         private void JatkaTuloksiin(object sender, EventArgs e)

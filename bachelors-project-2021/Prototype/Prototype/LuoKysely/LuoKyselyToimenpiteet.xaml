@@ -83,14 +83,7 @@
 										</CollectionView.ItemTemplate>
 									</CollectionView>
 
-									<AbsoluteLayout Margin="15"  VerticalOptions ="End" HorizontalOptions="Center">
-										<Button  
-                                            CornerRadius="100"
-                                            WidthRequest="150"
-                                            Text="Sulje"
-                                            Clicked="Sulje_Clicked"/>
-									</AbsoluteLayout>
-
+									
 								</StackLayout>
 
 							</Frame>
