@@ -49,7 +49,8 @@ namespace Prototype
             Main.GetInstance().host.data.AddEmojiResults(3);
             Main.GetInstance().host.data.AddEmojiResults(3);
             Main.GetInstance().host.data.AddEmojiResults(3);
-
+            Main.GetInstance().host.data.AddEmojiResults(3);
+            
             Console.WriteLine(Main.GetInstance().host.data.ToString());
 
             Emoji emoji = new Emoji();
@@ -101,10 +102,17 @@ namespace Prototype
            popupSelection.IsVisible = true;
             
         }
+        async void TestHost(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TabbedViewHost());
+        }
+        async void TestClient(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TabbedViewClient());
+        }
 
-     
 
-       void Peruuta_Clicked(object sender, EventArgs e)
+        void Peruuta_Clicked(object sender, EventArgs e)
         {
             popupSelection.IsVisible = false;
         }
