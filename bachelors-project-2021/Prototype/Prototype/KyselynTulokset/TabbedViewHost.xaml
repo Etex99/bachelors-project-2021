@@ -2,13 +2,9 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:Prototype;assembly=Prototype"
-            x:Class="Prototype.TabbedViewHost">
-    <TabbedPage.BarBackgroundColor>
-        Silver
-    </TabbedPage.BarBackgroundColor>
-    <TabbedPage.BarTextColor>
-        Black
-    </TabbedPage.BarTextColor>
+            x:Class="Prototype.TabbedViewHost"
+            BarBackgroundColor="Silver"
+            BarTextColor="Black">
     <local:YhteenVetoHost/>
     <local:LisätiedotHost/>
 </TabbedPage>
