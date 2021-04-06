@@ -31,9 +31,14 @@ namespace Prototype
         void JaaClicked(object sender, EventArgs e)
         {
 
-            // Kysytään kyselyn tallentamisesta
-            popupSelection.IsVisible = true;
 
+            if(NameEditor.Text != null && KeyEditor.Text != null) {
+
+                // Kysytään kyselyn tallentamisesta
+                popupSelection.IsVisible = true; 
+            }
+
+            else DisplayAlert("Nimi tai avainkoodi puuttuu", "Sinun on asetettava kyselylle nimi ja avainkoodi", "OK");
 
         }
 
