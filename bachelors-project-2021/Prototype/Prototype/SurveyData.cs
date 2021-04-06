@@ -8,6 +8,7 @@ namespace Prototype
 	{
 		private Dictionary<int, int> emojiResults;
 		private Dictionary<string, int> vote1Results;
+		public int totalEmojis = 0;
 
 		public SurveyData() {
 			emojiResults = new Dictionary<int, int>();
@@ -27,6 +28,7 @@ namespace Prototype
 			if (emojiResults.TryGetValue(emoji, out count)) {
 				count++;
 				emojiResults[emoji] = count;
+				totalEmojis++;
 				return;
 			}
 		}
