@@ -21,7 +21,7 @@
                 WidthRequest="300"
                 HeightRequest="50"
                 Clicked="btnPopupButton_Clicked"
-                Text="Valitse johdatuslause" 
+                Text="Valitse johdatuslause"             
                    />
 
        
@@ -82,7 +82,9 @@
                     Text="Jatka"
                     Clicked="JatkaButtonClicked" 
                     CornerRadius="100"
-                    WidthRequest="150"/>
+                    WidthRequest="150"
+                    x:Name="JatkaBtn"
+                    IsEnabled="False" />
             
             <Button 
                     Text="Peruuta"
