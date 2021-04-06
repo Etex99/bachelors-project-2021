@@ -40,23 +40,23 @@ namespace Prototype
         {
             //commented out testing for ActivityVote vote1candidates
             /*
-            Main.GetInstance().host.data.AddEmojiResults(0);
-            Main.GetInstance().host.data.AddEmojiResults(1);
-            Main.GetInstance().host.data.AddEmojiResults(1);
-            Main.GetInstance().host.data.AddEmojiResults(1);
             Main.GetInstance().host.data.AddEmojiResults(2);
+            Main.GetInstance().host.data.AddEmojiResults(5);
+            Main.GetInstance().host.data.AddEmojiResults(4);
+            Main.GetInstance().host.data.AddEmojiResults(4);
+            Main.GetInstance().host.data.AddEmojiResults(2);
+            Main.GetInstance().host.data.AddEmojiResults(5);
+            Main.GetInstance().host.data.AddEmojiResults(5);
+            Main.GetInstance().host.data.AddEmojiResults(4);
             Main.GetInstance().host.data.AddEmojiResults(2);
             Main.GetInstance().host.data.AddEmojiResults(3);
-            Main.GetInstance().host.data.AddEmojiResults(3);
-            Main.GetInstance().host.data.AddEmojiResults(3);
-            Main.GetInstance().host.data.AddEmojiResults(3);
-            
+
             Console.WriteLine(Main.GetInstance().host.data.ToString());
 
-            Emoji emoji = new Emoji();
             Survey survey = new Survey();
             ActivityVote aVote = new ActivityVote();
-            aVote.calcVote1Candidates(survey.emojis, Main.GetInstance().host.data.GetEmojiResults());
+            List<Emoji> emojis = survey.emojis;
+            aVote.calcVote1Candidates(emojis, Main.GetInstance().host.data.GetEmojiResults());
             Console.WriteLine(survey.ToString());
             Console.WriteLine(aVote.ToString());
             */
