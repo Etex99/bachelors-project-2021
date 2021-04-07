@@ -83,8 +83,21 @@ namespace Prototype
             ActivityVote aVote = new ActivityVote();
             aVote.calcVote2Candidates(Main.GetInstance().host.data.GetVote1Results());
             Console.WriteLine(aVote.ToString());
-            */
+            
+            Main.GetInstance().host.data.AddVote2Results("Tunti ulkona");
+            Main.GetInstance().host.data.AddVote2Results("Tunti ulkona");
+            Main.GetInstance().host.data.AddVote2Results("5 min tauko");
+            Main.GetInstance().host.data.AddVote2Results("5 min tauko");
+            Main.GetInstance().host.data.AddVote2Results("5 min tauko");
+            Main.GetInstance().host.data.AddVote2Results("Tunti ulkona");
+            Main.GetInstance().host.data.AddVote2Results("Tunti ulkona");
 
+            Console.WriteLine(Main.GetInstance().host.data.ToString());
+
+            ActivityVote aVote = new ActivityVote();
+            aVote.calcFinalResult(Main.GetInstance().host.data.GetVote2Results());
+            Console.WriteLine(aVote.ToString());
+            */
             InfoPopUp.IsVisible = false;
         }
 
