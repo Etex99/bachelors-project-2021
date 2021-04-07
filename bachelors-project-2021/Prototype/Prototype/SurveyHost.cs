@@ -26,7 +26,6 @@ namespace Prototype
 		private List<TcpClient> clients;
 
 		//Threading
-		private List<Task> currentTasks;
 		private CancellationTokenSource tokenSource;
 		private CancellationToken token;
 
@@ -47,9 +46,14 @@ namespace Prototype
 			Task task2 = AcceptClient();
 			Task.WaitAll(new Task[] { task1, task2 });
 
-			//Phase 2 - time after the survey has concluded in which users view results and host decides whether activity vote starts
+			//Phase 2 - time after the survey has concluded in which users view results
 			Console.WriteLine($"Results: {data}");
-			//Send results to all clients
+			Console.WriteLine("Sending results to clients");
+			SendSurveyDataToClients();
+		}
+
+		//Main sequence of running activity vote
+		public void RunActivityVote() {
 
 		}
 
@@ -66,7 +70,7 @@ namespace Prototype
 
 		//Continue survey to activity voting
 		public void StartActivityVote() {
-
+			State = HostState.AwaitingVotes1;
 		}
 
 		//replies to broadcasts in the network which contain the correct roomCode
@@ -95,6 +99,7 @@ namespace Prototype
 						await Task.Delay(1000);
 					} while (broadcast.Status != TaskStatus.RanToCompletion);
 
+					//message received
 					string message = Encoding.ASCII.GetString(broadcast.Result.Buffer, 0, broadcast.Result.Buffer.Length);
 					Console.WriteLine($"Received broadcast from {broadcast.Result.RemoteEndPoint} :");
 					Console.WriteLine($" {message}");
@@ -219,6 +224,31 @@ namespace Prototype
 			{
 				Console.WriteLine("Socket exception occured in AcceptClient...");
 				Console.WriteLine(e);
+			}
+		}
+
+		private async void SendSurveyDataToClients() {
+
+			//prepare survey data for transmission
+			byte[] message = Encoding.ASCII.GetBytes(
+				JsonConvert.SerializeObject(data)
+			);
+
+			//iterate each recorded client
+			foreach (var client in clients)
+			{
+				//catch errors per client
+				try
+				{
+					NetworkStream ns = client.GetStream();
+					await ns.WriteAsync(message, 0, message.Length);
+				}
+				catch (ObjectDisposedException e)
+				{
+					Console.WriteLine($"Connection lost with client: {client.Client.RemoteEndPoint}. Dropping client");
+					Console.WriteLine(e);
+					clients.Remove(client);
+				}
 			}
 		}
 	}

@@ -12,6 +12,7 @@ namespace Prototype
 	{
 		private TcpClient client = null;
 		private Survey survey = null;
+		private SurveyData summary = null;
 		
 		public SurveyClient() {
 			
@@ -54,7 +55,7 @@ namespace Prototype
 
 							//receive survey as json string
 							NetworkStream ns = client.GetStream();
-							byte[] buffer = new byte[2048];
+							byte[] buffer = new byte[4096];
 							Task<int> bytesRead = ns.ReadAsync(buffer, 0, buffer.Length);
 							await bytesRead;
 							Console.WriteLine($"Bytes read: {bytesRead.Result}");
@@ -113,6 +114,32 @@ namespace Prototype
 			catch (ObjectDisposedException e)
 			{
 				Console.WriteLine("Host abruptly closed connection, most likely");
+				Console.WriteLine(e);
+			}
+
+			return false;
+		}
+
+		public async Task<bool> ReceiveSurveyDataAsync() {
+
+			try
+			{
+				NetworkStream ns = client.GetStream();
+				byte[] readBuffer = new byte[4096];
+				int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+				summary = JsonConvert.DeserializeObject<SurveyData>(Encoding.ASCII.GetString(readBuffer, 0, bytesRead));
+
+				Console.WriteLine($"Received summary: {summary}");
+				return true;
+			}
+			catch (JsonException e)
+			{
+				Console.WriteLine("Received bad Json");
+				Console.WriteLine(e);
+			}
+			catch (ObjectDisposedException e)
+			{
+				Console.WriteLine($"Connection lost to server at: {client.Client.RemoteEndPoint}");
 				Console.WriteLine(e);
 			}
 
