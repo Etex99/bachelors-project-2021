@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Prototype.OdotetaanVastauksiaClient">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="Poistu kyselystä"
+                    Clicked="Poistu"
+                    Margin="0, 0, 0, 10"
+                    CornerRadius="40"
+                    WidthRequest="200"
+                    HeightRequest="75"
+                    HorizontalOptions="Center"
+                    VerticalOptions="EndAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

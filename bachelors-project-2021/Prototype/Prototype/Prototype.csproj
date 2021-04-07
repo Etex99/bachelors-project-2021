@@ -86,6 +86,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="VastaaKyselyyn\OdotetaanVastauksia.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="VastaaKyselyyn\OdotetaanVastauksiaClient.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>  
   </ItemGroup>
 	

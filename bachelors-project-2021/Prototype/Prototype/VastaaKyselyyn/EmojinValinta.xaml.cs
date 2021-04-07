@@ -48,7 +48,7 @@ namespace Prototype
         private async void Vastaa_Clicked(object sender, EventArgs e)
         {
             await Main.GetInstance().client.SendResult(answer.ToString());
-            await Navigation.PushAsync(new TabbedViewClient());
+            await Navigation.PushAsync(new OdotetaanVastauksiaClient());
         }
     }
 }
