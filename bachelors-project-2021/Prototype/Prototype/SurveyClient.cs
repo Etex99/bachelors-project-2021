@@ -54,7 +54,7 @@ namespace Prototype
 
 							//receive survey as json string
 							NetworkStream ns = client.GetStream();
-							byte[] buffer = new byte[2048];
+							byte[] buffer = new byte[4096];
 							Task<int> bytesRead = ns.ReadAsync(buffer, 0, buffer.Length);
 							await bytesRead;
 							Console.WriteLine($"Bytes read: {bytesRead.Result}");
