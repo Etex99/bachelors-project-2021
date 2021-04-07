@@ -10,6 +10,7 @@ namespace Prototype
         private Dictionary<int, IList<string>> vote1Candidates;
         private List<string> vote2Candidates;
         private readonly int totalCount = Main.GetInstance().host.data.totalEmojis;
+        private string finalResult;
 
 
         public ActivityVote ()
@@ -99,6 +100,18 @@ namespace Prototype
             return vote2Candidates;
         }
 
+        public string calcFinalResult(Dictionary<string, int> vote2Results)
+        {
+            Dictionary<string, int> sorted = new Dictionary<string, int>();
+            foreach (KeyValuePair<string, int> item in vote2Results.OrderByDescending(key => key.Value))
+            {
+                sorted.Add(item.Key, item.Value);
+            }
+            finalResult = sorted.Keys.ElementAt(0);
+
+            return finalResult;
+        }
+
         public override string ToString()
         {
             string value = "";
@@ -115,13 +128,16 @@ namespace Prototype
                 value += "]";
                 value += "\n";
             }
-            */
+            
 
             foreach(var item in vote2Candidates)
             {
                 value += $"Activity: {item}";
                 value += "\n";
             }
+            */
+
+            value += finalResult;
             return value;
         }
     }
