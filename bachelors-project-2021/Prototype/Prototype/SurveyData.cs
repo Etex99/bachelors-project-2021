@@ -7,12 +7,12 @@ namespace Prototype
 	class SurveyData
 	{
 		private Dictionary<int, int> emojiResults;
-		private Dictionary<string, int> vote1Results;
+		private Dictionary<(int, string), int> vote1Results;
 		public int totalEmojis = 0;
 
 		public SurveyData() {
 			emojiResults = new Dictionary<int, int>();
-			vote1Results = new Dictionary<string, int>();
+			vote1Results = new Dictionary<(int, string), int>();
 			emojiResults.Add(0, 0);
 			emojiResults.Add(1, 0);
 			emojiResults.Add(2, 0);
@@ -32,21 +32,29 @@ namespace Prototype
 				return;
 			}
 		}
-		public void AddVote1Results(string activity)
+		public void AddVote1Results(Dictionary<int, string> activities)
         {
-			int count;
-			if(vote1Results.TryGetValue(activity, out count))
-            {
-				count++;
-				vote1Results[activity] = count;
-				return;
-            }
-			vote1Results.Add(activity, 1);
+			foreach (var activity in activities)
+			{
+				int count;
+				if (vote1Results.TryGetValue((activity.Key, activity.Value), out count))
+				{
+					Console.WriteLine("In Loop:: EmojiID: {0}, Activity: {1}", activity.Key, activity.Value);
+					count++;
+					vote1Results[(activity.Key, activity.Value)] = count;
+				}
+				Console.WriteLine("EmojiID: {0}, Activity: {1}", activity.Key, activity.Value);
+				
+				if (vote1Results.ContainsKey((activity.Key, activity.Value)) == false)
+                {
+					vote1Results.Add((activity.Key, activity.Value), 1);
+				}
+			}
         }
 		public Dictionary<int, int> GetEmojiResults() {
 			return emojiResults;
 		}
-		public Dictionary<string, int> GetVote1Results()
+		public Dictionary<(int, string), int> GetVote1Results()
         {
 			return vote1Results;
         }
