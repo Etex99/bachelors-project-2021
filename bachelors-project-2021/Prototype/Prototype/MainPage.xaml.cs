@@ -62,21 +62,26 @@ namespace Prototype
             */
 
             //commented out testing for ActivityVote vote2candidates
+
             /*
-            Main.GetInstance().host.data.AddVote1Results("foo");
-            Main.GetInstance().host.data.AddVote1Results("bar");
-            Main.GetInstance().host.data.AddVote1Results("bar");
-            Main.GetInstance().host.data.AddVote1Results("this");
-            Main.GetInstance().host.data.AddVote1Results("this");
-            Main.GetInstance().host.data.AddVote1Results("this");
-            Main.GetInstance().host.data.AddVote1Results("foo");
-            Main.GetInstance().host.data.AddVote1Results("bar");
-            Main.GetInstance().host.data.AddVote1Results("this");
+            Dictionary<int, string> dict1 = new Dictionary<int, string>();
+            dict1.Add(0,"foo");
+            dict1.Add(1, "bar");
+            dict1.Add(2, "heh");
+            dict1.Add(3, "this");
+            Dictionary<int, string> dict2 = new Dictionary<int, string>();
+            dict2.Add(0, "fii");
+            dict2.Add(1, "bar");
+            dict2.Add(2, "heh");
+            dict2.Add(3, "that");
+            Main.GetInstance().host.data.AddVote1Results(dict1);
+            Main.GetInstance().host.data.AddVote1Results(dict2);
+            
 
             Console.WriteLine(Main.GetInstance().host.data.ToString());
 
             ActivityVote aVote = new ActivityVote();
-            aVote.calcVote2Candidates(Main.GetInstance().host.data.vote1Results);
+            aVote.calcVote2Candidates(Main.GetInstance().host.data.GetVote1Results());
             Console.WriteLine(aVote.ToString());
             */
 
