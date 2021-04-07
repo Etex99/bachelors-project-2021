@@ -77,20 +77,20 @@ namespace Prototype
             return vote1Candidates;
         }
 
-        public List<string> calcVote2Candidates(Dictionary<string, int> vote1Results)
+        public List<string> calcVote2Candidates(Dictionary<(int, string), int> vote1Results)
         {
             //for getting a sorted list out of vote1Results
-            Dictionary<string, int> sorted = new Dictionary<string, int>();
-            foreach (KeyValuePair<string, int> item in vote1Results.OrderByDescending(key => key.Value))
+            Dictionary<(int, string), int> sorted = new Dictionary<(int, string), int>();
+            foreach (KeyValuePair<(int, string), int> item in vote1Results.OrderByDescending(key => key.Value))
             {
                 Console.WriteLine("key: {0}, value: {1}", item.Key, item.Value);
                 sorted.Add(item.Key, item.Value);
             }
             
             //adding each sorted key (previously voted activities) to vote2Candidates list
-            foreach (string key in sorted.Keys)
+            foreach (var key in sorted.Keys)
             {
-                vote2Candidates.Add(key);
+                vote2Candidates.Add(key.Item2);
             }
             if(vote2Candidates.Count > 4)
             {
@@ -103,7 +103,7 @@ namespace Prototype
         {
             string value = "";
 
-            
+            /*
             foreach (var item in vote1Candidates)
             {
                 value += $"ID: {item.Key.ToString()}, ";
@@ -115,13 +115,13 @@ namespace Prototype
                 value += "]";
                 value += "\n";
             }
-            /*
+            */
+
             foreach(var item in vote2Candidates)
             {
                 value += $"Activity: {item}";
                 value += "\n";
             }
-            */
             return value;
         }
     }
