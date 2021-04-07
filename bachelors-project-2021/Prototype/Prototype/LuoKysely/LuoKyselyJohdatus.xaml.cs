@@ -87,8 +87,10 @@ namespace Prototype
 
             //Change the text of the button based on selected intro message
             
-            if (selectedItem != null)
+            if (selectedItem != null) { 
                 JButton.Text = selectedItem.introMessage;
+                JatkaBtn.IsEnabled = true;
+            }
 
             else
                 JButton.Text = "Valitse johdatuslause";

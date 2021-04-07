@@ -18,22 +18,37 @@ namespace Prototype
         }
         async void TallennaJaPoistuClicked(object sender, EventArgs e)
         {
-            SurveyManager man = SurveyManager.GetInstance();
-            //save survey code
-            man.GetSurvey().RoomCode = KeyEditor.Text;
-            //save survey
-            man.SaveSurvey(NameEditor.Text + ".txt");
 
-            // siirrytään etusivulle 
-            await Navigation.PushAsync(new MainPage()); ;
+
+            if (NameEditor.Text != null && KeyEditor.Text != null)
+            {
+
+                SurveyManager man = SurveyManager.GetInstance();
+                //save survey code
+                man.GetSurvey().RoomCode = KeyEditor.Text;
+                //save survey
+                man.SaveSurvey(NameEditor.Text + ".txt");
+
+                // siirrytään etusivulle 
+                await Navigation.PushAsync(new MainPage());
+
+            }
+
+            else await DisplayAlert("Nimi tai avainkoodi puuttuu", "Sinun on asetettava kyselylle nimi ja avainkoodi", "OK");
+
         }
 
         void JaaClicked(object sender, EventArgs e)
         {
 
-            // Kysytään kyselyn tallentamisesta
-            popupSelection.IsVisible = true;
 
+            if(NameEditor.Text != null && KeyEditor.Text != null) {
+
+                // Kysytään kyselyn tallentamisesta
+                popupSelection.IsVisible = true; 
+            }
+
+            else DisplayAlert("Nimi tai avainkoodi puuttuu", "Sinun on asetettava kyselylle nimi ja avainkoodi", "OK");
 
         }
 

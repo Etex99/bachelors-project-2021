@@ -12,6 +12,11 @@ namespace Prototype
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TallennetutKyselyt : ContentPage
     {
+
+        public enum ToolbarItemPosition { Start, End }
+
+ 
+
         public string SelectedSurvey { get; set; }
         public List<string> Surveys { get; set; }
         public TallennetutKyselyt()
@@ -20,10 +25,15 @@ namespace Prototype
             Surveys = new List<String>();
             SurveyManager manager = SurveyManager.GetInstance();
 
+            NavigationPage.SetHasBackButton(this, false);
+
             Surveys = manager.GetTemplates();
+
+
 
             BindingContext = this;
         }
+
 
         void OnListSelection(object sender, SelectionChangedEventArgs e)
         {
@@ -49,6 +59,13 @@ namespace Prototype
             KyselynTarkastelu.SetSurveyName(surveyName);
             //navigoinnissa ei ole vielä mitenkään yhdistetty valittua kyselyä kyselyn tarkastelusivulle
             await Navigation.PushAsync(new KyselynTarkastelu());
+
+        }
+
+        async void BackBtnClicked(object sender, EventArgs e)
+        {
+
+            await Navigation.PopToRootAsync();
 
         }
     }

@@ -37,7 +37,7 @@ namespace Prototype
             }
             foreach (int value in sorted.Values)
             {
-                calculateScale = 3 * (double)value / count;
+                calculateScale = 1.5 * (double)value / count;
                 resultScale.Add(calculateScale);
             }
 

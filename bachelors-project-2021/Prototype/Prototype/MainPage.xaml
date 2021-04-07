@@ -41,6 +41,20 @@
                     Margin="0,0,0,30"  
                     CornerRadius="15"
                     HeightRequest="65" />
+
+                <Button Text="Testaa host"
+                        Font="Bold,19"
+                        Clicked="TestHost"
+                        Margin="0,0,0,30"  
+                        CornerRadius="15"
+                        HeightRequest="65" />
+
+                <Button Text="Testaa client"
+                        Font="Bold,19"
+                        Clicked="TestClient"
+                        Margin="0,0,0,30"  
+                        CornerRadius="15"
+                        HeightRequest="65" />
             </StackLayout>
         </StackLayout>
 

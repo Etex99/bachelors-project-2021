@@ -17,11 +17,11 @@ namespace Prototype
 
 			Const.activities.TryGetValue(0, out activities);
 			activities = activities.GetRange(0, 3);
-			emojis.Add(new Emoji(0, "Mood 0", "neutral", activities, "emoji0.png"));
+			emojis.Add(new Emoji(0, "Mood 0", "positive", activities, "emoji0.png"));
 
 			Const.activities.TryGetValue(1, out activities);
 			activities = activities.GetRange(0, 3);
-			emojis.Add(new Emoji(1, "Mood 1", "neutral", activities, "emoji1.png"));
+			emojis.Add(new Emoji(1, "Mood 1", "positive", activities, "emoji1.png"));
 
 			Const.activities.TryGetValue(2, out activities);
 			activities = activities.GetRange(0, 3);
@@ -29,7 +29,7 @@ namespace Prototype
 
 			Const.activities.TryGetValue(3, out activities);
 			activities = activities.GetRange(0, 3);
-			emojis.Add(new Emoji(3, "Mood 3", "neutral", activities, "emoji3.png"));
+			emojis.Add(new Emoji(3, "Mood 3", "negative", activities, "emoji3.png"));
 
 			Const.activities.TryGetValue(4, out activities);
 			activities = activities.GetRange(0, 3);
@@ -41,7 +41,7 @@ namespace Prototype
 
 			Const.activities.TryGetValue(6, out activities);
 			activities = activities.GetRange(0, 3);
-			emojis.Add(new Emoji(6, "Mood 6", "neutral", activities, "emoji6.png"));
+			emojis.Add(new Emoji(6, "Mood 6", "positive", activities, "emoji6.png"));
 
 			RoomCode = "1234";
 		}

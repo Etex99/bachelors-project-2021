@@ -40,42 +40,48 @@ namespace Prototype
         {
             //commented out testing for ActivityVote vote1candidates
             /*
-            Main.GetInstance().host.data.AddEmojiResults(0);
-            Main.GetInstance().host.data.AddEmojiResults(1);
-            Main.GetInstance().host.data.AddEmojiResults(1);
-            Main.GetInstance().host.data.AddEmojiResults(1);
             Main.GetInstance().host.data.AddEmojiResults(2);
+            Main.GetInstance().host.data.AddEmojiResults(5);
+            Main.GetInstance().host.data.AddEmojiResults(4);
+            Main.GetInstance().host.data.AddEmojiResults(4);
             Main.GetInstance().host.data.AddEmojiResults(2);
-            Main.GetInstance().host.data.AddEmojiResults(3);
-            Main.GetInstance().host.data.AddEmojiResults(3);
+            Main.GetInstance().host.data.AddEmojiResults(5);
+            Main.GetInstance().host.data.AddEmojiResults(5);
+            Main.GetInstance().host.data.AddEmojiResults(4);
+            Main.GetInstance().host.data.AddEmojiResults(2);
             Main.GetInstance().host.data.AddEmojiResults(3);
 
             Console.WriteLine(Main.GetInstance().host.data.ToString());
 
-            Emoji emoji = new Emoji();
             Survey survey = new Survey();
             ActivityVote aVote = new ActivityVote();
-            aVote.calcVote1Candidates(survey.emojis, Main.GetInstance().host.data.GetEmojiResults());
+            List<Emoji> emojis = survey.emojis;
+            aVote.calcVote1Candidates(emojis, Main.GetInstance().host.data.GetEmojiResults());
             Console.WriteLine(survey.ToString());
             Console.WriteLine(aVote.ToString());
             */
 
             //commented out testing for ActivityVote vote2candidates
+
             /*
-            Main.GetInstance().host.data.AddVote1Results("foo");
-            Main.GetInstance().host.data.AddVote1Results("bar");
-            Main.GetInstance().host.data.AddVote1Results("bar");
-            Main.GetInstance().host.data.AddVote1Results("this");
-            Main.GetInstance().host.data.AddVote1Results("this");
-            Main.GetInstance().host.data.AddVote1Results("this");
-            Main.GetInstance().host.data.AddVote1Results("foo");
-            Main.GetInstance().host.data.AddVote1Results("bar");
-            Main.GetInstance().host.data.AddVote1Results("this");
+            Dictionary<int, string> dict1 = new Dictionary<int, string>();
+            dict1.Add(0,"foo");
+            dict1.Add(1, "bar");
+            dict1.Add(2, "heh");
+            dict1.Add(3, "this");
+            Dictionary<int, string> dict2 = new Dictionary<int, string>();
+            dict2.Add(0, "fii");
+            dict2.Add(1, "bar");
+            dict2.Add(2, "heh");
+            dict2.Add(3, "that");
+            Main.GetInstance().host.data.AddVote1Results(dict1);
+            Main.GetInstance().host.data.AddVote1Results(dict2);
+            
 
             Console.WriteLine(Main.GetInstance().host.data.ToString());
 
             ActivityVote aVote = new ActivityVote();
-            aVote.calcVote2Candidates(Main.GetInstance().host.data.vote1Results);
+            aVote.calcVote2Candidates(Main.GetInstance().host.data.GetVote1Results());
             Console.WriteLine(aVote.ToString());
             */
 
@@ -101,10 +107,17 @@ namespace Prototype
            popupSelection.IsVisible = true;
             
         }
+        async void TestHost(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TabbedViewHost());
+        }
+        async void TestClient(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TabbedViewClient());
+        }
 
-     
 
-       void Peruuta_Clicked(object sender, EventArgs e)
+        void Peruuta_Clicked(object sender, EventArgs e)
         {
             popupSelection.IsVisible = false;
         }
