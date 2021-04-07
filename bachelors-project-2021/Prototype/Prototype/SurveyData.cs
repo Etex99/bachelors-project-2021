@@ -8,11 +8,13 @@ namespace Prototype
 	{
 		private Dictionary<int, int> emojiResults;
 		private Dictionary<(int, string), int> vote1Results;
+		private Dictionary<string, int> vote2Results;
 		public int totalEmojis = 0;
 
 		public SurveyData() {
 			emojiResults = new Dictionary<int, int>();
 			vote1Results = new Dictionary<(int, string), int>();
+			vote2Results = new Dictionary<string, int>();
 			emojiResults.Add(0, 0);
 			emojiResults.Add(1, 0);
 			emojiResults.Add(2, 0);
@@ -51,12 +53,33 @@ namespace Prototype
 				}
 			}
         }
+
+		public void AddVote2Results(string activity)
+        {
+			int count;
+			if (vote2Results.TryGetValue(activity, out count))
+			{
+				Console.WriteLine("In Loop:: Activity: {0}", activity);
+				count++;
+				vote2Results[activity] = count;
+			}
+			Console.WriteLine("Activity: {0}", activity);
+
+			if (vote2Results.ContainsKey(activity) == false)
+			{
+				vote2Results.Add(activity, 1);
+			}
+		}
 		public Dictionary<int, int> GetEmojiResults() {
 			return emojiResults;
 		}
 		public Dictionary<(int, string), int> GetVote1Results()
         {
 			return vote1Results;
+        }
+		public Dictionary<string, int> GetVote2Results()
+        {
+			return vote2Results;
         }
 		public override string ToString() {
 			/*string s = "{emojiResults: ";
@@ -69,9 +92,21 @@ namespace Prototype
 				s += "],";
 			}
 			s = s.Substring(0, s.Length - 1);
-			s += "}";*/
+			s += "}";
 			string s = "{vote1Results: ";
 			foreach (var item in vote1Results)
+			{
+				s += "[";
+				s += item.Key;
+				s += ": ";
+				s += item.Value;
+				s += "],";
+			}
+			s = s.Substring(0, s.Length - 1);
+			s += "}";
+			*/
+			string s = "{vote2Results: ";
+			foreach (var item in vote2Results)
 			{
 				s += "[";
 				s += item.Key;
