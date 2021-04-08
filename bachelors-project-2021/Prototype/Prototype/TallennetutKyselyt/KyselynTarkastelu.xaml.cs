@@ -16,11 +16,12 @@ namespace Prototype
 
 
         public IList<CollectionItem> Emojit { get; private set; }
-        public static string surveyName;
+        public static string surveyName { get; set; }
 
         public static void SetSurveyName(string name)
         {
             surveyName = name;
+            
         }
 
         public class CollectionItem
@@ -39,6 +40,10 @@ namespace Prototype
             //alustetaan emojit kyselyn emojeilla
             Emojit = new List<CollectionItem>();
             List<Emoji> temp = SurveyManager.GetInstance().GetSurvey().emojis;
+
+            title.Text = surveyName;
+
+          
 
             //alustetaan radionappien valinnat
             //ei saa kyseenalaistaa tätä toteutusta, radionappeihin ei oikeastaan pääse käsiksi collection view layoutin sisältä

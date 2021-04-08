@@ -11,6 +11,24 @@
                      Clicked="PoistaClicked" />
     </ContentPage.ToolbarItems>
 
+    <NavigationPage.TitleView >
+
+
+
+        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+
+            <Label Text="kyselyn tarkastelu"
+                   x:Name="title"
+                   Margin="0,0,0,0"
+                   FontSize="20" 
+                   HorizontalOptions="Center"  
+                   VerticalOptions="Center"/>
+        </StackLayout>
+
+
+
+    </NavigationPage.TitleView>
+
 
     <AbsoluteLayout
         Padding="0"
