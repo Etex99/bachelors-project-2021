@@ -19,7 +19,7 @@
 
             <Label Text="kyselyn tarkastelu"
                    x:Name="title"
-                   Margin="0,0,0,0"
+                   Margin="0 ,0,0,0"
                    FontSize="20" 
                    HorizontalOptions="Center"  
                    VerticalOptions="Center"/>
