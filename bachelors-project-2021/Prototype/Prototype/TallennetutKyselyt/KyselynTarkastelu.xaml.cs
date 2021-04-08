@@ -101,7 +101,7 @@ namespace Prototype
         }
 
         async void Kyllä_Clicked(object sender, EventArgs e)
-        {
+        { 
 
             //kyselyn Poistaminen!
             SurveyManager.GetInstance().DeleteSurvey(surveyName);
