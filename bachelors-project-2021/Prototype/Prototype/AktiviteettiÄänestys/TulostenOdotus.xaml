@@ -5,22 +5,26 @@
     <ContentPage.Content>
         
         <StackLayout >
-            
-            
+
+
             <Label Text="ODOTETAAN TULOKSIA..."
                    FontAttributes="Bold"
-                   FontSize="20"
-                   Margin="0,70,0,0"
+                   FontSize="24"
+                   
                    TextColor="DarkOrange"
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="Center" />
+
+            <Label Text="10"
+                   x:Name="timer"
+                   FontAttributes="Bold"
+                   FontSize="100"
+                   
+                   TextColor="Gold"
                    VerticalOptions="StartAndExpand" 
                    HorizontalOptions="Center" />
 
-            <ActivityIndicator  IsRunning="true"
-                                VerticalOptions="StartAndExpand"
-                                HorizontalOptions="Center"
-                                Scale="2.5"
-                                Color="Gold"/>
-            
+
         </StackLayout>
         
     </ContentPage.Content>
