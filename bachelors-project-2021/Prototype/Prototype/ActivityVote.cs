@@ -19,7 +19,7 @@ namespace Prototype
             vote2Candidates = new List<string>();
         }
 
-        public Dictionary<int, IList<string>> calcVote1Candidates(List<Emoji> emojis, Dictionary<int, int> emojiResults)
+        public void calcVote1Candidates(List<Emoji> emojis, Dictionary<int, int> emojiResults)
         {
             //for getting a sorted list out of emojiResults
             //positive, neutral ja negative impact
@@ -75,10 +75,9 @@ namespace Prototype
                     vote1Candidates.Add(sortedRanking.Keys.ElementAt(i), emojis[sortedRanking.Keys.ElementAt(i)].activities);
                 }
             }
-            return vote1Candidates;
         }
 
-        public List<string> calcVote2Candidates(Dictionary<(int, string), int> vote1Results)
+        public void calcVote2Candidates(Dictionary<(int, string), int> vote1Results)
         {
             //for getting a sorted list out of vote1Results
             Dictionary<(int, string), int> sorted = new Dictionary<(int, string), int>();
@@ -97,7 +96,20 @@ namespace Prototype
             {
                 vote2Candidates = vote2Candidates.GetRange(0, 4);
             }
+        }
+        public Dictionary<int, IList<string>> GetVote1Candidates() {
+            return vote1Candidates;
+		}
+        public void SetVote1Candidates(Dictionary<int, IList<string>> candidates) {
+            vote1Candidates = candidates;
+		}
+
+        public List<string> GetVote2Candidates() {
             return vote2Candidates;
+        }
+        public void SetVote2Candidates(List<string> candidates)
+        {
+            vote2Candidates = candidates;
         }
 
         public string calcFinalResult(Dictionary<string, int> vote2Results)
