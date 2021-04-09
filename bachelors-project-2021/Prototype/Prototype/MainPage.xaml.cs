@@ -59,6 +59,7 @@ namespace Prototype
             aVote.calcVote1Candidates(emojis, Main.GetInstance().host.data.GetEmojiResults());
             Console.WriteLine(survey.ToString());
             Console.WriteLine(aVote.ToString());
+            Console.WriteLine("Time to vote in the 1st vote: {0}", aVote.vote1Timer);
             */
 
             //commented out testing for ActivityVote vote2candidates
