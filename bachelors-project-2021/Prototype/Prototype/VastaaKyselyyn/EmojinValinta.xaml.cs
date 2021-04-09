@@ -11,6 +11,7 @@ namespace Prototype
     {
         public IList<Emoji> Emojis { get; set; }
         public IList<string> Images { get; set; }
+        public string introMessage { get; set; }
         private int answer;
 
         public EmojinValinta()
@@ -19,6 +20,7 @@ namespace Prototype
             NavigationPage.SetHasBackButton(this, false);
 
             Emojis = SurveyManager.GetInstance().GetSurvey().emojis; //Change to survey provided by host
+            introMessage = SurveyManager.GetInstance().GetSurvey().introMessage;
             Images = new List<string>();
             foreach(Emoji emoji in Emojis)
             {

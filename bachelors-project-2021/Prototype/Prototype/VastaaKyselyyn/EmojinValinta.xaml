@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Margin="0,0,0,15"
-                Text="Valitse mielentilaasi kuvaava emoji"
+                Text="{Binding introMessage}"
                 TextColor="Black"
                 FontSize="20"
                 HorizontalTextAlignment="Center"/>
