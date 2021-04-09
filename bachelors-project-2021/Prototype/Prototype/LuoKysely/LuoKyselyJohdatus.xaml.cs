@@ -13,51 +13,22 @@ namespace Prototype
     public partial class LuoKyselyJohdatus : ContentPage
     {
 
-
-        //Testausta varten
-        public IList<CollectionItem> Intros { get; private set; }
-
-        public class CollectionItem
-        {
-            public string introMessage { get; set; }
-
-            public override string ToString()
-            {
-                return introMessage;
-            }
-        }
+        public IList<string> introMessage { get; set; }
 
 
-
-      
 
         public LuoKyselyJohdatus()
         {
             InitializeComponent();
 
-            //Testausta varten
-            Intros = new List<CollectionItem>();
+            introMessage = Const.intros;
+           
 
-            Intros.Add(new CollectionItem
-            {
-                    introMessage="Testi intro1 "
-            });
-
-            Intros.Add(new CollectionItem
-            {
-                introMessage = "Testi intro2 "
-            });
-
-            Intros.Add(new CollectionItem
-            {
-                introMessage = "Testi intro3 "
-            });
-
+       
             BindingContext = this;
 
 
-            //alustetaan näkymä avatun kyselyn introviestillä
-            // = SurveyManager.GetInstance().GetSurvey().introMessage;
+ 
         }
 
         private void btnPopupButton_Clicked(object sender, EventArgs e)
@@ -83,12 +54,12 @@ namespace Prototype
 
         void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CollectionItem selectedItem = e.CurrentSelection[0] as CollectionItem;
+            string selectedItem = e.CurrentSelection[0] as string;
 
             //Change the text of the button based on selected intro message
             
             if (selectedItem != null) { 
-                JButton.Text = selectedItem.introMessage;
+               JButton.Text = selectedItem;
                 JatkaBtn.IsEnabled = true;
             }
 

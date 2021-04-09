@@ -45,7 +45,7 @@
                     WidthRequest="260">
                         
                         <CollectionView x:Name="Collection" 
-                        ItemsSource= "{Binding Intros}"
+                        ItemsSource= "{Binding introMessage}"
                         SelectionMode="Single" 
                         SelectionChanged="OnSelectionChanged" >
                             <CollectionView.ItemTemplate>
@@ -56,7 +56,7 @@
                                           >
 
                                         <Label Grid.Column="1"
-                                               Text="{Binding introMessage}" 
+                                               Text="{Binding .}" 
                                                TextColor="Black"
                                                FontSize="20"/>
 
