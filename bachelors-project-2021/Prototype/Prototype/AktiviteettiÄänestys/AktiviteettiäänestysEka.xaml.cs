@@ -57,18 +57,21 @@ namespace Prototype
             // Edelleen :DDD
             if (sender is Button b && b.Parent is Grid g && g.Children[2] is Frame f)
             {
-                f.IsVisible = true;
+                if (f.IsVisible == false)
+                {
+
+                    f.IsVisible = true;
+                }
+
+                else if (f.IsVisible == true)
+                {
+
+                    f.IsVisible = false;
+                }
             }
         }
 
-        private void Sulje_Clicked(object sender, EventArgs e)
-        {
-            //Edelleen hieno ratkasu :DDD
-            if (sender is Button b && b.Parent.Parent.Parent is Frame f)
-            {
-                f.IsVisible = false;
-            }
-        }
+    
 
 
         async void JatkaButtonClicked(object sender, EventArgs e)

@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Prototype
 {
+    //joku taitava liittäkööt tämän backendin kanssa
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class KyselynTarkastelu : ContentPage
     {
-
 
         public IList<CollectionItem> Emojit { get; private set; }
         public static string surveyName;
@@ -21,6 +17,7 @@ namespace Prototype
         public static void SetSurveyName(string name)
         {
             surveyName = name;
+            
         }
 
         public class CollectionItem
@@ -39,6 +36,12 @@ namespace Prototype
             //alustetaan emojit kyselyn emojeilla
             Emojit = new List<CollectionItem>();
             List<Emoji> temp = SurveyManager.GetInstance().GetSurvey().emojis;
+
+
+            //asetetaan otsikoksi kyselyn nimi
+            title.Text = surveyName;
+
+      
 
             //alustetaan radionappien valinnat
             //ei saa kyseenalaistaa tätä toteutusta, radionappeihin ei oikeastaan pääse käsiksi collection view layoutin sisältä
@@ -98,7 +101,7 @@ namespace Prototype
         }
 
         async void Kyllä_Clicked(object sender, EventArgs e)
-        {
+        { 
 
             //kyselyn Poistaminen!
             SurveyManager.GetInstance().DeleteSurvey(surveyName);
@@ -125,13 +128,8 @@ namespace Prototype
                     f.IsVisible = false;
                 }
 
-
-            }
-
-               
-         }
-
-            
+            }               
+         } 
+        
         }
-
     }
