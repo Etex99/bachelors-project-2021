@@ -59,17 +59,22 @@ namespace Prototype
 
         private void btnPopupButton_Clicked(object sender, EventArgs e)
         {
-            popupSelection.IsVisible = true;
+            if (popupSelection.IsVisible == false)
+            {
+
+                popupSelection.IsVisible = true;
+            }
+
+            else if (popupSelection.IsVisible == true)
+            {
+
+                popupSelection.IsVisible = false;
+            }
 
 
         }
 
-        private void Sulje_Clicked(object sender, EventArgs e)
-        {
-            popupSelection.IsVisible = false;
-
-
-        }
+    
 
 
       
