@@ -37,10 +37,13 @@ namespace Prototype
 
 		public async Task<bool> JoinSurvey(string RoomCode) {
 			Console.WriteLine($"DEBUG: Attempting new client instance with RoomCode: {RoomCode}");
-			state = MainState.Participating;
 			client = new SurveyClient();
-			return await Task.Run(() => client.LookForHost(RoomCode));
-		}
+			bool success = await Task.Run(() => client.LookForHost(RoomCode));
+			if (success) {
+				state = MainState.Participating;
+			}
+			return success;
+		}	
 
 		public void HostSurvey() {
 			Console.WriteLine($"DEBUG: Creating new host instance with selected survey");
