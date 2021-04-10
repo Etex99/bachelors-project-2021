@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Prototype
 {
-	class SurveyData
+	public class SurveyData
 	{
 		private Dictionary<int, int> emojiResults;
 		private Dictionary<(int, string), int> vote1Results;

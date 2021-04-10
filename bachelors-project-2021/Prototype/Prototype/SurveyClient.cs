@@ -11,8 +11,10 @@ namespace Prototype
 	public class SurveyClient
 	{
 		private TcpClient client = null;
-		private Survey survey = null;
-		private SurveyData summary = null;
+		public Survey survey { get; private set; } = null;
+		public SurveyData summary { get; private set; } = null;
+
+		public Dictionary<int, IList<string>> voteCandidates1 { get; private set; } = null;
 		
 		public SurveyClient() {
 			
@@ -45,7 +47,8 @@ namespace Prototype
 					if (reply.Status == TaskStatus.RanToCompletion)
 					{
 						Console.WriteLine($"Received reply to broadcast from: {reply.Result.RemoteEndPoint}");
-						Console.WriteLine($"Message: {Encoding.ASCII.GetString(reply.Result.Buffer, 0, reply.Result.Buffer.Length)}");
+						string replyMessage = Encoding.ASCII.GetString(reply.Result.Buffer, 0, reply.Result.Buffer.Length);
+						Console.WriteLine($"Message: {replyMessage}");
 
 						try
 						{	
@@ -139,11 +142,40 @@ namespace Prototype
 			}
 			catch (ObjectDisposedException e)
 			{
-				Console.WriteLine($"Connection lost to server at: {client.Client.RemoteEndPoint}");
+				Console.WriteLine($"Connection closed or lost to server at: {client.Client.RemoteEndPoint}");
 				Console.WriteLine(e);
 			}
 
 			return false;
+		}
+		public async Task<bool> ReceiveVote1Candidates()  {
+
+			try
+			{
+				NetworkStream ns = client.GetStream();
+				byte[] readBuffer = new byte[16];
+				Console.WriteLine("Waiting for activity vote");
+				int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+				Console.WriteLine($"Bytes read: {bytesRead}");
+
+				//expecting JSON string containing Dictionary<int, IList<string>>
+				voteCandidates1 = JsonConvert.DeserializeObject<Dictionary<int, IList<string>>>(Encoding.ASCII.GetString(readBuffer, 0, bytesRead));
+				Console.WriteLine("Received vote 1 candidates");
+				return true;
+			}
+			catch (JsonException e) 
+			{
+				Console.WriteLine("Received bad JSON");
+				Console.WriteLine(e);
+			}
+			catch (ObjectDisposedException e)
+			{
+				Console.WriteLine($"Connection closed or lost to server at: {client.Client.RemoteEndPoint}");
+				Console.WriteLine(e);
+			}
+
+			return false;
+
 		}
 	}
 }
