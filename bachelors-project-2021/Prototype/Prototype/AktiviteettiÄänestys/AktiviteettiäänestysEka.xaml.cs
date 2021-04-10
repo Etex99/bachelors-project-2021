@@ -32,6 +32,7 @@ namespace Prototype
                 Selected = new ObservableCollection<object>();
                 foreach (var item in emoji.activities)
                 {
+                    Console.WriteLine("Item: {0}", item);
                     Selected.Add(ActivityChoises[ActivityChoises.IndexOf(item)]);
                 }
             }
@@ -42,10 +43,13 @@ namespace Prototype
             NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
             //alustus
+            List<Emoji> Emojis = new Survey().emojis;
             Items = new List<CollectionItem>();
-            foreach (var item in SurveyManager.GetInstance().GetSurvey().emojis)
+
+            foreach (var item in Main.GetInstance().client.voteCandidates1)
             {
-                Items.Add(new CollectionItem(item, Const.activities[item.ID]));
+                Console.WriteLine("Key: {0}, Value: {1}", item.Key, Emojis[item.Key].activities);
+                Items.Add(new CollectionItem(Emojis[item.Key], Emojis[item.Key].activities));
             }
 
             BindingContext = this;
