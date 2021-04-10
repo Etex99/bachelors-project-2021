@@ -15,6 +15,7 @@ namespace Prototype
 		public SurveyData summary { get; private set; } = null;
 
 		public Dictionary<int, IList<string>> voteCandidates1 { get; private set; } = null;
+		public List<string> voteCandidates2 { get; private set; } = null;
 		
 		public SurveyClient() {
 			
@@ -153,7 +154,7 @@ namespace Prototype
 			try
 			{
 				NetworkStream ns = client.GetStream();
-				byte[] readBuffer = new byte[16];
+				byte[] readBuffer = new byte[128];
 				Console.WriteLine("Waiting for activity vote");
 				int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
 				Console.WriteLine($"Bytes read: {bytesRead}");
@@ -164,6 +165,36 @@ namespace Prototype
 				return true;
 			}
 			catch (JsonException e) 
+			{
+				Console.WriteLine("Received bad JSON");
+				Console.WriteLine(e);
+			}
+			catch (ObjectDisposedException e)
+			{
+				Console.WriteLine($"Connection closed or lost to server at: {client.Client.RemoteEndPoint}");
+				Console.WriteLine(e);
+			}
+
+			return false;
+
+		}
+		public async Task<bool> ReceiveVote2Candidates()
+		{
+
+			try
+			{
+				NetworkStream ns = client.GetStream();
+				byte[] readBuffer = new byte[128];
+				Console.WriteLine("Waiting for activity vote 2");
+				int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+				Console.WriteLine($"Bytes read: {bytesRead}");
+
+				//expecting JSON string containing List<string>
+				voteCandidates2 = JsonConvert.DeserializeObject<List<string>>(Encoding.ASCII.GetString(readBuffer, 0, bytesRead));
+				Console.WriteLine("Received vote 2 candidates");
+				return true;
+			}
+			catch (JsonException e)
 			{
 				Console.WriteLine("Received bad JSON");
 				Console.WriteLine(e);
