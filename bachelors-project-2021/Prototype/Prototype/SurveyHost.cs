@@ -70,6 +70,7 @@ namespace Prototype
 			SendToAllClients(voteCalc.GetVote2Candidates());
 
 			//for vote 2 duration accept votes from all clients
+			await AcceptVotes2(10);
 
 			//prepare result and send it to all clients
 			string result = voteCalc.calcFinalResult(data.GetVote2Results());
@@ -307,7 +308,64 @@ namespace Prototype
 			return;
 		}
 		private async Task AcceptVotes2(int seconds) {
+			//listen to each client for their answer
+			List<Task> clientVotes = new List<Task>();
+			foreach (var client in clients)
+			{
+				clientVotes.Add(
 
+					//task for one client
+					Task.Run(() =>
+					{
+
+						try
+						{
+							//waiting for vote for limited time by setting network stream read timeout
+							byte[] buffer = new byte[16];
+							NetworkStream ns = client.GetStream();
+							ns.ReadTimeout = 1000 * seconds;
+							int bytesRead = 0;
+							Console.WriteLine("Waiting for client vote 1");
+							bytesRead = ns.Read(buffer, 0, buffer.Length);
+							Console.WriteLine($"DEBUG: AcceptVotes 1 read {bytesRead} bytes from: {client}");
+
+							//set timeout back to normal
+							ns.ReadTimeout = int.MaxValue;
+
+							//if read times out bytes read remains 0
+							if (bytesRead == 0)
+							{
+								return;
+							}
+
+							//read was successful, expecting string containing final activity vote
+							data.AddVote2Results(Encoding.ASCII.GetString(buffer, 0, bytesRead));
+							Console.WriteLine("Added voting 2 answer to surveydata");
+							return;
+
+						}
+						catch (JsonException e)
+						{
+							Console.WriteLine("Received bad JSON");
+							Console.WriteLine(e);
+							//we don't do that here
+							clients.Remove(client);
+						}
+						catch (ObjectDisposedException e)
+						{
+							Console.WriteLine("Connection lost to client");
+							Console.WriteLine(e);
+							//this is sparta
+							clients.Remove(client);
+						}
+
+					})
+				);
+			}
+
+			//wait for all tasks to complete before returning
+			await Task.WhenAll(clientVotes);
+			return;
 		}
 
 		private void SendToAllClients(object obj) {
