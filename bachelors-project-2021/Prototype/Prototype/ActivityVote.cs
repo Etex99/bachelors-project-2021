@@ -11,6 +11,8 @@ namespace Prototype
         private List<string> vote2Candidates;
         private readonly int totalCount = Main.GetInstance().host.data.totalEmojis;
         private string finalResult;
+        public int vote1Timer = 0;
+        public int vote2Timer = Const.vote2Time;
 
 
         public ActivityVote ()
@@ -75,6 +77,7 @@ namespace Prototype
                     vote1Candidates.Add(sortedRanking.Keys.ElementAt(i), emojis[sortedRanking.Keys.ElementAt(i)].activities);
                 }
             }
+            vote1Timer = (Const.vote1PerEmojiTime * vote1Candidates.Count) + 10;
         }
 
         public void calcVote2Candidates(Dictionary<(int, string), int> vote1Results)
@@ -128,7 +131,7 @@ namespace Prototype
         {
             string value = "";
 
-            /*
+            
             foreach (var item in vote1Candidates)
             {
                 value += $"ID: {item.Key.ToString()}, ";
@@ -140,16 +143,17 @@ namespace Prototype
                 value += "]";
                 value += "\n";
             }
-            
+            /*
 
             foreach(var item in vote2Candidates)
             {
                 value += $"Activity: {item}";
                 value += "\n";
             }
-            */
+            
 
             value += finalResult;
+            */
             return value;
         }
     }
