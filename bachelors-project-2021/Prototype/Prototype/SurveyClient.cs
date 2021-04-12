@@ -124,6 +124,54 @@ namespace Prototype
 			return false;
 		}
 
+		public async Task<bool> SendVote1Result(Dictionary<int, string> answer)
+		{
+
+			try
+			{
+				//prepare message
+				byte[] bytes = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(answer));
+
+				//send
+				NetworkStream ns = client.GetStream();
+				await ns.WriteAsync(bytes, 0, bytes.Length);
+
+				//no error, returning success
+				return true;
+			}
+			catch (ObjectDisposedException e)
+			{
+				Console.WriteLine("Host abruptly closed connection, most likely");
+				Console.WriteLine(e);
+			}
+
+			return false;
+		}
+
+		public async Task<bool> SendVote2Result(string answer)
+		{
+
+			try
+			{
+				//prepare message
+				byte[] bytes = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(answer));
+
+				//send
+				NetworkStream ns = client.GetStream();
+				await ns.WriteAsync(bytes, 0, bytes.Length);
+
+				//no error, returning success
+				return true;
+			}
+			catch (ObjectDisposedException e)
+			{
+				Console.WriteLine("Host abruptly closed connection, most likely");
+				Console.WriteLine(e);
+			}
+
+			return false;
+		}
+
 		public async Task<bool> ReceiveSurveyDataAsync() {
 
 			try

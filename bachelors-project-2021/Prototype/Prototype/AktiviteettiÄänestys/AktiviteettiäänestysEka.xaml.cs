@@ -98,15 +98,16 @@ namespace Prototype
         {
             //Copy and Paste
             //asetetaan emojit survey olioon
-            List<Emoji> tempEmojis = new List<Emoji>();
+            Dictionary<int, string> answer = new Dictionary<int, string>();
             foreach (var item in Items)
             {
-                List<string> tempActivities = new List<string>();
-                tempActivities.Add(item.Selected);
-                item.Emoji.activities = tempActivities;
-                tempEmojis.Add(item.Emoji);
+                if(item == null)
+                {
+                    break;
+                }
+                answer.Add(item.Emoji.ID, item.Selected);
             }
-
+            await Main.GetInstance().client.SendVote1Result(answer);
             // siirrytään Aktiviteetti äänestys 2/2
             await Navigation.PushAsync(new AktiviteettiäänestysToka()); ;
         }
