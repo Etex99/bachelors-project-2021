@@ -23,6 +23,7 @@ namespace Prototype
 
 		private Survey survey;
         internal SurveyData data;
+		private ActivityVote voteCalc = null;
 		private List<TcpClient> clients;
 
 		//Threading
@@ -49,12 +50,31 @@ namespace Prototype
 			//Phase 2 - time after the survey has concluded in which users view results
 			Console.WriteLine($"Results: {data}");
 			Console.WriteLine("Sending results to clients");
-			SendSurveyDataToClients();
+			SendToAllClients(data);
 		}
 
 		//Main sequence of running activity vote
-		public void RunActivityVote() {
+		public async void RunActivityVote()
+		{
 
+			//prepare first vote and send it to all candidates
+			voteCalc = new ActivityVote();
+			voteCalc.calcVote1Candidates(survey.emojis, data.GetEmojiResults());
+			SendToAllClients(voteCalc.GetVote1Candidates());
+
+			//for vote 1 duration accept votes from all clients
+			await AcceptVotes1(10);
+
+			//prepare second vote and send it to all clients
+			voteCalc.calcVote2Candidates(data.GetVote1Results());
+			SendToAllClients(voteCalc.GetVote2Candidates());
+
+			//for vote 2 duration accept votes from all clients
+			await AcceptVotes2(10);
+
+			//prepare result and send it to all clients
+			string result = voteCalc.calcFinalResult(data.GetVote2Results());
+			SendToAllClients(result);
 		}
 
 		//Transition from awaiting emojis to summary
@@ -107,7 +127,7 @@ namespace Prototype
 					if (message == survey.RoomCode)
 					{
 						//prepare message and destination
-						byte[] sendbuf = Encoding.ASCII.GetBytes("connection available");
+						byte[] sendbuf = Encoding.ASCII.GetBytes("Connect please");
 						IPEndPoint ep = new IPEndPoint(broadcast.Result.RemoteEndPoint.Address, Const.Network.ClientUDPClientPort);
 
 						//reply
@@ -226,13 +246,144 @@ namespace Prototype
 				Console.WriteLine(e);
 			}
 		}
+		private async Task AcceptVotes1(int seconds) {
 
-		private async void SendSurveyDataToClients() {
+			//listen to each client for their answer
+			List<Task> clientVotes = new List<Task>();
+			foreach (var client in clients)
+			{
+				clientVotes.Add(
 
-			//prepare survey data for transmission
-			byte[] message = Encoding.ASCII.GetBytes(
-				JsonConvert.SerializeObject(data)
-			);
+					//task for one client
+					Task.Run(() =>
+					{
+
+						try
+						{
+							//waiting for vote for limited time by setting network stream read timeout
+							byte[] buffer = new byte[64];
+							NetworkStream ns = client.GetStream();
+							ns.ReadTimeout = 1000 * seconds;
+							int bytesRead = 0;
+							Console.WriteLine("Waiting for client vote 1");
+							bytesRead = ns.Read(buffer, 0, buffer.Length);
+							Console.WriteLine($"DEBUG: AcceptVotes 1 read {bytesRead} bytes from: {client}");
+
+							//set timeout back to normal
+							ns.ReadTimeout = int.MaxValue;
+
+							//if read times out bytes read remains 0
+							if (bytesRead == 0)
+							{
+								return;
+							}
+
+							//read was successful, expecting JSON string containing Dictionary<int, string> 
+							data.AddVote1Results(JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.ASCII.GetString(buffer, 0, bytesRead)));
+							Console.WriteLine("Added voting 1 answer to surveydata");
+							return;
+
+						}
+						catch (JsonException e)
+						{
+							Console.WriteLine("Received bad JSON");
+							Console.WriteLine(e);
+							//so... you have chosen death
+							clients.Remove(client);
+						}
+						catch (ObjectDisposedException e)
+						{
+							Console.WriteLine("Connection lost to client");
+							Console.WriteLine(e);
+							//long live the king
+							clients.Remove(client);
+						}
+
+					})
+				);
+			}
+
+			//wait for all tasks to complete before returning
+			await Task.WhenAll(clientVotes);
+			return;
+		}
+		private async Task AcceptVotes2(int seconds) {
+			//listen to each client for their answer
+			List<Task> clientVotes = new List<Task>();
+			foreach (var client in clients)
+			{
+				clientVotes.Add(
+
+					//task for one client
+					Task.Run(() =>
+					{
+
+						try
+						{
+							//waiting for vote for limited time by setting network stream read timeout
+							byte[] buffer = new byte[16];
+							NetworkStream ns = client.GetStream();
+							ns.ReadTimeout = 1000 * seconds;
+							int bytesRead = 0;
+							Console.WriteLine("Waiting for client vote 1");
+							bytesRead = ns.Read(buffer, 0, buffer.Length);
+							Console.WriteLine($"DEBUG: AcceptVotes 1 read {bytesRead} bytes from: {client}");
+
+							//set timeout back to normal
+							ns.ReadTimeout = int.MaxValue;
+
+							//if read times out bytes read remains 0
+							if (bytesRead == 0)
+							{
+								return;
+							}
+
+							//read was successful, expecting string containing final activity vote
+							data.AddVote2Results(Encoding.ASCII.GetString(buffer, 0, bytesRead));
+							Console.WriteLine("Added voting 2 answer to surveydata");
+							return;
+
+						}
+						catch (JsonException e)
+						{
+							Console.WriteLine("Received bad JSON");
+							Console.WriteLine(e);
+							//we don't do that here
+							clients.Remove(client);
+						}
+						catch (ObjectDisposedException e)
+						{
+							Console.WriteLine("Connection lost to client");
+							Console.WriteLine(e);
+							//this is sparta
+							clients.Remove(client);
+						}
+
+					})
+				);
+			}
+
+			//wait for all tasks to complete before returning
+			await Task.WhenAll(clientVotes);
+			return;
+		}
+
+		private void SendToAllClients(object obj) {
+
+			//prepare data for transmission
+			byte[] message;
+			if (obj.GetType() == "".GetType())
+			{
+				message = Encoding.ASCII.GetBytes(
+					(string)obj
+				);
+			}
+			else
+			{
+				message = Encoding.ASCII.GetBytes(
+					JsonConvert.SerializeObject(obj)
+				);
+			}
 
 			//iterate each recorded client
 			foreach (var client in clients)
@@ -241,7 +392,7 @@ namespace Prototype
 				try
 				{
 					NetworkStream ns = client.GetStream();
-					await ns.WriteAsync(message, 0, message.Length);
+					ns.Write(message, 0, message.Length);
 				}
 				catch (ObjectDisposedException e)
 				{

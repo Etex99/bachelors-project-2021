@@ -11,6 +11,8 @@ namespace Prototype
         private List<string> vote2Candidates;
         private readonly int totalCount = Main.GetInstance().host.data.totalEmojis;
         private string finalResult;
+        public int vote1Timer = 0;
+        public int vote2Timer = Const.vote2Time;
 
 
         public ActivityVote ()
@@ -19,7 +21,7 @@ namespace Prototype
             vote2Candidates = new List<string>();
         }
 
-        public Dictionary<int, IList<string>> calcVote1Candidates(List<Emoji> emojis, Dictionary<int, int> emojiResults)
+        public void calcVote1Candidates(List<Emoji> emojis, Dictionary<int, int> emojiResults)
         {
             //for getting a sorted list out of emojiResults
             //positive, neutral ja negative impact
@@ -75,10 +77,10 @@ namespace Prototype
                     vote1Candidates.Add(sortedRanking.Keys.ElementAt(i), emojis[sortedRanking.Keys.ElementAt(i)].activities);
                 }
             }
-            return vote1Candidates;
+            vote1Timer = (Const.vote1PerEmojiTime * vote1Candidates.Count) + 10;
         }
 
-        public List<string> calcVote2Candidates(Dictionary<(int, string), int> vote1Results)
+        public void calcVote2Candidates(Dictionary<(int, string), int> vote1Results)
         {
             //for getting a sorted list out of vote1Results
             Dictionary<(int, string), int> sorted = new Dictionary<(int, string), int>();
@@ -97,7 +99,20 @@ namespace Prototype
             {
                 vote2Candidates = vote2Candidates.GetRange(0, 4);
             }
+        }
+        public Dictionary<int, IList<string>> GetVote1Candidates() {
+            return vote1Candidates;
+		}
+        public void SetVote1Candidates(Dictionary<int, IList<string>> candidates) {
+            vote1Candidates = candidates;
+		}
+
+        public List<string> GetVote2Candidates() {
             return vote2Candidates;
+        }
+        public void SetVote2Candidates(List<string> candidates)
+        {
+            vote2Candidates = candidates;
         }
 
         public string calcFinalResult(Dictionary<string, int> vote2Results)
@@ -116,7 +131,7 @@ namespace Prototype
         {
             string value = "";
 
-            /*
+            
             foreach (var item in vote1Candidates)
             {
                 value += $"ID: {item.Key.ToString()}, ";
@@ -128,16 +143,17 @@ namespace Prototype
                 value += "]";
                 value += "\n";
             }
-            
+            /*
 
             foreach(var item in vote2Candidates)
             {
                 value += $"Activity: {item}";
                 value += "\n";
             }
-            */
+            
 
             value += finalResult;
+            */
             return value;
         }
     }
