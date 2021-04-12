@@ -6,64 +6,27 @@
     
     <ContentPage.Content>
         <StackLayout >
-            
-            
-            <!--  "Drop down" menu painike -->
-
-
-            <Button Margin="20,20,20,0"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    WidthRequest="300"
-                     HeightRequest="50"
-                    Clicked="btnPopupButton_Clicked"
-                 
-                    Text="Äänestä aktiviteettia" 
-                   />
-
-
-            <!--  Popup Area  -->
-            
-            <Frame  Grid.Column="1"
-                    Grid.Row="1"             
-                    x:Name="popupSelection"
-                    AbsoluteLayout.LayoutBounds="0, 0, 1,1"
-                    AbsoluteLayout.LayoutFlags="All"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    HeightRequest="460"
-                    Padding="1"
-                    HasShadow="True"
-                    WidthRequest="300"
-                    BorderColor="Gray"
-                    
-                    BackgroundColor="WhiteSmoke" 
-                    IsVisible="false">
-
-                <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
 					         Orientation="Vertical"
                              WidthRequest="200">
 
-                    <CollectionView x:Name="Collection"
+                <CollectionView x:Name="Collection"
                                     ItemsSource= "{Binding Items}"
                                     SelectionMode= "Single" 
-                                    SelectedItems="{Binding Selected, Mode=TwoWay}">
+                                    SelectedItem="{Binding Selected, Mode=TwoWay}">
 
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
 
-                                <Label  Text="Binding activities not working yet" 
+                            <Label  Text="Binding activities not working yet" 
                                         Margin="5"
                                         TextColor="Black"
                                         FontSize="20"/>
 
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                </StackLayout>
-
-            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
 
             <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
                 <Button Grid.Column="1" 
