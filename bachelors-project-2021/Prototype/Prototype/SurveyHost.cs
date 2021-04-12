@@ -61,16 +61,18 @@ namespace Prototype
 			voteCalc = new ActivityVote();
 			voteCalc.calcVote1Candidates(survey.emojis, data.GetEmojiResults());
 			SendToAllClients(voteCalc.GetVote1Candidates());
+			SendToAllClients(voteCalc.vote1Timer.ToString());
 
-			//for vote 1 duration accept votes from all clients
-			await AcceptVotes1(voteCalc.vote1Timer);
+			//for first vote duration accept votes from all clients
+			await AcceptVotes1(voteCalc.vote1Timer + 5);
 
 			//prepare second vote and send it to all clients
 			voteCalc.calcVote2Candidates(data.GetVote1Results());
 			SendToAllClients(voteCalc.GetVote2Candidates());
+			SendToAllClients(voteCalc.vote2Timer.ToString());
 
 			//for vote 2 duration accept votes from all clients
-			await AcceptVotes2(voteCalc.vote2Timer);
+			await AcceptVotes2(voteCalc.vote2Timer + 5);
 
 			//prepare result and send it to all clients
 			string result = voteCalc.calcFinalResult(data.GetVote2Results());
@@ -372,18 +374,33 @@ namespace Prototype
 
 			//prepare data for transmission
 			byte[] message;
-			if (obj.GetType() == "".GetType())
+			message = Encoding.ASCII.GetBytes(
+				JsonConvert.SerializeObject(obj)
+			);
+
+			//iterate each recorded client
+			foreach (var client in clients)
 			{
-				message = Encoding.ASCII.GetBytes(
-					(string)obj
-				);
+				//catch errors per client
+				try
+				{
+					NetworkStream ns = client.GetStream();
+					ns.Write(message, 0, message.Length);
+				}
+				catch (ObjectDisposedException e)
+				{
+					Console.WriteLine($"Connection lost with client: {client.Client.RemoteEndPoint}. Dropping client");
+					Console.WriteLine(e);
+					clients.Remove(client);
+				}
 			}
-			else
-			{
-				message = Encoding.ASCII.GetBytes(
-					JsonConvert.SerializeObject(obj)
-				);
-			}
+		}
+		private void SendToAllClients(string text)
+		{
+
+			//prepare data for transmission
+			byte[] message;
+			message = Encoding.ASCII.GetBytes( text );
 
 			//iterate each recorded client
 			foreach (var client in clients)
