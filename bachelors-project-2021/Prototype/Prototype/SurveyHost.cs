@@ -127,14 +127,14 @@ namespace Prototype
 					} while (broadcast.Status != TaskStatus.RanToCompletion);
 
 					//message received
-					string message = Encoding.ASCII.GetString(broadcast.Result.Buffer, 0, broadcast.Result.Buffer.Length);
+					string message = Encoding.Unicode.GetString(broadcast.Result.Buffer, 0, broadcast.Result.Buffer.Length);
 					Console.WriteLine($"Received broadcast from {broadcast.Result.RemoteEndPoint} :");
 					Console.WriteLine($" {message}");
 
 					if (message == survey.RoomCode)
 					{
 						//prepare message and destination
-						byte[] sendbuf = Encoding.ASCII.GetBytes("Connect please");
+						byte[] sendbuf = Encoding.Unicode.GetBytes("Connect please");
 						IPEndPoint ep = new IPEndPoint(broadcast.Result.RemoteEndPoint.Address, Const.Network.ClientUDPClientPort);
 
 						//reply
@@ -195,16 +195,17 @@ namespace Prototype
 						//prepare message for sending survey
 						string message = JsonConvert.SerializeObject(survey);
 						Console.WriteLine($"DEBUG: message: {message}");
-						byte[] bytes = Encoding.ASCII.GetBytes(message);
+						byte[] bytes = Encoding.Unicode.GetBytes(message);
 
 						try
 						{
 							NetworkStream ns = client.GetStream();
 							//send message
 							ns.Write(bytes, 0, bytes.Length);
+							Console.WriteLine($"Sent {bytes.Length} bytes worth of survey");
 
 							//try get reply
-							byte[] buffer = new byte[256];
+							byte[] buffer = new byte[128];
 							Task<int> emojiReply = ns.ReadAsync(buffer, 0, buffer.Length);
 
 							//allow cancellation of task here.
@@ -219,7 +220,7 @@ namespace Prototype
 							} while (emojiReply.Status != TaskStatus.RanToCompletion);
 
 							//process reply
-							string reply = Encoding.ASCII.GetString(buffer, 0, emojiReply.Result);
+							string reply = Encoding.Unicode.GetString(buffer, 0, emojiReply.Result);
 							Console.WriteLine($"Bytes read: {emojiReply.Result}");
 							Console.WriteLine($"Client sent: {reply}");
 							
@@ -268,7 +269,7 @@ namespace Prototype
 						try
 						{
 							//waiting for vote for limited time by setting network stream read timeout
-							byte[] buffer = new byte[64];
+							byte[] buffer = new byte[2048];
 							NetworkStream ns = client.GetStream();
 							ns.ReadTimeout = 1000 * seconds;
 							int bytesRead = 0;
@@ -286,7 +287,7 @@ namespace Prototype
 							}
 
 							//read was successful, expecting JSON string containing Dictionary<int, string> 
-							data.AddVote1Results(JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.ASCII.GetString(buffer, 0, bytesRead)));
+							data.AddVote1Results(JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.Unicode.GetString(buffer, 0, bytesRead)));
 							Console.WriteLine("Added voting 1 answer to surveydata");
 							return;
 
@@ -328,7 +329,7 @@ namespace Prototype
 						try
 						{
 							//waiting for vote for limited time by setting network stream read timeout
-							byte[] buffer = new byte[64];
+							byte[] buffer = new byte[128];
 							NetworkStream ns = client.GetStream();
 							ns.ReadTimeout = 1000 * seconds;
 							int bytesRead = 0;
@@ -346,7 +347,7 @@ namespace Prototype
 							}
 
 							//read was successful, expecting string containing final activity vote
-							data.AddVote2Results(Encoding.ASCII.GetString(buffer, 0, bytesRead));
+							data.AddVote2Results(Encoding.Unicode.GetString(buffer, 0, bytesRead));
 							Console.WriteLine("Added voting 2 answer to surveydata");
 							return;
 
@@ -379,7 +380,7 @@ namespace Prototype
 
 			//prepare data for transmission
 			byte[] message;
-			message = Encoding.ASCII.GetBytes(
+			message = Encoding.Unicode.GetBytes(
 				JsonConvert.SerializeObject(obj)
 			);
 
@@ -405,7 +406,7 @@ namespace Prototype
 
 			//prepare data for transmission
 			byte[] message;
-			message = Encoding.ASCII.GetBytes( text );
+			message = Encoding.Unicode.GetBytes( text );
 
 			//iterate each recorded client
 			foreach (var client in clients)
