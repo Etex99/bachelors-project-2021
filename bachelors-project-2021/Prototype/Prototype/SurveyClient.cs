@@ -18,6 +18,7 @@ namespace Prototype
 		public int vote1Time = 0;
 		public List<string> voteCandidates2 { get; private set; } = null;
 		public int vote2Time = 0;
+		public string voteResult = null;
 		public SurveyClient() {
 			
 		}
@@ -276,11 +277,43 @@ namespace Prototype
 				Console.WriteLine($"Connection closed or lost to server at: {client.Client.RemoteEndPoint}");
 				Console.WriteLine(e);
 			}
+			catch (FormatException e)
+			{
+				Console.WriteLine("Received bad int");
+				Console.WriteLine(e);
+			}
 
 			return false;
 
 		}
-		
+
+		public async Task<bool> ReceiveVoteResult()
+		{
+
+			try
+			{
+				NetworkStream ns = client.GetStream();
+				byte[] readBuffer = new byte[128];
+				Console.WriteLine("Waiting for vote result");
+				int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+				Console.WriteLine($"Bytes read: {bytesRead}");
+
+				//expecting string containing voteResult
+				voteResult = Encoding.ASCII.GetString(readBuffer, 0, bytesRead);
+				Console.WriteLine("Received vote result");
+
+				return true;
+			}
+			catch (ObjectDisposedException e)
+			{
+				Console.WriteLine($"Connection closed or lost to server at: {client.Client.RemoteEndPoint}");
+				Console.WriteLine(e);
+			}
+
+			return false;
+
+		}
+
 		//this is as sophisticated as it gets
 		public void DestroyClient() {
 			client = null;
