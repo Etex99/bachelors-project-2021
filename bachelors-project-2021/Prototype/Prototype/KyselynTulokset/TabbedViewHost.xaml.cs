@@ -17,5 +17,12 @@ namespace Prototype
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
         }
+
+        //Device back button disabled
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+
+        }
     }
 }

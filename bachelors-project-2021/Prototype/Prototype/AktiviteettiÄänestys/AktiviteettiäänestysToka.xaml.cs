@@ -56,6 +56,12 @@ namespace Prototype
         }
 
 
+        //Device back button disabled
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+
+        }
 
         private void btnPopupButton_Clicked(object sender, EventArgs e)
         {

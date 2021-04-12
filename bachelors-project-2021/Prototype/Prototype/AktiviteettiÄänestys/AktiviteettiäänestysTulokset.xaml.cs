@@ -22,5 +22,13 @@ namespace Prototype
         {
             await Navigation.PushAsync(new MainPage());
         }
+
+
+        //Device back button disabled
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+
+        }
     }
 }

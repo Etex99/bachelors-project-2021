@@ -46,12 +46,20 @@ namespace Prototype
 
                 return Convert.ToBoolean(_countSeconds);
             }); 
+
+
         }
 
 
-  
+        //Device back button disabled
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
 
- 
+        }
+
+
+
 
     }
 }

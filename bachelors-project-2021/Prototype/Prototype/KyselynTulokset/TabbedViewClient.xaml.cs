@@ -21,5 +21,12 @@ namespace Prototype
                 return false;
             });
         }
+
+        //Device back button disabled
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+
+        }
     }
 }

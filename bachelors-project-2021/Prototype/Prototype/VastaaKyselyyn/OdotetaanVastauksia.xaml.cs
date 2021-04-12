@@ -25,5 +25,12 @@ namespace Prototype
             Navigation.PushAsync(new TabbedViewHost());
             Main.GetInstance().host.CloseSurvey();
         }
+
+        //Device back button disabled
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+
+        }
     }
 }

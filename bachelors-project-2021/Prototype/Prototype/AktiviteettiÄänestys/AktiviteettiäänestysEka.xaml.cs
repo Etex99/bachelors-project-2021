@@ -52,6 +52,14 @@ namespace Prototype
         }
 
 
+        //Device back button disabled
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+
+        }
+
+
         void btnPopupButton_Clicked(object sender, EventArgs e)
         {
             // Edelleen :DDD

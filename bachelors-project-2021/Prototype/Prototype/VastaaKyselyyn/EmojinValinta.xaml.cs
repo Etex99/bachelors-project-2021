@@ -30,6 +30,13 @@ namespace Prototype
             BindingContext = this;
         }
 
+        //Device back button disabled
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+
+        }
+
         private void Button_Clicked(object sender, EventArgs e)
         {
             b0.BorderColor = Color.Transparent;
