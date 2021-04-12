@@ -141,14 +141,6 @@ namespace Prototype
            popupSelection.IsVisible = true;
             
         }
-        async void TestHost(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new TabbedViewHost());
-        }
-        async void TestClient(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new TabbedViewClient());
-        }
 
 
         void Peruuta_Clicked(object sender, EventArgs e)
