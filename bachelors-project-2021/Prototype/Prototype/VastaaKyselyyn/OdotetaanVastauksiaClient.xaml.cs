@@ -17,10 +17,24 @@ namespace Prototype
             InitializeComponent();
             //Ei enää mahdollista päästä takaisin kysleyn luontiin painamalla navigoinnin backbuttonia 
             NavigationPage.SetHasBackButton(this, false);
-        }
+            Task.Run(async () => {
 
+                bool success = await Main.GetInstance().client.ReceiveSurveyDataAsync();
+				if (success)
+				{
+                    //received correct summary, now we can show it :)
+                    await Navigation.PushAsync(new TabbedViewClient());
+                    return;
+                }
+                //received some actual garbage? cannot comprehend this... returning to main menu
+                Main.GetInstance().client.DestroyClient();
+                await Navigation.PopToRootAsync();
+            });
+        }
+        
         private void Poistu(object sender, EventArgs e)
         {
+            Main.GetInstance().client.DestroyClient();
             Navigation.PopToRootAsync();
         }
 

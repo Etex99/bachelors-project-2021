@@ -14,27 +14,27 @@
                TextColor="Black"
                FontSize="20"/>
 
-        <CollectionView 
+		<CollectionView 
             HorizontalOptions="CenterAndExpand" 
             VerticalOptions="CenterAndExpand"
           
             HeightRequest="470" 
             ItemsSource="{Binding Items} "  >
 
-            <CollectionView.ItemTemplate >
-                <DataTemplate >
-                    <Grid Padding="1"
+			<CollectionView.ItemTemplate >
+				<DataTemplate >
+					<Grid Padding="1"
                         RowDefinitions="Auto, *"
                         ColumnDefinitions="Auto, *">
 
 
-                        <Image Grid.RowSpan="1"
+						<Image Grid.RowSpan="1"
                                 Source="{Binding Emoji.ImageSource}"     
                                 Aspect="AspectFill"
                                 HeightRequest="60"
                                 WidthRequest="60" />
 
-                        <Button Grid.Column="1"
+						<Button Grid.Column="1"
                             
                                 Margin="10,10,10,0"
                                 VerticalOptions="Center"
@@ -45,7 +45,7 @@
                  
                                 Text="Valitse toimenpide"    />
 
-                        <Frame
+						<Frame
                                 Grid.Column="1"
                                 Grid.Row="1"                               
                                 AbsoluteLayout.LayoutBounds="0, 0, 1,1"
@@ -61,51 +61,41 @@
                                 BackgroundColor="WhiteSmoke" 
                                 IsVisible="false">
 
-                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
+							<StackLayout HorizontalOptions="Center" VerticalOptions="Center"
 									
                                     Orientation="Vertical"
                                     WidthRequest="200">
 
-                                <CollectionView x:Name="Collection" 
+								<CollectionView x:Name="Collection" 
                                         ItemsSource= "{Binding ActivityChoises}"
                                         SelectionMode= "Single" 
-                                        SelectedItems="{Binding Selected, Mode=TwoWay}">
+                                        SelectedItem="{Binding Selected, Mode=TwoWay}">
 
-                                    <CollectionView.ItemTemplate>
-                                        <DataTemplate>
+									<CollectionView.ItemTemplate>
+										<DataTemplate>
 
-                                            <Label 
+											<Label 
                                                     Text="{Binding .}" 
                                                     TextColor="Black"
                                                     FontSize="20"/>
 
-                                        </DataTemplate>
-                                    </CollectionView.ItemTemplate>
-                                </CollectionView>
+										</DataTemplate>
+									</CollectionView.ItemTemplate>
+								</CollectionView>
 
-                        
-                            </StackLayout>
 
-                        </Frame>
+							</StackLayout>
 
-                    </Grid>
+						</Frame>
 
-                </DataTemplate>
+					</Grid>
 
-            </CollectionView.ItemTemplate>
+				</DataTemplate>
 
-        </CollectionView>
+			</CollectionView.ItemTemplate>
 
-        <!-- "Jatka" Button -->
-        <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
-            <Button Text="Jatka"
-                Clicked="JatkaButtonClicked" 
-                CornerRadius="100"
-                HorizontalOptions="Center"
-                WidthRequest="150"
-                HeightRequest="50"/>
-        </AbsoluteLayout>
+		</CollectionView>
 
-    </StackLayout>
+	</StackLayout>
 
 </ContentPage>

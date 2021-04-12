@@ -1,6 +1,7 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System;
+using System.Threading.Tasks;
 
 namespace Prototype
 {
@@ -13,12 +14,19 @@ namespace Prototype
 
             NavigationPage.SetHasBackButton(this, false);
 
-
-            //Siirrytään aktiviteettin äänestykseen 10sec kuluttua. (timer testi) 
-            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
+            Task.Run(async () =>
             {
-                Navigation.PushAsync(new AktiviteettiäänestysEka());
-                return false;
+
+                bool success = await Main.GetInstance().client.ReceiveVote1Candidates();
+				if (success)
+				{
+                    //Received vote candidates lets goooo
+                    await Navigation.PushAsync(new AktiviteettiäänestysEka());
+                    return;
+				}
+                //Did not get candidates, now it is safe to leave this survey, because nothing more is going to happen
+                //TODO maybe indicate that the survey has concluded somehow?? e.g "Poistu" turns green
+                return;
             });
         }
 

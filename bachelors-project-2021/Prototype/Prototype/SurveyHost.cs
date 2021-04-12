@@ -63,14 +63,14 @@ namespace Prototype
 			SendToAllClients(voteCalc.GetVote1Candidates());
 
 			//for vote 1 duration accept votes from all clients
-			await AcceptVotes1(10);
+			await AcceptVotes1(voteCalc.vote1Timer);
 
 			//prepare second vote and send it to all clients
 			voteCalc.calcVote2Candidates(data.GetVote1Results());
 			SendToAllClients(voteCalc.GetVote2Candidates());
 
 			//for vote 2 duration accept votes from all clients
-			await AcceptVotes2(10);
+			await AcceptVotes2(voteCalc.vote2Timer);
 
 			//prepare result and send it to all clients
 			string result = voteCalc.calcFinalResult(data.GetVote2Results());
@@ -272,8 +272,8 @@ namespace Prototype
 							//set timeout back to normal
 							ns.ReadTimeout = int.MaxValue;
 
-							//if read times out bytes read remains 0
-							if (bytesRead == 0)
+							//if read times out bytes read remains 0?
+							if (bytesRead <= 0)
 							{
 								return;
 							}

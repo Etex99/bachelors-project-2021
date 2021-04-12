@@ -208,5 +208,10 @@ namespace Prototype
 			return false;
 
 		}
+		
+		//this is as sophisticated as it gets
+		public void DestroyClient() {
+			client = null;
+		}
 	}
 }

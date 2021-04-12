@@ -47,7 +47,7 @@ namespace Prototype
         }
         async void JatkaClicked(object sender, EventArgs e)
         {
-
+            
             //Siirrytään odottamaan äänestyksen tuloksia (HOST)
             await Navigation.PushAsync(new TulostenOdotus());
         }

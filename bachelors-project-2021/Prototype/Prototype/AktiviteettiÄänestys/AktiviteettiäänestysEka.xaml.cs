@@ -22,18 +22,16 @@ namespace Prototype
         {
             public Emoji Emoji { get; set; }
             public IList<string> ActivityChoises { get; set; }
-            public ObservableCollection<object> Selected { get; set; }
+            public string Selected { get; set; } = null;
 
             public CollectionItem(Emoji emoji, IList<string> activities)
             {
                 Emoji = emoji;
                 ActivityChoises = activities;
 
-                Selected = new ObservableCollection<object>();
                 foreach (var item in emoji.activities)
                 {
                     Console.WriteLine("Item: {0}", item);
-                    Selected.Add(ActivityChoises[ActivityChoises.IndexOf(item)]);
                 }
             }
         }
@@ -43,7 +41,7 @@ namespace Prototype
             NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
             //alustus
-            List<Emoji> Emojis = new Survey().emojis;
+            List<Emoji> Emojis = Main.GetInstance().client.survey.emojis;
             Items = new List<CollectionItem>();
 
             foreach (var item in Main.GetInstance().client.voteCandidates1)
@@ -53,6 +51,16 @@ namespace Prototype
             }
 
             BindingContext = this;
+
+            Task.Run(async () =>
+            {
+                bool success = await Main.GetInstance().client.ReceiveVote2Candidates();
+				if (success)
+				{
+                    //received vote 2, sending vote 1 results as is
+                    Jatka();
+				}
+            });
         }
 
 
@@ -86,7 +94,7 @@ namespace Prototype
     
 
 
-        async void JatkaButtonClicked(object sender, EventArgs e)
+        async void Jatka()
         {
             //Copy and Paste
             //asetetaan emojit survey olioon
@@ -94,14 +102,10 @@ namespace Prototype
             foreach (var item in Items)
             {
                 List<string> tempActivities = new List<string>();
-                foreach (var selection in item.Selected)
-                {
-                    tempActivities.Add(selection as string);
-                }
+                tempActivities.Add(item.Selected);
                 item.Emoji.activities = tempActivities;
                 tempEmojis.Add(item.Emoji);
             }
-            SurveyManager.GetInstance().GetSurvey().emojis = tempEmojis;
 
             // siirrytään Aktiviteetti äänestys 2/2
             await Navigation.PushAsync(new AktiviteettiäänestysToka()); ;

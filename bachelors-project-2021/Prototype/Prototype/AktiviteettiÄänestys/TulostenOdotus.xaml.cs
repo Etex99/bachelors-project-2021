@@ -13,7 +13,7 @@ namespace Prototype
     public partial class TulostenOdotus : ContentPage
     {
 
-        private int _countSeconds = 10;
+        private int _countSeconds = 20;
 
         public TulostenOdotus()
         {
@@ -42,10 +42,12 @@ namespace Prototype
                     });
 
                   
-                }
+                 }
 
                 return Convert.ToBoolean(_countSeconds);
-            }); 
+            });
+
+            Task.Run( () => Main.GetInstance().host.RunActivityVote() );
 
 
         }
