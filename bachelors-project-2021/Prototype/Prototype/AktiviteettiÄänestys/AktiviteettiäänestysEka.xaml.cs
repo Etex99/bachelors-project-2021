@@ -54,11 +54,14 @@ namespace Prototype
 
             Task.Run(async () =>
             {
+                await Task.Delay(Main.GetInstance().client.vote1Time * 1000);
+                FinishVote1();
+
                 bool success = await Main.GetInstance().client.ReceiveVote2Candidates();
 				if (success)
 				{
-                    //received vote 2, sending vote 1 results as is
-                    Jatka();
+                    //received vote 2 changing view
+                    await Navigation.PushAsync(new AktiviteettiäänestysToka());
 				}
             });
         }
@@ -94,7 +97,7 @@ namespace Prototype
     
 
 
-        async void Jatka()
+        async void FinishVote1()
         {
             //Copy and Paste
             //asetetaan emojit survey olioon
@@ -108,8 +111,6 @@ namespace Prototype
                 answer.Add(item.Emoji.ID, item.Selected);
             }
             await Main.GetInstance().client.SendVote1Result(answer);
-            // siirrytään Aktiviteetti äänestys 2/2
-            await Navigation.PushAsync(new AktiviteettiäänestysToka()); ;
         }
     }
 }

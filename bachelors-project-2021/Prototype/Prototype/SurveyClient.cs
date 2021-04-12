@@ -15,8 +15,9 @@ namespace Prototype
 		public SurveyData summary { get; private set; } = null;
 
 		public Dictionary<int, IList<string>> voteCandidates1 { get; private set; } = null;
+		public int vote1Time = 0;
 		public List<string> voteCandidates2 { get; private set; } = null;
-		
+		public int vote2Time = 0;
 		public SurveyClient() {
 			
 		}
@@ -210,6 +211,15 @@ namespace Prototype
 				//expecting JSON string containing Dictionary<int, IList<string>>
 				voteCandidates1 = JsonConvert.DeserializeObject<Dictionary<int, IList<string>>>(Encoding.ASCII.GetString(readBuffer, 0, bytesRead));
 				Console.WriteLine("Received vote 1 candidates");
+
+				//next, receive vote time
+				readBuffer = new byte[128];
+				Console.WriteLine("Waiting for vote 1 timer");
+				bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+				Console.WriteLine($"Bytes read: {bytesRead}");
+
+				//expecting string containing int
+				vote1Time = int.Parse(Encoding.ASCII.GetString(readBuffer, 0, bytesRead));
 				return true;
 			}
 			catch (JsonException e) 
@@ -220,6 +230,11 @@ namespace Prototype
 			catch (ObjectDisposedException e)
 			{
 				Console.WriteLine($"Connection closed or lost to server at: {client.Client.RemoteEndPoint}");
+				Console.WriteLine(e);
+			}
+			catch (FormatException e)
+			{
+				Console.WriteLine("Received bad int");
 				Console.WriteLine(e);
 			}
 
@@ -240,6 +255,15 @@ namespace Prototype
 				//expecting JSON string containing List<string>
 				voteCandidates2 = JsonConvert.DeserializeObject<List<string>>(Encoding.ASCII.GetString(readBuffer, 0, bytesRead));
 				Console.WriteLine("Received vote 2 candidates");
+
+				//next, receive vote time
+				readBuffer = new byte[128];
+				Console.WriteLine("Waiting for vote 2 timer");
+				bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+				Console.WriteLine($"Bytes read: {bytesRead}");
+
+				//expecting string containing int
+				vote2Time = int.Parse(Encoding.ASCII.GetString(readBuffer, 0, bytesRead));
 				return true;
 			}
 			catch (JsonException e)
