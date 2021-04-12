@@ -27,6 +27,7 @@ namespace Prototype
 
             NavigationPage.SetHasBackButton(this, false);
 
+
             Surveys = manager.GetTemplates();
 
 
@@ -34,8 +35,15 @@ namespace Prototype
             BindingContext = this;
         }
 
+        //Device back button navigation 
+        protected override bool OnBackButtonPressed()
+        {
+            Navigation.PushAsync(new MainPage());
+            return true;
 
-        void OnListSelection(object sender, SelectionChangedEventArgs e)
+        }
+
+            void OnListSelection(object sender, SelectionChangedEventArgs e)
         {
             SelectedSurvey = e.CurrentSelection[0] as string;
 

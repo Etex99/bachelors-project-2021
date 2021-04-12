@@ -67,7 +67,16 @@ namespace Prototype
             BindingContext = this;
         }
 
-         async void JaaClicked(object sender, EventArgs e)
+        //Device back button navigation 
+        protected override bool OnBackButtonPressed()
+        {
+            Navigation.PushAsync(new TallennetutKyselyt());
+            return true;
+
+        }
+
+
+        async void JaaClicked(object sender, EventArgs e)
         {
             //siirrytään OdotetaanVastauksia sivulle
             await Navigation.PushAsync(new OdotetaanVastauksia());
