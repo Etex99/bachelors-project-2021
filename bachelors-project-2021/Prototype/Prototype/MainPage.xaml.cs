@@ -17,7 +17,23 @@ namespace Prototype
             BindingContext = Main.GetInstance();
 
 
+
         }
+
+        //Device back button navigation test to close the application from the back button 
+        protected override bool OnBackButtonPressed()
+        {
+             Device.BeginInvokeOnMainThread(async () => 
+         {
+               var res = await this.DisplayAlert("Do you really want to exit the application?", "","Yes", "No").ConfigureAwait(false);
+
+               if (res) System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
+        });           
+        return true;
+
+        }
+
+
 
         void InfoClicked(object sender, EventArgs e)
         {
@@ -101,6 +117,10 @@ namespace Prototype
             InfoPopUp.IsVisible = false;
         }
 
+
+      
+
+        //
 
         async void LuoUusiClicked(object sender, EventArgs e)
         {
