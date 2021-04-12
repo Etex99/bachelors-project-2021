@@ -27,6 +27,22 @@ namespace Prototype
             Items = Main.GetInstance().client.voteCandidates2;
 
             BindingContext = this;
+
+            Vote2();
+        }
+        private async void Vote2() {
+            await Task.Delay(Main.GetInstance().client.vote2Time * 1000);
+            if (Selected != null)
+            {
+                await Main.GetInstance().client.SendVote2Result(Selected);
+            }
+
+            bool success = await Main.GetInstance().client.ReceiveVoteResult();
+            if (success)
+            {
+                //received result changing view
+                await Navigation.PushAsync(new AktiviteettiäänestysTulokset());
+            }
         }
 
 
@@ -35,14 +51,6 @@ namespace Prototype
         {
             return true;
 
-        }
-
-        async void JatkaButtonClicked(object sender, EventArgs e)
-        {
-
-
-            //siirrytään "Äänestksen tulokset" sivulle 
-            await Navigation.PushAsync(new AktiviteettiäänestysTulokset());
         }
     }
 }

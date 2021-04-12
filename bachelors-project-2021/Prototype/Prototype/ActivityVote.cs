@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Prototype
 {
-    class ActivityVote
+    public class ActivityVote
     {
         private Dictionary<int, IList<string>> vote1Candidates;
         private List<string> vote2Candidates;

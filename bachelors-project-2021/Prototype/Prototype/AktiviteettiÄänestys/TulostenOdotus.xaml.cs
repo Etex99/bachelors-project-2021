@@ -13,20 +13,18 @@ namespace Prototype
     public partial class TulostenOdotus : ContentPage
     {
 
-        private int _countSeconds = 20;
+        private int _countSeconds = 10;
 
         public TulostenOdotus()
         {
             InitializeComponent();
 
-  
-
             //poistetaan turha navigointipalkki
-            NavigationPage.SetHasNavigationBar(this, false); 
+            NavigationPage.SetHasNavigationBar(this, false);
 
-            //Siirrytään aktiviteettin äänestykseen tuloksiin 10s kuluttua. (timer testi) 
+            Main.GetInstance().host.StartActivityVote();
 
-
+            _countSeconds = Main.GetInstance().host.voteCalc.vote1Timer + Main.GetInstance().host.voteCalc.vote2Timer;
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 _countSeconds--;
@@ -47,7 +45,7 @@ namespace Prototype
                 return Convert.ToBoolean(_countSeconds);
             });
 
-            Task.Run( () => Main.GetInstance().host.RunActivityVote() );
+            
 
 
         }

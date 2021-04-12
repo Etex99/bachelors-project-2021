@@ -22,8 +22,8 @@ namespace Prototype
 		public HostState State { get; private set; } = HostState.AwaitingAnswers;
 
 		private Survey survey;
-        internal SurveyData data;
-		private ActivityVote voteCalc = null;
+        public SurveyData data { get; private set; }
+		public ActivityVote voteCalc { get; private set; } = null;
 		private List<TcpClient> clients;
 
 		//Threading
@@ -56,10 +56,7 @@ namespace Prototype
 		//Main sequence of running activity vote
 		public async void RunActivityVote()
 		{
-
-			//prepare first vote and send it to all candidates
-			voteCalc = new ActivityVote();
-			voteCalc.calcVote1Candidates(survey.emojis, data.GetEmojiResults());
+			//send first vote to all candidates
 			SendToAllClients(voteCalc.GetVote1Candidates());
 			SendToAllClients(voteCalc.vote1Timer.ToString());
 
@@ -76,6 +73,7 @@ namespace Prototype
 
 			//prepare result and send it to all clients
 			string result = voteCalc.calcFinalResult(data.GetVote2Results());
+			data.voteResult = result;
 			SendToAllClients(result);
 		}
 
@@ -93,6 +91,13 @@ namespace Prototype
 		//Continue survey to activity voting
 		public void StartActivityVote() {
 			State = HostState.AwaitingVotes1;
+			//prepare first vote
+			voteCalc = new ActivityVote();
+			voteCalc.calcVote1Candidates(survey.emojis, data.GetEmojiResults());
+			Task.Run( async () =>
+			{
+				RunActivityVote();
+			});
 		}
 
 		//replies to broadcasts in the network which contain the correct roomCode
@@ -323,13 +328,13 @@ namespace Prototype
 						try
 						{
 							//waiting for vote for limited time by setting network stream read timeout
-							byte[] buffer = new byte[16];
+							byte[] buffer = new byte[64];
 							NetworkStream ns = client.GetStream();
 							ns.ReadTimeout = 1000 * seconds;
 							int bytesRead = 0;
-							Console.WriteLine("Waiting for client vote 1");
+							Console.WriteLine("Waiting for client vote 2");
 							bytesRead = ns.Read(buffer, 0, buffer.Length);
-							Console.WriteLine($"DEBUG: AcceptVotes 1 read {bytesRead} bytes from: {client}");
+							Console.WriteLine($"DEBUG: AcceptVotes 2 read {bytesRead} bytes from: {client}");
 
 							//set timeout back to normal
 							ns.ReadTimeout = int.MaxValue;
@@ -417,6 +422,14 @@ namespace Prototype
 					Console.WriteLine(e);
 					clients.Remove(client);
 				}
+			}
+		}
+		public void DestroyHost() {
+			
+			//close all connections
+			foreach (var item in clients)
+			{
+				item.Close();
 			}
 		}
 	}

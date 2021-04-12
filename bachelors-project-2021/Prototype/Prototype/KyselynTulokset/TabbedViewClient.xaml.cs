@@ -11,23 +11,20 @@ namespace Prototype
         public TabbedViewClient()
         {
             InitializeComponent();
-
             NavigationPage.SetHasBackButton(this, false);
-
-            Task.Run(async () =>
-            {
-
-                bool success = await Main.GetInstance().client.ReceiveVote1Candidates();
-				if (success)
-				{
-                    //Received vote candidates lets goooo
-                    await Navigation.PushAsync(new AktiviteettiäänestysEka());
-                    return;
-				}
-                //Did not get candidates, now it is safe to leave this survey, because nothing more is going to happen
-                //TODO maybe indicate that the survey has concluded somehow?? e.g "Poistu" turns green
-                return;
-            });
+            ReceiveVote1();
+        }
+        private async void ReceiveVote1()
+        {
+            bool success = await Main.GetInstance().client.ReceiveVote1Candidates();
+			if (success)
+			{
+                Console.WriteLine("Received Vote1 successfully");
+				await Navigation.PushAsync(new AktiviteettiäänestysEka());
+			}
+            //Did not get candidates, now it is safe to leave this survey, because nothing more is going to happen
+            //TODO maybe indicate that the survey has concluded somehow?? e.g "Poistu" turns green
+            return;
         }
 
         //Device back button disabled

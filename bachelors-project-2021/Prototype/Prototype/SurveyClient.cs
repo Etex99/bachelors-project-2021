@@ -316,7 +316,7 @@ namespace Prototype
 
 		//this is as sophisticated as it gets
 		public void DestroyClient() {
-			client = null;
+			client.Close();
 		}
 	}
 }

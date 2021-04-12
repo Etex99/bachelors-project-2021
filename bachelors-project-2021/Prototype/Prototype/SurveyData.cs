@@ -6,9 +6,11 @@ namespace Prototype
 {
 	public class SurveyData
 	{
-		private Dictionary<int, int> emojiResults;
-		private Dictionary<(int, string), int> vote1Results;
-		private Dictionary<string, int> vote2Results;
+		public Dictionary<int, int> emojiResults { get; private set; }
+		public Dictionary<(int, string), int> vote1Results { get; private set; }
+		public Dictionary<string, int> vote2Results { get; private set; }
+
+		public string voteResult { get; set; }
 		public int totalEmojis = 0;
 
 		public SurveyData() {
@@ -82,7 +84,7 @@ namespace Prototype
 			return vote2Results;
         }
 		public override string ToString() {
-			/*string s = "{emojiResults: ";
+			string s = "{emojiResults: ";
 			foreach (var item in emojiResults)
 			{
 				s += "[";
@@ -93,7 +95,7 @@ namespace Prototype
 			}
 			s = s.Substring(0, s.Length - 1);
 			s += "}";
-			string s = "{vote1Results: ";
+			s += "{vote1Results: ";
 			foreach (var item in vote1Results)
 			{
 				s += "[";
@@ -104,8 +106,8 @@ namespace Prototype
 			}
 			s = s.Substring(0, s.Length - 1);
 			s += "}";
-			*/
-			string s = "{vote2Results: ";
+			
+			s += "{vote2Results: ";
 			foreach (var item in vote2Results)
 			{
 				s += "[";

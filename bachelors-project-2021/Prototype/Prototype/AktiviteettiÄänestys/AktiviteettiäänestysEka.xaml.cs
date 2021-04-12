@@ -52,20 +52,19 @@ namespace Prototype
 
             BindingContext = this;
 
-            Task.Run(async () =>
-            {
-                await Task.Delay(Main.GetInstance().client.vote1Time * 1000);
-                FinishVote1();
-
-                bool success = await Main.GetInstance().client.ReceiveVote2Candidates();
-				if (success)
-				{
-                    //received vote 2 changing view
-                    await Navigation.PushAsync(new AktiviteettiäänestysToka());
-				}
-            });
+            Vote1();
         }
-
+        
+        private async void Vote1() {
+            await Task.Delay(Main.GetInstance().client.vote1Time * 1000);
+            FinishVote1();
+            bool success = await Main.GetInstance().client.ReceiveVote2Candidates();
+            if (success)
+            {
+                //received vote 2 changing view
+                await Navigation.PushAsync(new AktiviteettiäänestysToka());
+            }
+        }
 
         //Device back button disabled
         protected override bool OnBackButtonPressed()

@@ -6,36 +6,27 @@
     
     <ContentPage.Content>
         <StackLayout >
-            <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
+			<StackLayout HorizontalOptions="Center" VerticalOptions="Center"
 					         Orientation="Vertical"
                              WidthRequest="200">
 
-                <CollectionView x:Name="Collection"
+				<CollectionView x:Name="Collection"
                                     ItemsSource= "{Binding Items}"
                                     SelectionMode= "Single" 
                                     SelectedItem="{Binding Selected, Mode=TwoWay}">
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
+					<CollectionView.ItemTemplate>
+						<DataTemplate>
 
-                            <Label  Text="Binding activities not working yet" 
+							<Label  Text="{Binding}" 
                                         Margin="5"
                                         TextColor="Black"
                                         FontSize="20"/>
 
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
-
-            <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
-                <Button Grid.Column="1" 
-                    Text="Jatka"
-                    Clicked="JatkaButtonClicked" 
-                    CornerRadius="100"
-                    WidthRequest="150"/>
-            </AbsoluteLayout>
-
-        </StackLayout>
+						</DataTemplate>
+					</CollectionView.ItemTemplate>
+				</CollectionView>
+			</StackLayout>
+		</StackLayout>
     </ContentPage.Content>
 </ContentPage>

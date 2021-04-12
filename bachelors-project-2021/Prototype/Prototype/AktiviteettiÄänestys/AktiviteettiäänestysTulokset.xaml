@@ -8,7 +8,7 @@
         <StackLayout>
 
             <AbsoluteLayout Margin="15"  VerticalOptions ="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-                <Label Text="Tähän äänestyksen tulos"
+                <Label x:Name="result" Text="Tähän äänestyksen tulos"
                    FontSize="25"
                    />
             </AbsoluteLayout>
