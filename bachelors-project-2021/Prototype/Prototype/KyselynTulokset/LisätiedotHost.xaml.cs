@@ -37,8 +37,15 @@ namespace Prototype
             }
             foreach (int value in sorted.Values)
             {
-                calculateScale = 1.5 * (double)value / count;
-                resultScale.Add(calculateScale);
+                if (count == 0)
+                {
+                    resultScale.Add(0);
+                }
+                else
+                {
+                    calculateScale = 1 * (double)value / count;
+                    resultScale.Add(calculateScale);
+                }
             }
 
             BindingContext = this;
