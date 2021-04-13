@@ -27,6 +27,7 @@ namespace Prototype
 		private List<TcpClient> clients;
 
 		//Threading
+		private List<Task> cancellableTasks;
 		private CancellationTokenSource tokenSource;
 		private CancellationToken token;
 
@@ -34,6 +35,7 @@ namespace Prototype
 			data = new SurveyData();
 			survey = SurveyManager.GetInstance().GetSurvey();
 			clients = new List<TcpClient>();
+			cancellableTasks = new List<Task>();
 			tokenSource = new CancellationTokenSource();
 			token = tokenSource.Token;
 		}
@@ -45,7 +47,9 @@ namespace Prototype
 			//Phase 1 - making client connections and collecting emojis
 			Task task1 = ReplyBroadcast();
 			Task task2 = AcceptClient();
-			Task.WaitAll(new Task[] { task1, task2 });
+			cancellableTasks.Add(task1);
+			cancellableTasks.Add(task2);
+			Task.WaitAll(cancellableTasks.ToArray());
 
 			//Phase 2 - time after the survey has concluded in which users view results
 			Console.WriteLine($"Results: {data}");
@@ -78,9 +82,11 @@ namespace Prototype
 		}
 
 		//Transition from awaiting emojis to summary
-		public void CloseSurvey() {
+		public async Task CloseSurvey() {
 			State = HostState.Results;
 			tokenSource.Cancel();
+			await Task.WhenAll(cancellableTasks.ToArray());
+			return;
 		}
 
 		//End survey for good
