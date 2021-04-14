@@ -32,5 +32,12 @@ namespace Prototype
             return true;
 
         }
+
+        private void Peruuta(object sender, EventArgs e)
+        {
+           
+            Navigation.PopToRootAsync();
+
+        }
     }
 }
