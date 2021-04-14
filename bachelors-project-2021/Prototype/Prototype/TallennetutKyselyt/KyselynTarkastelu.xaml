@@ -43,16 +43,16 @@
                          VerticalOptions="FillAndExpand">
 
                 <Label Margin="0,10,0,10"
-                    Text="*Kysysmys*"
+                    Text="{Binding introMessage}"
                     TextColor="Black"
                     FontSize="20"/>
 
                 <Label Margin="0,10,0,10"
-                        Text="*Kyselyn avainkoodi*"
+                        Text="{Binding roomCode}"
                         TextColor="Black"
                         FontSize="20"/>
 
-                <CollectionView ItemsSource="{Binding  Emojit}"
+                <CollectionView ItemsSource="{Binding Emojit}"
                    HeightRequest="400" >
 
                 <CollectionView.ItemTemplate >
@@ -64,7 +64,7 @@
 
                             <!-- Emojit -->
                                 <Image Grid.RowSpan="1"
-                                       Source="{Binding Item.ImageSource}"     
+                                       Source="{Binding Item.ImageSource}"
                                        Aspect="AspectFill"
                                        HeightRequest="60"
                                        WidthRequest="60" />
@@ -91,7 +91,7 @@
                                 VerticalOptions="Center"
                                 HorizontalOptions="Center"
                                 HeightRequest="230"
-                                Padding="1"
+                                Padding="10"
                                 HasShadow="True"
                                 WidthRequest="160"
                                 BorderColor="Gray"
@@ -107,23 +107,20 @@
                                         <!-- binding activities not working yet-->
 
                                         <CollectionView x:Name="Collection" 
-                                        ItemsSource= "{Binding .}"
-                                         >
+                                                        ItemsSource= "{Binding ActivityChoises}"
+                                                        SelectionMode="None">
 
                                             <CollectionView.ItemTemplate>
                                                 <DataTemplate>
 
-                                                    <Label 
-                                                    Text="Hello" 
-                                                    TextColor="Black"
-                                                    FontSize="20"/>
+                                                    <Label Text="{Binding}" 
+                                                           TextColor="Black"
+                                                           FontSize="15"
+                                                           Margin="1, 1, 1, 10"/>
 
                                                 </DataTemplate>
                                             </CollectionView.ItemTemplate>
                                         </CollectionView>
-
-                             
-
                                     </StackLayout>
 
                                 </Frame>
@@ -132,13 +129,10 @@
 
                                 <!-- En ole vielä keksinyt miten itse radiobuttonin värin voisi vaihtaa tai miten sivulle saa aina kyselyn luonnin aikana valitun radiobuttonin-->
                                 <!-- Green-->
-                                <RadioButton Grid.RowSpan="1"
-                                             Grid.Row="0"
-                                             Grid.Column="1"
-                                             Content=":)"
-                                             TextColor="Green"
-                                             BackgroundColor="LightGreen"
-                                             Value="positive"                                                              
+                                <Rectangle Grid.RowSpan="1"
+                                           Grid.Row="0"
+                                           Grid.Column="1"
+                                           BackgroundColor="{Binding Color}"                                                             
                                 />
 
                             </Grid>

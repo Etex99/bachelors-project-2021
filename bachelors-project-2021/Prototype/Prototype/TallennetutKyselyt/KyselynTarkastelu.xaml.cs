@@ -11,21 +11,21 @@ namespace Prototype
     public partial class KyselynTarkastelu : ContentPage
     {
 
-        public IList<CollectionItem> Emojit { get; private set; }
+        public IList<CollectionItem> Emojit { get; private set; } = null;
         public static string surveyName;
+        public string roomCode { get; set; } = "Roomcode: ";
+        public string introMessage { get; set; } = "Intro: ";
 
         public static void SetSurveyName(string name)
         {
             surveyName = name;
-            
         }
 
         public class CollectionItem
         {
             public Emoji Item { get; set; } = null;
-            public bool IsNegative { get; set; } = false;
-            public bool IsNeutral { get; set; } = false;
-            public bool IsPositive { get; set; } = false;
+            public IList<string> ActivityChoises { get; set; } = null;
+            public string Color { get; set; } = null;
         }
 
 
@@ -41,7 +41,10 @@ namespace Prototype
             //asetetaan otsikoksi kyselyn nimi
             title.Text = surveyName;
 
-      
+            //asetetaan kyselyn roomCode ja intro
+            roomCode += SurveyManager.GetInstance().GetSurvey().RoomCode;
+            introMessage += SurveyManager.GetInstance().GetSurvey().introMessage;
+            
 
             //alustetaan radionappien valinnat
             //ei saa kyseenalaistaa tätä toteutusta, radionappeihin ei oikeastaan pääse käsiksi collection view layoutin sisältä
@@ -49,16 +52,17 @@ namespace Prototype
             {
                 CollectionItem i = new CollectionItem();
                 i.Item = item;
+                i.ActivityChoises = item.activities;
                 switch (item.Impact)
                 {
                     case "positive":
-                        i.IsPositive = true;
+                        i.Color = "Green";
                         break;
                     case "neutral":
-                        i.IsNeutral = true;
+                        i.Color = "Yellow";
                         break;
                     case "negative":
-                        i.IsNegative = true;
+                        i.Color = "Red";
                         break;
                 }
                 Emojit.Add(i);
