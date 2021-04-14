@@ -13,6 +13,9 @@ namespace Prototype
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AktiviteettiäänestysToka : ContentPage
     {
+
+        private int _countSeconds = 10;
+
         // pitää muuttaa siten, että drop down menu/popup pääsee käsiksi aktiviteetteihin
         //Tätä pitää muuttaa siten, että äänestyksessä mukana vain äänestyksen ensimmäisessä vaiheessa valitut aktiviteetit
 
@@ -31,7 +34,29 @@ namespace Prototype
             Vote2();
         }
         private async void Vote2() {
-            await Task.Delay(Main.GetInstance().client.vote2Time * 1000);
+           // await Task.Delay(Main.GetInstance().client.vote2Time * 1000);
+
+            _countSeconds = Main.GetInstance().client.vote2Time;
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                _countSeconds--;
+
+                timer.Text = _countSeconds.ToString();
+
+
+                if (_countSeconds == 0)
+                {
+                    Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                    {
+                        return false;
+                    });
+
+
+                }
+
+                return Convert.ToBoolean(_countSeconds);
+            });
+
             if (Selected != null)
             {
                 await Main.GetInstance().client.SendVote2Result(Selected);

@@ -14,6 +14,7 @@ namespace Prototype
     public partial class AktiviteettiäänestysEka : ContentPage
     {
 
+        private int _countSeconds = 10;
         // Copy paste go brrrrrrrR
         //Tätä pitänee muuttaa siten, että äänestyksessä mukana vain kyselyn luonnin aikana valitut aktiviteetit
 
@@ -56,14 +57,37 @@ namespace Prototype
         }
         
         private async void Vote1() {
-            await Task.Delay(Main.GetInstance().client.vote1Time * 1000);
+            // await Task.Delay(Main.GetInstance().client.vote1Time * 1000);
+
+            _countSeconds = Main.GetInstance().client.vote1Time;
+             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                _countSeconds--;
+
+                timer.Text = _countSeconds.ToString();
+
+
+                if (_countSeconds == 0)
+                {
+                    Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                    {
+                        return false;
+                    }); 
+
+
+                }
+
+                return Convert.ToBoolean(_countSeconds);
+            }); 
+
+
             FinishVote1();
             bool success = await Main.GetInstance().client.ReceiveVote2Candidates();
             if (success)
             {
                 //received vote 2 changing view
                 await Navigation.PushAsync(new AktiviteettiäänestysToka());
-            }
+            } 
         }
 
         //Device back button disabled
@@ -109,7 +133,7 @@ namespace Prototype
                 }
                 answer.Add(item.Emoji.ID, item.Selected);
             }
-            await Main.GetInstance().client.SendVote1Result(answer);
+          await Main.GetInstance().client.SendVote1Result(answer);
         }
     }
 }

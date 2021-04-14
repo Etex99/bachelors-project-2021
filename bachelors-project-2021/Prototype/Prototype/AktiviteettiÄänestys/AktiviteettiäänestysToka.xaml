@@ -5,12 +5,34 @@
              Title="Aktiviteetti äänestys 2/2">
     
     <ContentPage.Content>
+
+        
         <StackLayout >
 			<StackLayout HorizontalOptions="Center" VerticalOptions="Center"
 					         Orientation="Vertical"
                              WidthRequest="200">
 
-				<CollectionView x:Name="Collection"
+
+                <Grid Padding="1"
+              RowDefinitions="Auto, *"
+              ColumnDefinitions="Auto, *">
+
+                    <Label Margin="0,0,0,15"
+               Text="Äänestä aktiviteettiä"
+               TextColor="Black"
+               FontSize="20"/>
+
+                    <Label Text="10"
+                   x:Name="timer"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   TextColor="Gold"
+                   VerticalOptions="StartAndExpand" 
+                   HorizontalOptions="Center" />
+
+                </Grid>
+
+                <CollectionView x:Name="Collection"
                                     ItemsSource= "{Binding Items}"
                                     SelectionMode= "Single" 
                                     SelectedItem="{Binding Selected, Mode=TwoWay}">
