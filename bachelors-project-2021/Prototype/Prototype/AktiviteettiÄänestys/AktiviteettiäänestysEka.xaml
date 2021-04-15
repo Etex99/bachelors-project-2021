@@ -8,21 +8,23 @@
     <!-- copy pase go BRRRRRR-->
     <StackLayout Margin="20">
 
-        <Grid Padding="1"
-              RowDefinitions="Auto, *"
-              ColumnDefinitions="Auto, *">
+        <Grid Margin="0">
+            
             <Label Margin="0,0,0,15"
+               HorizontalOptions="Start"
+               VerticalOptions="Start"
                Text="Äänestä aktiviteettiä"
                TextColor="Black"
                FontSize="20"/>
 
-        <Label Text="10"
+            <Label Text="10"
                    x:Name="timer"
                    FontAttributes="Bold"
                    FontSize="20"
                    TextColor="Gold"
-                   VerticalOptions="StartAndExpand" 
-                   HorizontalOptions="Center" />
+                   VerticalOptions="Start"
+                   HorizontalOptions="End"
+                    />
 
         </Grid>
         
@@ -55,7 +57,7 @@
                                 HeightRequest="45"
                                 Clicked="btnPopupButton_Clicked"
                  
-                                Text="Valitse toimenpide"    />
+                                Text="valitse"    />
 
 						<Frame
                                 Grid.Column="1"

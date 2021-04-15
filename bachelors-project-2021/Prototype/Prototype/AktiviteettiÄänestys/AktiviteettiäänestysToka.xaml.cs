@@ -46,10 +46,9 @@ namespace Prototype
 
                 if (_countSeconds == 0)
                 {
-                    Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-                    {
+                  
                         return false;
-                    });
+              
 
 
                 }

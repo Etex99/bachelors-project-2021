@@ -57,9 +57,9 @@ namespace Prototype
         }
         
         private async void Vote1() {
-            // await Task.Delay(Main.GetInstance().client.vote1Time * 1000);
+         //   await Task.Delay(Main.GetInstance().client.vote1Time * 1000);
 
-            _countSeconds = Main.GetInstance().client.vote1Time;
+              _countSeconds = Main.GetInstance().client.vote1Time;
              Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 _countSeconds--;
@@ -69,21 +69,18 @@ namespace Prototype
 
                 if (_countSeconds == 0)
                 {
-                    Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-                    {
+                   
                         return false;
-                    }); 
-
-
+  
                 }
 
                 return Convert.ToBoolean(_countSeconds);
-            }); 
+            });  
 
 
             FinishVote1();
             bool success = await Main.GetInstance().client.ReceiveVote2Candidates();
-            if (success)
+            if (success && _countSeconds == 0)
             {
                 //received vote 2 changing view
                 await Navigation.PushAsync(new AktiviteettiäänestysToka());
@@ -114,6 +111,7 @@ namespace Prototype
 
                     f.IsVisible = false;
                 }
+
             }
         }
 

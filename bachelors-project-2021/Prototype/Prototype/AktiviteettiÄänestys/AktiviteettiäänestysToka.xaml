@@ -12,23 +12,22 @@
 					         Orientation="Vertical"
                              WidthRequest="200">
 
-
-                <Grid Padding="1"
-              RowDefinitions="Auto, *"
-              ColumnDefinitions="Auto, *">
+                <Grid Margin="0">
 
                     <Label Margin="0,0,0,15"
-               Text="Äänestä aktiviteettiä"
-               TextColor="Black"
-               FontSize="20"/>
+                       Text="Äänestä aktiviteettiä"
+                       TextColor="Black"
+                       VerticalOptions="Start" 
+                       HorizontalOptions="StartAndExpand"
+                       FontSize="20"/>
 
                     <Label Text="10"
                    x:Name="timer"
                    FontAttributes="Bold"
                    FontSize="20"
                    TextColor="Gold"
-                   VerticalOptions="StartAndExpand" 
-                   HorizontalOptions="Center" />
+                   VerticalOptions="Start" 
+                   HorizontalOptions="EndAndExpand" />
 
                 </Grid>
 
