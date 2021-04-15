@@ -36,7 +36,14 @@ namespace Prototype
             //alustetaan emojit kyselyn emojeilla
             Emojit = new List<CollectionItem>();
             List<Emoji> temp = SurveyManager.GetInstance().GetSurvey().emojis;
-
+            
+            //Jeesusteippi ratkaisu, joka on kommentoitu poissa (IF ALL ELSE FAILS T: Discord nörtti)
+            /*
+            if (temp.Count > 7)
+            {
+                temp.RemoveRange(7, 7);
+            }
+            */
 
             //asetetaan otsikoksi kyselyn nimi
             title.Text = surveyName;
