@@ -100,7 +100,7 @@ namespace Prototype
 			//prepare first vote
 			voteCalc = new ActivityVote();
 			voteCalc.calcVote1Candidates(survey.emojis, data.GetEmojiResults());
-			Task.Run( async () =>
+			Task.Run(() =>
 			{
 				RunActivityVote();
 			});
@@ -194,60 +194,7 @@ namespace Prototype
 					} while (newClient.Status != TaskStatus.RanToCompletion);
 
 					//Child task to communicate with new client
-					Task childtask = Task.Run( async () =>
-					{
-						TcpClient client = newClient.Result;
-
-						//prepare message for sending survey
-						string message = JsonConvert.SerializeObject(survey);
-						Console.WriteLine($"DEBUG: message: {message}");
-						byte[] bytes = Encoding.Unicode.GetBytes(message);
-
-						try
-						{
-							NetworkStream ns = client.GetStream();
-							//send message
-							ns.Write(bytes, 0, bytes.Length);
-							Console.WriteLine($"Sent {bytes.Length} bytes worth of survey");
-
-							//try get reply
-							byte[] buffer = new byte[128];
-							Task<int> emojiReply = ns.ReadAsync(buffer, 0, buffer.Length);
-
-							//allow cancellation of task here.
-							do
-							{
-								if (token.IsCancellationRequested)
-								{
-									client.Close();
-									token.ThrowIfCancellationRequested();
-								}
-								await Task.WhenAny(new Task[] { Task.Delay(1000), emojiReply });
-							} while (emojiReply.Status != TaskStatus.RanToCompletion);
-
-							//process reply
-							string reply = Encoding.Unicode.GetString(buffer, 0, emojiReply.Result);
-							Console.WriteLine($"Bytes read: {emojiReply.Result}");
-							Console.WriteLine($"Client sent: {reply}");
-							
-							//add to surveydata
-							data.AddEmojiResults(int.Parse(reply));
-
-							//add this client to list of clients
-							clients.Add(client);
-						}
-						catch (OperationCanceledException) {
-							Console.WriteLine("Cancelling task, Client was dropped for being slow poke");
-						}
-						catch (Exception e)
-						{
-							Console.WriteLine($"Something went wrong in first communication with client: {client.Client.RemoteEndPoint}");
-							Console.WriteLine(e);
-							client.Close();
-							return;
-						}
-						
-					}, token);
+					Task childtask = Task.Run(() => ServeNewClient(newClient.Result, token));
 				}				
 			}
 			catch (OperationCanceledException)
@@ -260,6 +207,70 @@ namespace Prototype
 				Console.WriteLine(e);
 			}
 		}
+		private async void ServeNewClient(TcpClient client, CancellationToken token)
+		{
+			//prepare message for sending survey
+			string message = JsonConvert.SerializeObject(survey);
+			Console.WriteLine($"DEBUG: message: {message}");
+			byte[] bytes = Encoding.Unicode.GetBytes(message);
+
+			try
+			{
+				NetworkStream ns = client.GetStream();
+
+				//if we cant write to networkstream we don't want this client anymore
+				if (!ns.CanWrite) return;
+
+				//send message
+				ns.Write(bytes, 0, bytes.Length);
+				Console.WriteLine($"Sent {bytes.Length} bytes worth of survey");
+
+				//try get reply
+				byte[] buffer = new byte[128];
+				Task<int> emojiReply = ns.ReadAsync(buffer, 0, buffer.Length);
+
+				//allow cancellation of task here.
+				do
+				{
+					if (token.IsCancellationRequested)
+					{
+						client.Close();
+						token.ThrowIfCancellationRequested();
+					}
+					await Task.WhenAny(new Task[] { Task.Delay(1000), emojiReply });
+				} while (emojiReply.Status != TaskStatus.RanToCompletion);
+
+				if (emojiReply.Result == 0)
+				{
+					//we read nothing out of disconnected network, nice
+					//we don't want this client
+					return;
+				}
+
+				//process reply
+				string reply = Encoding.Unicode.GetString(buffer, 0, emojiReply.Result);
+				Console.WriteLine($"Bytes read: {emojiReply.Result}");
+				Console.WriteLine($"Client sent: {reply}");
+
+				//add to surveydata
+				data.AddEmojiResults(int.Parse(reply));
+
+				//add this client to list of clients
+				clients.Add(client);
+			}
+			catch (OperationCanceledException)
+			{
+				Console.WriteLine("Cancelling task, Client was dropped for being slow poke");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine($"Something went wrong in first communication with client: {client.Client.RemoteEndPoint}");
+				Console.WriteLine(e);
+				client.Close();
+				return;
+			}
+		}
+
 		private async Task AcceptVotes1(int seconds) {
 
 			//listen to each client for their answer
@@ -281,6 +292,7 @@ namespace Prototype
 							int bytesRead = 0;
 							Console.WriteLine("Waiting for client vote 1");
 							bytesRead = ns.Read(buffer, 0, buffer.Length);
+
 							Console.WriteLine($"DEBUG: AcceptVotes 1 read {bytesRead} bytes from: {client}");
 
 							//set timeout back to normal
@@ -397,6 +409,12 @@ namespace Prototype
 				try
 				{
 					NetworkStream ns = client.GetStream();
+
+					if (!ns.CanWrite)
+					{
+						return;
+					}
+
 					ns.Write(message, 0, message.Length);
 				}
 				catch (ObjectDisposedException e)
@@ -421,6 +439,12 @@ namespace Prototype
 				try
 				{
 					NetworkStream ns = client.GetStream();
+
+					if (!ns.CanWrite)
+					{
+						return;
+					}
+
 					ns.Write(message, 0, message.Length);
 				}
 				catch (ObjectDisposedException e)

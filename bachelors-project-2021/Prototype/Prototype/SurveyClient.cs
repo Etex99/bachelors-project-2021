@@ -71,6 +71,7 @@ namespace Prototype
 
 							//if no error occurs return success
 							return true;
+	
 
 						}
 						catch (JsonException e) {
@@ -81,7 +82,12 @@ namespace Prototype
 						{
 							Console.WriteLine("Host abruptly closed connection, most likely");
 							Console.WriteLine(e);
-						} 
+						}
+						catch (NotSupportedException e)
+						{
+							Console.WriteLine("Stream does not support that operation");
+							Console.WriteLine(e);
+						}
 						finally 
 						{
 							//received garbage, lets try that again.
@@ -98,6 +104,7 @@ namespace Prototype
 				Console.WriteLine("Socket exception occured in LookForHost");
 				Console.WriteLine(e);
 			}
+			
 
 			return false;
 		}
@@ -120,6 +127,11 @@ namespace Prototype
 			catch (ObjectDisposedException e)
 			{
 				Console.WriteLine("Host abruptly closed connection, most likely");
+				Console.WriteLine(e);
+			}
+			catch (NotSupportedException e)
+			{
+				Console.WriteLine("Stream does not support that operation");
 				Console.WriteLine(e);
 			}
 
@@ -146,6 +158,11 @@ namespace Prototype
 				Console.WriteLine("Host abruptly closed connection, most likely");
 				Console.WriteLine(e);
 			}
+			catch (NotSupportedException e)
+			{
+				Console.WriteLine("Stream does not support that operation");
+				Console.WriteLine(e);
+			}
 
 			return false;
 		}
@@ -170,6 +187,11 @@ namespace Prototype
 				Console.WriteLine("Host abruptly closed connection, most likely");
 				Console.WriteLine(e);
 			}
+			catch (NotSupportedException e)
+			{
+				Console.WriteLine("Stream does not support that operation");
+				Console.WriteLine(e);
+			}
 
 			return false;
 		}
@@ -181,8 +203,14 @@ namespace Prototype
 				NetworkStream ns = client.GetStream();
 				byte[] readBuffer = new byte[8192];
 				int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
-				summary = JsonConvert.DeserializeObject<SurveyData>(Encoding.Unicode.GetString(readBuffer, 0, bytesRead));
 
+				if (bytesRead == 0)
+				{
+					Console.WriteLine("Somehow we just read something from disconnected network, this is fine.");
+					return false;
+				}
+
+				summary = JsonConvert.DeserializeObject<SurveyData>(Encoding.Unicode.GetString(readBuffer, 0, bytesRead));
 				Console.WriteLine($"Received summary: {summary}");
 				return true;
 			}
@@ -196,6 +224,11 @@ namespace Prototype
 				Console.WriteLine($"Connection closed or lost to server at: {client.Client.RemoteEndPoint}");
 				Console.WriteLine(e);
 			}
+			catch (NotSupportedException e)
+			{
+				Console.WriteLine("Stream does not support that operation");
+				Console.WriteLine(e);
+			}
 
 			return false;
 		}
@@ -207,6 +240,13 @@ namespace Prototype
 				byte[] readBuffer = new byte[2048];
 				Console.WriteLine("Waiting for activity vote");
 				int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+
+				if (bytesRead == 0)
+				{
+					Console.WriteLine("Somehow we just read something from disconnected network, this is fine.");
+					return false;
+				}
+
 				Console.WriteLine($"Bytes read: {bytesRead}");
 
 				//expecting JSON string containing Dictionary<int, IList<string>>
@@ -217,6 +257,13 @@ namespace Prototype
 				readBuffer = new byte[64];
 				Console.WriteLine("Waiting for vote 1 timer");
 				bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+
+				if (bytesRead == 0)
+				{
+					Console.WriteLine("Somehow we just read something from disconnected network, this is fine.");
+					return false;
+				}
+
 				Console.WriteLine($"Bytes read: {bytesRead}");
 
 				//expecting string containing int
@@ -238,6 +285,11 @@ namespace Prototype
 				Console.WriteLine("Received bad int");
 				Console.WriteLine(e);
 			}
+			catch (NotSupportedException e)
+			{
+				Console.WriteLine("Stream does not support that operation");
+				Console.WriteLine(e);
+			}
 
 			return false;
 
@@ -251,6 +303,13 @@ namespace Prototype
 				byte[] readBuffer = new byte[2048];
 				Console.WriteLine("Waiting for activity vote 2");
 				int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+
+				if (bytesRead == 0)
+				{
+					Console.WriteLine("Somehow we just read something from disconnected network, this is fine.");
+					return false;
+				}
+
 				Console.WriteLine($"Bytes read: {bytesRead}");
 
 				//expecting JSON string containing List<string>
@@ -261,6 +320,13 @@ namespace Prototype
 				readBuffer = new byte[64];
 				Console.WriteLine("Waiting for vote 2 timer");
 				bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+
+				if (bytesRead == 0)
+				{
+					Console.WriteLine("Somehow we just read something from disconnected network, this is fine.");
+					return false;
+				}
+
 				Console.WriteLine($"Bytes read: {bytesRead}");
 
 				//expecting string containing int
@@ -282,6 +348,11 @@ namespace Prototype
 				Console.WriteLine("Received bad int");
 				Console.WriteLine(e);
 			}
+			catch (NotSupportedException e)
+			{
+				Console.WriteLine("Stream does not support that operation");
+				Console.WriteLine(e);
+			}
 
 			return false;
 
@@ -296,6 +367,13 @@ namespace Prototype
 				byte[] readBuffer = new byte[256];
 				Console.WriteLine("Waiting for vote result");
 				int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+
+				if (bytesRead == 0)
+				{
+					Console.WriteLine("Somehow we just read something from disconnected network, this is fine.");
+					return false;
+				}
+
 				Console.WriteLine($"Bytes read: {bytesRead}");
 
 				//expecting string containing voteResult
@@ -307,6 +385,11 @@ namespace Prototype
 			catch (ObjectDisposedException e)
 			{
 				Console.WriteLine($"Connection closed or lost to server at: {client.Client.RemoteEndPoint}");
+				Console.WriteLine(e);
+			}
+			catch (NotSupportedException e)
+			{
+				Console.WriteLine("Stream does not support that operation");
 				Console.WriteLine(e);
 			}
 
