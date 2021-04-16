@@ -23,7 +23,7 @@ namespace Prototype
             int count = 0;
             double calculateScale = 0.0;
             Dictionary<int, int> sorted = new Dictionary<int, int>();
-            foreach (var item in Main.GetInstance().host.data.GetEmojiResults().OrderByDescending(item => item.Value))
+            foreach (var item in Main.GetInstance().client.summary.GetEmojiResults().OrderByDescending(item => item.Value))
             {
                 sorted.Add(item.Key, item.Value);
             }
