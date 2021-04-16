@@ -15,8 +15,8 @@ namespace Prototype
     {
 
         private int _countSeconds = 10;
+
         // Copy paste go brrrrrrrR
-        //Tätä pitänee muuttaa siten, että äänestyksessä mukana vain kyselyn luonnin aikana valitut aktiviteetit
 
         public IList<CollectionItem> Items { get; set; }
         public class CollectionItem
@@ -45,19 +45,19 @@ namespace Prototype
             List<Emoji> Emojis = Main.GetInstance().client.survey.emojis;
             Items = new List<CollectionItem>();
 
-            foreach (var item in Main.GetInstance().client.voteCandidates1)
+          foreach (var item in Main.GetInstance().client.voteCandidates1)
             {
                 Console.WriteLine("Key: {0}, Value: {1}", item.Key, Emojis[item.Key].activities);
                 Items.Add(new CollectionItem(Emojis[item.Key], Emojis[item.Key].activities));
-            }
-
+            } 
+      
             BindingContext = this;
 
             Vote1();
         }
         
         private async void Vote1() {
-         //   await Task.Delay(Main.GetInstance().client.vote1Time * 1000);
+             await Task.Delay(Main.GetInstance().client.vote1Time * 1000);
 
               _countSeconds = Main.GetInstance().client.vote1Time;
              Device.StartTimer(TimeSpan.FromSeconds(1), () =>
@@ -70,21 +70,21 @@ namespace Prototype
                 if (_countSeconds == 0)
                 {
                    
-                        return false;
+                   return false;
   
                 }
 
                 return Convert.ToBoolean(_countSeconds);
-            });  
+            });
 
 
             FinishVote1();
-            bool success = await Main.GetInstance().client.ReceiveVote2Candidates();
-            if (success && _countSeconds == 0)
-            {
-                //received vote 2 changing view
-                await Navigation.PushAsync(new AktiviteettiäänestysToka());
-            } 
+              bool success = await Main.GetInstance().client.ReceiveVote2Candidates();
+                 if (success && _countSeconds == 0)
+                 {
+                     //received vote 2 changing view
+                     await Navigation.PushAsync(new AktiviteettiäänestysToka());
+                 } 
         }
 
         //Device back button disabled
@@ -100,10 +100,18 @@ namespace Prototype
             // Edelleen :DDD
             if (sender is Button b && b.Parent is Grid g && g.Children[2] is Frame f)
             {
+
+               if ( b.Text == null )
+                {
+                    b.Text = "Valitse yksi";
+                }
+
+
                 if (f.IsVisible == false)
                 {
 
                     f.IsVisible = true;
+                    
                 }
 
                 else if (f.IsVisible == true)
@@ -118,7 +126,7 @@ namespace Prototype
     
 
 
-        async void FinishVote1()
+       async void FinishVote1()
         {
             //Copy and Paste
             //asetetaan emojit survey olioon
@@ -132,6 +140,6 @@ namespace Prototype
                 answer.Add(item.Emoji.ID, item.Selected);
             }
           await Main.GetInstance().client.SendVote1Result(answer);
-        }
+        } 
     }
 }

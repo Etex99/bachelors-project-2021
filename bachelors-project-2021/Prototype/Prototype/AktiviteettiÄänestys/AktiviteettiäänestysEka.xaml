@@ -49,7 +49,7 @@
                                 WidthRequest="60" />
 
 						<Button Grid.Column="1"
-                            
+                                x:Name="VBtn"
                                 Margin="10,10,10,0"
                                 VerticalOptions="Center"
                                 HorizontalOptions="CenterAndExpand"
@@ -57,7 +57,7 @@
                                 HeightRequest="45"
                                 Clicked="btnPopupButton_Clicked"
                  
-                                Text="valitse"    />
+                                Text="{Binding Selected }"    />
 
 						<Frame
                                 Grid.Column="1"
