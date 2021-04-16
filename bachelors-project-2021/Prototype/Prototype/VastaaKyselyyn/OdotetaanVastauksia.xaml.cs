@@ -12,9 +12,14 @@ namespace Prototype
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class OdotetaanVastauksia : ContentPage
     {
+        public string roomCode { get; set; } = "Roomcode: ";
+
+
         public OdotetaanVastauksia()
         {
             InitializeComponent();
+            roomCode += SurveyManager.GetInstance().GetSurvey().RoomCode;
+            BindingContext = this; 
 
             //Ei enää mahdollista päästä takaisin kysleyn luontiin painamalla navigoinnin backbuttonia 
             NavigationPage.SetHasBackButton(this, false);

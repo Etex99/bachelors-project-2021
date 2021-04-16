@@ -14,11 +14,17 @@
     <ContentPage.Content>
         <StackLayout>
 
+            <Label Text="{Binding roomCode}"
+                   FontSize="20"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Start"
+                   Margin="20,30,0,0"/>
+            
             <ActivityIndicator IsRunning="true" 
                                 Color="{StaticResource AppPrimaryColor}"
                                HorizontalOptions="Center"
                                VerticalOptions="CenterAndExpand"
-                               Margin="0,170,0,0"
+                               Margin="0,120,0,0"
                                Scale="2.5"/>
             
             <Button Text="Jatka tulosten tarkasteluun"
