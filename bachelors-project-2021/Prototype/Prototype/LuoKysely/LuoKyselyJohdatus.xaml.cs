@@ -85,7 +85,7 @@ namespace Prototype
             SurveyManager.GetInstance().ResetSurvey();
 
             // siirrytään etusivulle
-            await Navigation.PushAsync(new MainPage());
+            await Navigation.PopToRootAsync();
         }
     }
 
