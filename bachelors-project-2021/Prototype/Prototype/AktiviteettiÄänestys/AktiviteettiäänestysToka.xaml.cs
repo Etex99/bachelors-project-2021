@@ -34,8 +34,6 @@ namespace Prototype
             Vote2();
         }
         private async void Vote2() {
-           // await Task.Delay(Main.GetInstance().client.vote2Time * 1000);
-
             _countSeconds = Main.GetInstance().client.vote2Time;
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
@@ -55,6 +53,8 @@ namespace Prototype
 
                 return Convert.ToBoolean(_countSeconds);
             });
+
+            await Task.Delay(Main.GetInstance().client.vote2Time * 1000);
 
             if (Selected != null)
             {
