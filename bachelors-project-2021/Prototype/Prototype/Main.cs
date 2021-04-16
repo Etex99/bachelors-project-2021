@@ -15,7 +15,8 @@ namespace Prototype
 			Browsing = 1,
 			Editing = 2,
 			Hosting = 3,
-			Participating = 4
+			Participating = 4,
+			CreatingNew = 5
 		}
 		public MainState state;
 		public SurveyClient client = null;
@@ -33,6 +34,13 @@ namespace Prototype
 		public void EditSurvey() {
 			Console.WriteLine($"DEBUG: Editing selected survey");
 			state = MainState.Editing;
+
+		}
+		public void CreateNewSurvey()
+		{
+			Console.WriteLine("Creating new survey");
+			state = MainState.CreatingNew;
+			SurveyManager.GetInstance().ResetSurvey();
 		}
 
 		public async Task<bool> JoinSurvey(string RoomCode) {

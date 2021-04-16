@@ -126,6 +126,7 @@ namespace Prototype
         async void LuoUusiClicked(object sender, EventArgs e)
         {
             // siirrytään "luo uus kysely" sivulle
+            Main.GetInstance().CreateNewSurvey();
             await Navigation.PushAsync(new LuoKyselyJohdatus()); 
         }
 
