@@ -54,7 +54,14 @@ namespace Prototype
         }
         async void PoistuClicked(object sender, EventArgs e)
         {
-            await Navigation.PopToRootAsync();
+            var res = await DisplayAlert("Oletko varma että tahdot poistua kyselystä?", "", "Kyllä", "Ei");
+
+            if (res == true)
+            {
+                await Navigation.PopToRootAsync();
+            }
+            else return;
+
         }
     }
 }

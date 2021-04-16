@@ -30,10 +30,20 @@ namespace Prototype
             }
         }        
 
-        private void Poistu(object sender, EventArgs e)
+        private async void Poistu(object sender, EventArgs e)
         {
-            Main.GetInstance().client.DestroyClient();
-            Navigation.PopToRootAsync();
+
+            // Varmistus kyselystä poistumisen yhteydessä
+
+             var res = await DisplayAlert("Oletko varma että tahdot poistua kyselystä?", "", "Kyllä", "Ei");
+
+            if (res == true)
+            {
+                Main.GetInstance().client.DestroyClient();
+                await Navigation.PopToRootAsync();
+            }
+            else return;
+            
 
         }
 

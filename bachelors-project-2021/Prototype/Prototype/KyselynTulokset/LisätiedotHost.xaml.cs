@@ -53,7 +53,16 @@ namespace Prototype
         async void LopetaClicked(object sender, EventArgs e)
         {
             //Sulkee kyselyn kaikilta osallisujilta (linjat poikki höhö XD)
-            await Navigation.PopToRootAsync();
+           
+
+            var res = await DisplayAlert("Oletko varma että tahdot sulkea kyselyn?", "", "Kyllä", "Ei");
+
+            if (res == true)
+            {
+                await Navigation.PopToRootAsync();
+            }
+            else return;
+
         }
         async void JatkaClicked(object sender, EventArgs e)
         {

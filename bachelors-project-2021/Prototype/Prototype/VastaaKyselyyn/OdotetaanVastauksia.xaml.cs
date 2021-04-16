@@ -33,10 +33,19 @@ namespace Prototype
 
         }
 
-        private void Peruuta(object sender, EventArgs e)
+        private async void Peruuta(object sender, EventArgs e)
         {
+
+            //Varmistu kyselyn peruuttamisen yhteydessä
+
+            var res = await DisplayAlert("Oletko varma että tahdot peruuttaa kyselyn?", "", "Kyllä", "Ei");
+
+            if (res == true) {
+                Main.GetInstance().host.DestroyHost();
+                await Navigation.PopToRootAsync();
+            }
+            else return; 
            
-            Navigation.PopToRootAsync();
 
         }
     }
