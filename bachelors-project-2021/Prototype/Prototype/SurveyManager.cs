@@ -35,7 +35,7 @@ namespace Prototype
             try
             {
                 string jsontext = File.ReadAllText(path);
-                survey = JsonConvert.DeserializeObject<Survey>(jsontext);
+                survey = JsonConvert.DeserializeObject<Survey>(jsontext, new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace });
             }
             catch (FileNotFoundException)
             {
