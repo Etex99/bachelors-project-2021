@@ -133,6 +133,7 @@ namespace Prototype
         async void TallennetutKyselytClicked(object sender, EventArgs e)
         {
             // siirrytään "Tallenetut Kyselyt" sivulle
+            Main.GetInstance().BrowseSurveys();
             await Navigation.PushAsync(new TallennetutKyselyt()); 
         }
 
