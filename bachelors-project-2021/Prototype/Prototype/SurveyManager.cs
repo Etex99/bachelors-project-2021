@@ -25,7 +25,16 @@ namespace Prototype
             string path = Path.Combine(folder, name.ToLower());
             File.WriteAllText(path, jsonString);
 
-            return true;
+            if (File.Exists(path) == true)
+            {
+                Console.WriteLine("File saving successful");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("File saving failed");
+                return false;
+            }
         }
 
         //Method for loading the survey by selecting the file with name
