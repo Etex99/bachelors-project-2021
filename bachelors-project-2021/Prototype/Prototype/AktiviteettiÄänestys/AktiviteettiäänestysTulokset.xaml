@@ -8,9 +8,15 @@
         <StackLayout>
 
             <AbsoluteLayout Margin="15"  VerticalOptions ="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-                <Label x:Name="result" Text="Tähän äänestyksen tulos"
-                   FontSize="25"
+                <Label x:Name="result" Margin="5"  
+                       Text="Tähän äänestyksen tulos"
+                       FontSize="25" 
+                       HeightRequest="500"
+                       VerticalTextAlignment="Center" 
+                       HorizontalTextAlignment="Center"
                    />
+                
+               
             </AbsoluteLayout>
 
             <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
