@@ -94,10 +94,11 @@ namespace Prototype
             //Jaetaan kysely 
             Main.GetInstance().HostSurvey();
         }
-        void MuokkaaClicked(object sender, EventArgs e)
+        async void MuokkaaClicked(object sender, EventArgs e)
         {
-
-            // Siirrytään kyselyn muokkaukseen 
+            // Siirrytään kyselyn muokkaukseen
+            Main.GetInstance().EditSurvey();
+            await Navigation.PushAsync(new LuoKyselyJohdatus());
         }
 
         void PoistaClicked(object sender, EventArgs e)
