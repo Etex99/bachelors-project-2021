@@ -14,6 +14,7 @@ namespace Prototype
     {
 
         public IList<string> introMessage { get; set; }
+        public string selectedItem = null;
 
 
 
@@ -22,6 +23,15 @@ namespace Prototype
             InitializeComponent();
 
             introMessage = Const.intros;
+
+
+
+            if(Main.GetInstance().GetMainState() == Main.MainState.Editing)
+            {
+                selectedItem = SurveyManager.GetInstance().GetSurvey().introMessage;
+                JButton.Text = selectedItem;
+                JatkaBtn.IsEnabled = true;
+            }
            
 
        
@@ -54,7 +64,7 @@ namespace Prototype
 
         void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string selectedItem = e.CurrentSelection[0] as string;
+            selectedItem = e.CurrentSelection[0] as string;
 
             //Change the text of the button based on selected intro message
             
@@ -72,7 +82,7 @@ namespace Prototype
         async void JatkaButtonClicked(object sender, EventArgs e)
         {
             //kyselyn johdatuslause asetetaan.
-            // SurveyManager.GetInstance().GetSurvey().introMessage = 
+            SurveyManager.GetInstance().GetSurvey().introMessage = selectedItem;
           
 
             //siirrytään "luo uus kysely 2/3" sivulle 
@@ -84,8 +94,17 @@ namespace Prototype
             //survey resetoidaan
             SurveyManager.GetInstance().ResetSurvey();
 
-            // siirrytään etusivulle
-            await Navigation.PopToRootAsync();
+            //Jos ollaan edit tilassa, niin siirrytään takaisin kyselyntarkastelu sivulle, muutoin main menuun
+            if(Main.GetInstance().GetMainState() == Main.MainState.Editing)
+            {
+                Main.GetInstance().BrowseSurveys();
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                // siirrytään etusivulle
+                await Navigation.PopToRootAsync();
+            }
         }
     }
 

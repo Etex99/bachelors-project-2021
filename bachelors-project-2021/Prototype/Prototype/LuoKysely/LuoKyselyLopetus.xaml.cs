@@ -15,11 +15,15 @@ namespace Prototype
         public LuoKyselyLopetus()
         {
             InitializeComponent();
+
+            if (Main.GetInstance().GetMainState() == Main.MainState.Editing)
+            {
+                NameEditor.Text = KyselynTarkastelu.surveyName.Substring(0, KyselynTarkastelu.surveyName.LastIndexOf("."));
+                KeyEditor.Text = SurveyManager.GetInstance().GetSurvey().RoomCode;
+            }
         }
         async void TallennaJaPoistuClicked(object sender, EventArgs e)
         {
-
-
             if (NameEditor.Text != null && KeyEditor.Text != null)
             {
 
