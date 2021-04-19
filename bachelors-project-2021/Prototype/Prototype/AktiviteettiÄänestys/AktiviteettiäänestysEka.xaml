@@ -9,8 +9,8 @@
     <StackLayout Margin="20">
 
         <Grid Margin="0">
-            
-            <Label Margin="0,0,0,15"
+
+            <Label Margin="5,0,0,0"
                HorizontalOptions="Start"
                VerticalOptions="Start"
                Text="Äänestä aktiviteettiä"
@@ -20,6 +20,7 @@
             <Label Text="10"
                    x:Name="timer"
                    FontAttributes="Bold"
+                    Margin="15,0, 20,0"
                    FontSize="20"
                    TextColor="Gold"
                    VerticalOptions="Start"
@@ -57,7 +58,7 @@
                                 HeightRequest="45"
                                 Clicked="btnPopupButton_Clicked"
                  
-                                Text="{Binding Selected }"    />
+                                Text="Valitse aktiviteetti"    />
 
 						<Frame
                                 Grid.Column="1"
@@ -110,6 +111,9 @@
 
 		</CollectionView>
 
-	</StackLayout>
+     
+
+   
+    </StackLayout>
 
 </ContentPage>

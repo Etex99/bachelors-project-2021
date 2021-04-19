@@ -7,34 +7,40 @@
     <ContentPage.Content>
 
         
-        <StackLayout >
-			<StackLayout HorizontalOptions="Center" VerticalOptions="Center"
-					         Orientation="Vertical"
-                             WidthRequest="200">
+        <StackLayout Margin="10">
 
-                <Grid Margin="0">
+            <Grid Margin="0">
 
-                    <Label Margin="0,0,0,15"
+                <Label Margin="10,0,0,0"
                        Text="Äänestä aktiviteettiä"
                        TextColor="Black"
                        VerticalOptions="Start" 
-                       HorizontalOptions="StartAndExpand"
+                       HorizontalOptions="Start"
                        FontSize="20"/>
 
-                    <Label Text="10"
+                <Label Text="10"
                    x:Name="timer"
+                   Margin="15,0, 20,0"
                    FontAttributes="Bold"
                    FontSize="20"
                    TextColor="Gold"
                    VerticalOptions="Start" 
-                   HorizontalOptions="EndAndExpand" />
+                   HorizontalOptions="End" />
 
-                </Grid>
+            </Grid>
+            
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
+					         Orientation="Vertical"
+                             WidthRequest="200"
+                             >
+
+              
 
                 <CollectionView x:Name="Collection"
                                     ItemsSource= "{Binding Items}"
                                     SelectionMode= "Single" 
-                                    SelectedItem="{Binding Selected, Mode=TwoWay}">
+                                    SelectedItem="{Binding Selected, Mode=TwoWay}"
+                                    Margin="0,20,0,0">
 
 					<CollectionView.ItemTemplate>
 						<DataTemplate>

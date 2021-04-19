@@ -8,8 +8,8 @@
             <Label Text="Odotetaan muita vastaajia..."
                     Margin="0,20,0,0"
                     FontSize="20"
-                    HorizontalOptions="Start"
-                    VerticalOptions="CenterAndExpand"/>
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"/>
 
             <ActivityIndicator IsRunning="true" 
                                 Color="{StaticResource AppPrimaryColor}"

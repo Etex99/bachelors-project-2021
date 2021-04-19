@@ -25,6 +25,8 @@ namespace Prototype
             public IList<string> ActivityChoises { get; set; }
             public string Selected { get; set; } = null;
 
+  
+
             public CollectionItem(Emoji emoji, IList<string> activities)
             {
                 Emoji = emoji;
@@ -34,6 +36,8 @@ namespace Prototype
                 {
                     Console.WriteLine("Item: {0}", item);
                 }
+
+
             }
         }
 
@@ -49,6 +53,8 @@ namespace Prototype
             {
                 Console.WriteLine("Key: {0}, Value: {1}", item.Key, Emojis[item.Key].activities);
                 Items.Add(new CollectionItem(Emojis[item.Key], Emojis[item.Key].activities));
+
+               
             } 
       
             BindingContext = this;
@@ -77,6 +83,7 @@ namespace Prototype
             });
 
             await Task.Delay(Main.GetInstance().client.vote1Time * 1000);
+
             FinishVote1();
             bool success = await Main.GetInstance().client.ReceiveVote2Candidates();
             if (success)
@@ -99,11 +106,6 @@ namespace Prototype
             // Edelleen :DDD
             if (sender is Button b && b.Parent is Grid g && g.Children[2] is Frame f)
             {
-
-               if ( b.Text == null )
-                {
-                    b.Text = "Valitse yksi";
-                }
 
 
                 if (f.IsVisible == false)
@@ -137,8 +139,14 @@ namespace Prototype
                     break;
                 }
                 answer.Add(item.Emoji.ID, item.Selected);
+
+                
             }
           await Main.GetInstance().client.SendVote1Result(answer);
+
+        
+
+
         } 
     }
 }
