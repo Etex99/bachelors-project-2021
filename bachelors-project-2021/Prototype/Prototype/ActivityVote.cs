@@ -82,6 +82,16 @@ namespace Prototype
 
         public void calcVote2Candidates(Dictionary<(int, string), int> vote1Results)
         {
+            //fallback, if nobody votes in phase 1
+            if (vote1Results.Count == 0)
+            {
+                Console.WriteLine("We did not receive any votes in phase 1, default fallback = first activity in activities of each emoji");
+				foreach (var item in vote1Candidates)
+				{
+                    vote2Candidates.Add(item.Value.ElementAt(0));
+				}
+            }
+
             //for getting a sorted list out of vote1Results
             Dictionary<(int, string), int> sorted = new Dictionary<(int, string), int>();
             foreach (KeyValuePair<(int, string), int> item in vote1Results.OrderByDescending(key => key.Value))
@@ -117,6 +127,13 @@ namespace Prototype
 
         public string calcFinalResult(Dictionary<string, int> vote2Results)
         {
+            //fallback, if nobody voted in phase 2
+			if (vote2Results.Count == 0)
+			{
+                Console.WriteLine("We did not receive any votes in phase 2, default fallback = activity of the emoji with highest level of concern");
+                return vote1Candidates.ElementAt(0).Value.ElementAt(0);
+			}
+
             Dictionary<string, int> sorted = new Dictionary<string, int>();
             foreach (KeyValuePair<string, int> item in vote2Results.OrderByDescending(key => key.Value))
             {
