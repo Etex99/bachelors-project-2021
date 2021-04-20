@@ -24,18 +24,24 @@ namespace Prototype
 
             Main.GetInstance().host.StartActivityVote();
 
-            _countSeconds = Main.GetInstance().host.voteCalc.vote1Timer + Main.GetInstance().host.voteCalc.vote2Timer;
+            //timer set to vote times, cooldowns, plus one extra
+            _countSeconds = Main.GetInstance().host.voteCalc.vote1Timer + Main.GetInstance().host.voteCalc.vote2Timer + ( 3 * Main.GetInstance().host.voteCalc.coolDown);
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 _countSeconds--;
 
                  timer.Text = _countSeconds.ToString();
-                
+
+				if (Main.GetInstance().host.voteTask.IsCompleted)
+				{
+                    Navigation.PushAsync(new AktiviteettiäänestysTulokset());
+                    return false;
+                }
+                    
 
                  if (_countSeconds == 0) {
                     Device.StartTimer(TimeSpan.FromSeconds(1), () =>
                     {
-                        Navigation.PushAsync(new AktiviteettiäänestysTulokset());
                         return false;
                     });
 
@@ -44,12 +50,7 @@ namespace Prototype
 
                 return Convert.ToBoolean(_countSeconds);
             });
-
-            
-
-
         }
-
 
         //Device back button disabled
         protected override bool OnBackButtonPressed()

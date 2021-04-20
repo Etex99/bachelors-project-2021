@@ -23,7 +23,7 @@ namespace Prototype
 
 		private Survey survey;
         public SurveyData data { get; private set; }
-		public ActivityVote voteCalc { get; private set; } = null;
+		
 		private List<TcpClient> clients;
 		private List<IPAddress> clientAddresses;
 
@@ -31,6 +31,10 @@ namespace Prototype
 		private List<Task> cancellableTasks;
 		private CancellationTokenSource tokenSource;
 		private CancellationToken token;
+
+		//vote
+		public ActivityVote voteCalc { get; private set; } = null;
+		public Task voteTask { get; private set; } = null;
 
 		public SurveyHost() {
 			data = new SurveyData();
@@ -60,22 +64,24 @@ namespace Prototype
 		}
 
 		//Main sequence of running activity vote
-		public async void RunActivityVote()
+		public async Task RunActivityVote()
 		{
 			//send first vote to all candidates
 			SendToAllClients(voteCalc.GetVote1Candidates());
 			SendToAllClients(voteCalc.vote1Timer.ToString());
 
-			//for first vote duration accept votes from all clients
-			await AcceptVotes1(voteCalc.vote1Timer + 5);
+			//for first vote duration wait for clients to reply
+			await Task.Delay(1000 * (voteCalc.vote1Timer + voteCalc.coolDown));
+			await AcceptVotes1();
 
 			//prepare second vote and send it to all clients
 			voteCalc.calcVote2Candidates(data.GetVote1Results());
 			SendToAllClients(voteCalc.GetVote2Candidates());
 			SendToAllClients(voteCalc.vote2Timer.ToString());
 
-			//for vote 2 duration accept votes from all clients
-			await AcceptVotes2(voteCalc.vote2Timer + 5);
+			//for vote 2 duration wait for clients to reply
+			await Task.Delay(1000 * (voteCalc.vote2Timer + voteCalc.coolDown));
+			await AcceptVotes2();
 
 			//prepare result and send it to all clients
 			string result = voteCalc.calcFinalResult(data.GetVote2Results());
@@ -104,7 +110,7 @@ namespace Prototype
 			voteCalc.calcVote1Candidates(survey.emojis, data.GetEmojiResults());
 			Task.Run(() =>
 			{
-				RunActivityVote();
+				voteTask = RunActivityVote();
 			});
 		}
 
@@ -278,7 +284,7 @@ namespace Prototype
 			}
 		}
 
-		private async Task AcceptVotes1(int seconds) {
+		private async Task AcceptVotes1() {
 
 			//listen to each client for their answer
 			List<Task> clientVotes = new List<Task>();
@@ -295,17 +301,20 @@ namespace Prototype
 							//waiting for vote for limited time by setting network stream read timeout
 							byte[] buffer = new byte[2048];
 							NetworkStream ns = client.GetStream();
-							ns.ReadTimeout = 1000 * seconds;
 							int bytesRead = 0;
 							Console.WriteLine("Waiting for client vote 1");
+
+							//if client does not reply anything, data is not available.
+							if (!ns.DataAvailable)
+							{
+								return;
+							}
+
 							bytesRead = ns.Read(buffer, 0, buffer.Length);
 
 							Console.WriteLine($"DEBUG: AcceptVotes 1 read {bytesRead} bytes from: {client}");
 
-							//set timeout back to normal
-							ns.ReadTimeout = int.MaxValue;
-
-							//if read times out bytes read remains 0?
+							//if client has exited read results in 0 bytes read
 							if (bytesRead <= 0)
 							{
 								return;
@@ -343,9 +352,10 @@ namespace Prototype
 
 			//wait for all tasks to complete before returning
 			await Task.WhenAll(clientVotes);
+			Console.WriteLine("Stopped accepting votes in phase 1");
 			return;
 		}
-		private async Task AcceptVotes2(int seconds) {
+		private async Task AcceptVotes2() {
 			//listen to each client for their answer
 			List<Task> clientVotes = new List<Task>();
 			foreach (var client in clients)
@@ -361,16 +371,19 @@ namespace Prototype
 							//waiting for vote for limited time by setting network stream read timeout
 							byte[] buffer = new byte[128];
 							NetworkStream ns = client.GetStream();
-							ns.ReadTimeout = 1000 * seconds;
 							int bytesRead = 0;
 							Console.WriteLine("Waiting for client vote 2");
+
+							//if client does not reply anything, data is not available.
+							if (!ns.DataAvailable)
+							{
+								return;
+							}
+
 							bytesRead = ns.Read(buffer, 0, buffer.Length);
 							Console.WriteLine($"DEBUG: AcceptVotes 2 read {bytesRead} bytes from: {client}");
 
-							//set timeout back to normal
-							ns.ReadTimeout = int.MaxValue;
-
-							//if read times out bytes read remains 0
+							//if client has exited read results in 0 bytes read
 							if (bytesRead == 0)
 							{
 								return;
@@ -408,6 +421,7 @@ namespace Prototype
 
 			//wait for all tasks to complete before returning
 			await Task.WhenAll(clientVotes);
+			Console.WriteLine("Stopped accepting votes in phase 2");
 			return;
 		}
 
