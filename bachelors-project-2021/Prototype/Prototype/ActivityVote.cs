@@ -13,6 +13,7 @@ namespace Prototype
         private string finalResult;
         public int vote1Timer = 0;
         public int vote2Timer = Const.vote2Time;
+        public int coolDown = 5;
 
 
         public ActivityVote ()
@@ -131,7 +132,7 @@ namespace Prototype
 			if (vote2Results.Count == 0)
 			{
                 Console.WriteLine("We did not receive any votes in phase 2, default fallback = activity of the emoji with highest level of concern");
-                return vote1Candidates.ElementAt(0).Value.ElementAt(0);
+                return vote2Candidates.ElementAt(0);
 			}
 
             Dictionary<string, int> sorted = new Dictionary<string, int>();
