@@ -59,6 +59,7 @@ namespace Prototype
 
             if (res == true)
             {
+                Main.GetInstance().client.DestroyClient();
                 await Navigation.PopToRootAsync();
             }
             else return;

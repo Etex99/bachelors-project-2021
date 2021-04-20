@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace Prototype
 {
@@ -19,8 +20,16 @@ namespace Prototype
 		public List<string> voteCandidates2 { get; private set; } = null;
 		public int vote2Time = 0;
 		public string voteResult = null;
+
+		//Threading
+		private List<Task> cancellableTasks;
+		private CancellationTokenSource tokenSource;
+		private CancellationToken token;
+
 		public SurveyClient() {
-			
+			cancellableTasks = new List<Task>();
+			tokenSource = new CancellationTokenSource();
+			token = tokenSource.Token;
 		}
 		
 		//async look for host returns a task which when completed indicates whether connection to the host was built.
@@ -239,24 +248,34 @@ namespace Prototype
 				NetworkStream ns = client.GetStream();
 				byte[] readBuffer = new byte[2048];
 				Console.WriteLine("Waiting for activity vote");
-				int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+				Task<int> bytesReadTask = ns.ReadAsync(readBuffer, 0, readBuffer.Length);
 
-				if (bytesRead == 0)
+				//allow cancellation of this task
+				do
+				{
+					if (token.IsCancellationRequested)
+					{
+						return false;
+					}
+					await Task.Delay(1000);
+				} while (bytesReadTask.Status != TaskStatus.RanToCompletion);
+
+				if (bytesReadTask.Result == 0)
 				{
 					Console.WriteLine("Somehow we just read something from disconnected network, this is fine.");
 					return false;
 				}
 
-				Console.WriteLine($"Bytes read: {bytesRead}");
+				Console.WriteLine($"Bytes read: {bytesReadTask}");
 
 				//expecting JSON string containing Dictionary<int, IList<string>>
-				voteCandidates1 = JsonConvert.DeserializeObject<Dictionary<int, IList<string>>>(Encoding.Unicode.GetString(readBuffer, 0, bytesRead));
+				voteCandidates1 = JsonConvert.DeserializeObject<Dictionary<int, IList<string>>>(Encoding.Unicode.GetString(readBuffer, 0, bytesReadTask.Result));
 				Console.WriteLine("Received vote 1 candidates");
 
 				//next, receive vote time
 				readBuffer = new byte[64];
 				Console.WriteLine("Waiting for vote 1 timer");
-				bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+				int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
 
 				if (bytesRead == 0)
 				{
@@ -398,7 +417,11 @@ namespace Prototype
 		}
 
 		//this is as sophisticated as it gets
-		public void DestroyClient() {
+		public async void DestroyClient() {
+
+			//cancel all cancellable tasks
+			tokenSource.Cancel();
+			await Task.WhenAll(cancellableTasks.ToArray());
 			client.Close();
 		}
 	}
