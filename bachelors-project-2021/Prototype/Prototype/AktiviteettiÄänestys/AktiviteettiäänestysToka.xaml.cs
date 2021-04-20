@@ -16,9 +16,6 @@ namespace Prototype
 
         private int _countSeconds = 10;
 
-        // pitää muuttaa siten, että drop down menu/popup pääsee käsiksi aktiviteetteihin
-        //Tätä pitää muuttaa siten, että äänestyksessä mukana vain äänestyksen ensimmäisessä vaiheessa valitut aktiviteetit
-
         public IList<string> Items { get; set; }
         public string Selected { get; set; } = null;
         public AktiviteettiäänestysToka()
