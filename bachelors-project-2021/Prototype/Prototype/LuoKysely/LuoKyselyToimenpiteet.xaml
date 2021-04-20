@@ -4,7 +4,10 @@
              x:Class="Prototype.LuoKyselyToimenpiteet"
              Title="Luo kysely 3/3">
 
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Peruuta"
+                     Clicked="PeruutaClicked"/>
+    </ContentPage.ToolbarItems>
 
     <StackLayout Margin="20">
 

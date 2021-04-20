@@ -42,6 +42,24 @@ namespace Prototype
 
         }
 
+        async void PeruutaClicked(object sender, EventArgs e)
+        {
+            //survey resetoidaan
+            SurveyManager.GetInstance().ResetSurvey();
+
+            //Jos ollaan edit tilassa, niin siirrytään takaisin kyselyntarkastelu sivulle, muutoin main menuun
+            if (Main.GetInstance().GetMainState() == Main.MainState.Editing)
+            {
+                Main.GetInstance().BrowseSurveys();
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                // siirrytään etusivulle
+                await Navigation.PopToRootAsync();
+            }
+        }
+
         void JaaClicked(object sender, EventArgs e)
         {
 

@@ -3,7 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Prototype.LuoKyselyEmojit"
              Title="Luo kysely 2/3">
-
+    
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Peruuta"
+                     Clicked="PeruutaClicked"/>
+    </ContentPage.ToolbarItems>
 
     <StackLayout Margin="20">
 

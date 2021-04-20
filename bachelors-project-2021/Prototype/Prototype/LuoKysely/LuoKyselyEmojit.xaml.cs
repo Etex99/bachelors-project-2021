@@ -53,9 +53,27 @@ namespace Prototype
 
             BindingContext = this;
         }
-    
-        
 
+       
+   
+
+    async void PeruutaClicked(object sender, EventArgs e)
+    {
+        //survey resetoidaan
+        SurveyManager.GetInstance().ResetSurvey();
+
+        //Jos ollaan edit tilassa, niin siirrytään takaisin kyselyntarkastelu sivulle, muutoin main menuun
+        if (Main.GetInstance().GetMainState() == Main.MainState.Editing)
+        {
+            Main.GetInstance().BrowseSurveys();
+            await Navigation.PopAsync();
+        }
+        else
+        {
+            // siirrytään etusivulle
+            await Navigation.PopToRootAsync();
+        }
+    }
     async void JatkaButtonClicked(object sender, EventArgs e)
         {
             //asetetaan emojit survey olioon

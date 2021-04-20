@@ -4,6 +4,12 @@
              x:Class="Prototype.LuoKyselyLopetus"
              Title="Melkein valmista...">
 
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Peruuta"
+                     Clicked="PeruutaClicked"/>
+    </ContentPage.ToolbarItems>
+
     <AbsoluteLayout
         Padding="0"
         HorizontalOptions="FillAndExpand"
