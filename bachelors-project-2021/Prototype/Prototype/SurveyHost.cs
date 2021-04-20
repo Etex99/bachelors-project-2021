@@ -25,6 +25,7 @@ namespace Prototype
         public SurveyData data { get; private set; }
 		public ActivityVote voteCalc { get; private set; } = null;
 		private List<TcpClient> clients;
+		private List<IPAddress> clientAddresses;
 
 		//Threading
 		private List<Task> cancellableTasks;
@@ -35,6 +36,7 @@ namespace Prototype
 			data = new SurveyData();
 			survey = SurveyManager.GetInstance().GetSurvey();
 			clients = new List<TcpClient>();
+			clientAddresses = new List<IPAddress>();
 			cancellableTasks = new List<Task>();
 			tokenSource = new CancellationTokenSource();
 			token = tokenSource.Token;
@@ -180,7 +182,8 @@ namespace Prototype
 				while (true)
 				{
 					Console.WriteLine("Waiting to accept tcp client");
-					Task<TcpClient> newClient = listener.AcceptTcpClientAsync();
+					Task<TcpClient> newClient = null;
+					newClient = listener.AcceptTcpClientAsync();
 
 					//Allow cancellation of task between adding each client
 					do
@@ -209,6 +212,10 @@ namespace Prototype
 		}
 		private async void ServeNewClient(TcpClient client, CancellationToken token)
 		{
+
+			//check if client has already been served before
+			
+
 			//prepare message for sending survey
 			string message = JsonConvert.SerializeObject(survey);
 			Console.WriteLine($"DEBUG: message: {message}");
@@ -324,6 +331,11 @@ namespace Prototype
 							//long live the king
 							clients.Remove(client);
 						}
+						catch (System.IO.IOException e)
+						{
+							Console.WriteLine("Error reading socket or network");
+							Console.WriteLine(e);
+						}
 
 					})
 				);
@@ -384,6 +396,11 @@ namespace Prototype
 							//this is sparta
 							clients.Remove(client);
 						}
+						catch (System.IO.IOException e)
+						{
+							Console.WriteLine("Error reading socket or network");
+							Console.WriteLine(e);
+						}
 
 					})
 				);
@@ -423,6 +440,11 @@ namespace Prototype
 					Console.WriteLine(e);
 					clients.Remove(client);
 				}
+				catch (System.IO.IOException e)
+				{
+					Console.WriteLine("Error reading socket or network");
+					Console.WriteLine(e);
+				}
 			}
 		}
 		private void SendToAllClients(string text)
@@ -452,6 +474,11 @@ namespace Prototype
 					Console.WriteLine($"Connection lost with client: {client.Client.RemoteEndPoint}. Dropping client");
 					Console.WriteLine(e);
 					clients.Remove(client);
+				}
+				catch (System.IO.IOException e)
+				{
+					Console.WriteLine("Error reading socket or network");
+					Console.WriteLine(e);
 				}
 			}
 		}
