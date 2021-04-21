@@ -55,7 +55,7 @@
                                 VerticalOptions="Center"
                                 HorizontalOptions="CenterAndExpand"
                                 WidthRequest="300"
-                                HeightRequest="45"
+                                MinimumHeightRequest="0"
                                 Clicked="btnPopupButton_Clicked"
                  
                                 Text="Valitse aktiviteetti"    />
