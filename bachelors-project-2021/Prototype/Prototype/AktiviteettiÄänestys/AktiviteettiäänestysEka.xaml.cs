@@ -126,7 +126,7 @@ namespace Prototype
 					f.IsVisible = false;
 				}
 
-				// change the text of the button to the asnwer
+				// change the text of the button to the answer
 
 				foreach (var item in Items)
 				{

@@ -15,7 +15,7 @@
                    VerticalOptions="CenterAndExpand" 
                    HorizontalOptions="Center" />
 
-            <Label Text="10"
+            <Label Text=""
                    x:Name="timer"
                    FontAttributes="Bold"
                    FontSize="100"

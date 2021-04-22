@@ -81,7 +81,7 @@
                                 />
 
 
-                                <!-- drop down menu placeholder-->
+                                <!-- drop down menu -->
                         
                                 <Frame
                                 Grid.Column="2"
@@ -104,7 +104,6 @@
                                     Orientation="Vertical"
                                     WidthRequest="200">
 
-                                        <!-- binding activities not working yet-->
 
                                         <CollectionView x:Name="Collection" 
                                                         ItemsSource= "{Binding ActivityChoises}"
@@ -126,9 +125,8 @@
                                 </Frame>
 
 
+                                <!-- "Liikennevalot" -->
 
-                                <!-- En ole vielä keksinyt miten itse radiobuttonin värin voisi vaihtaa tai miten sivulle saa aina kyselyn luonnin aikana valitun radiobuttonin-->
-                                <!-- Green-->
                                 <Rectangle Grid.RowSpan="1"
                                            Grid.Row="0"
                                            Grid.Column="1"
