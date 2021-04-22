@@ -101,40 +101,46 @@
                              HeightRequest="200"
                              Orientation="Vertical"
                              WidthRequest="300">
-                    <Label Margin="20,10,10,0" 
+                    
+                    <!--Hyperlinks-->
+                    <Label Margin="20,20,15,0" 
                            TextColor="Black"
+                           FontSize="18"
                            HorizontalOptions="Center">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="All emojis designed by OpenMoji"/>
-                                <Span Text=" - the open-source emoji and icon project. License: CC BY-SA 4.0"/>
+                                <Span Text="All emojis designed by "/>
+                                <Span Text="OpenMoji"
+                                      TextColor="Blue"
+                                      TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TapCommand}"
+                                          CommandParameter="https://openmoji.org/" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                                <Span Text=" - the open-source emoji and icon project. "/>
+                                <Span Text="License: CC BY-SA 4.0"
+                                      TextColor="Blue"
+                                      TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TapCommand}"
+                                          CommandParameter="https://creativecommons.org/licenses/by-sa/4.0/legalcode" />
+                                    </Span.GestureRecognizers>
+                                </Span>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
+                    
                     <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
-                        <Grid Margin="0, 0, 0, 0">
-                            <Button Grid.Column="0"
-                                    Grid.Row="0"
-                                    Text="OpenMoji"
-                                    FontSize="12"
+                   
+                   
+                            <Button Text="OK"
+                                    FontSize="18"
+                                    HeightRequest="43"
                                     BackgroundColor="{StaticResource QuinaryColor}"
-                                    CornerRadius="100"
-                                    Clicked="OpenMojiClicked" />
-                            <Button Grid.Column="2"
-                                    Grid.Row="0"
-                                    Text="License" 
-                                    FontSize="12"
-                                    BackgroundColor="{StaticResource QuinaryColor}"
-                                    CornerRadius="100"
-                                    Clicked="LicenseClicked"/>
-                            <Button Grid.Column="1"
-                                    Grid.Row="1"
-                                    Text="OK"
-                                    FontSize="12"
-                                    BackgroundColor="{StaticResource QuinaryColor}"
-                                    CornerRadius="100"
+                                    CornerRadius="18"
                                     Clicked="InfoOKClicked" />
-                        </Grid>
+                    
                     </AbsoluteLayout>
                 </StackLayout>
             </StackLayout>

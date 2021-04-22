@@ -10,11 +10,15 @@ namespace Prototype
 {
     public partial class MainPage : ContentPage
     {
+        // Launcher.OpenAsync is provided by Xamarin.Essentials.
+        public ICommand TapCommand => new Command<string>(async (url) => await Launcher.OpenAsync(url));
+
         public MainPage()
         {
             NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
             BindingContext = Main.GetInstance();
+            BindingContext = this;
 
 
 
@@ -40,17 +44,7 @@ namespace Prototype
             InfoPopUp.IsVisible = true;
         }
 
-        void OpenMojiClicked(object sender, EventArgs e)
-        {
-            Uri OpenMoji = new Uri("https://openmoji.org/");
-            Launcher.OpenAsync(OpenMoji);
-        }
 
-        void LicenseClicked(object sender, EventArgs e)
-        {
-            Uri License = new Uri("https://creativecommons.org/licenses/by-sa/4.0/legalcode");
-            Launcher.OpenAsync(License);
-        }
 
         void InfoOKClicked(object sender, EventArgs e)
         {
