@@ -22,25 +22,32 @@
             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
 
                 <Button Text="Luo uusi kysely"
-                    Font="Bold,19"
-                    Clicked="LuoUusiClicked"
-                    Margin="0,0,0,30"
-                    CornerRadius="15"
-                    HeightRequest="65"/>
+                        ImageSource="emoji_main1.png"
+                        ContentLayout="Right, 0" 
+                        Font="Bold,19"
+                        Clicked="LuoUusiClicked"
+                        Margin="0,0,0,25"
+                        CornerRadius="15"
+                        HeightRequest="70"/>
 
                 <Button Text="Tallennetut kyselyt"
-                    Font="Bold,19"
-                    Clicked="TallennetutKyselytClicked" 
-                    Margin="0,0,0,30"
-                    CornerRadius="15"
-                    HeightRequest="65"/>
+                        ImageSource="emoji_main2.png"
+                        ContentLayout="Right, 0"
+                       WidthRequest="250"
+                        Font="Bold,19"
+                        Clicked="TallennetutKyselytClicked" 
+                        Margin="0,0,0,25"
+                        CornerRadius="15"
+                        HeightRequest="70"/>
 
                 <Button Text="Liity kyselyyn"
-                    Font="Bold,19"
-                    Clicked="LiityKyselyynClicked"
-                    Margin="0,0,0,30"  
-                    CornerRadius="15"
-                    HeightRequest="65" />
+                        ImageSource="emoji5.png"
+                        ContentLayout="Right, 5"
+                        Font="Bold,19"
+                        Clicked="LiityKyselyynClicked"
+                        Margin="0,0,0,30"  
+                        CornerRadius="15"
+                        HeightRequest="70" />
             </StackLayout>
         </StackLayout>
 
@@ -90,6 +97,8 @@
             </ContentView>
         <!--  Popup Area  ends -->
 
+
+        <!--  Info Popup -->
         <ContentView x:Name="InfoPopUp"
                      Padding="10,0"
                      AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
