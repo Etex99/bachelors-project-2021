@@ -22,25 +22,32 @@
             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
 
                 <Button Text="Luo uusi kysely"
-                    Font="Bold,19"
-                    Clicked="LuoUusiClicked"
-                    Margin="0,0,0,30"
-                    CornerRadius="15"
-                    HeightRequest="65"/>
+                        ImageSource="emoji_main1.png"
+                        ContentLayout="Right, 0" 
+                        Font="Bold,19"
+                        Clicked="LuoUusiClicked"
+                        Margin="0,0,0,25"
+                        CornerRadius="15"
+                        HeightRequest="70"/>
 
                 <Button Text="Tallennetut kyselyt"
-                    Font="Bold,19"
-                    Clicked="TallennetutKyselytClicked" 
-                    Margin="0,0,0,30"
-                    CornerRadius="15"
-                    HeightRequest="65"/>
+                        ImageSource="emoji_main2.png"
+                        ContentLayout="Right, 0"
+                       WidthRequest="250"
+                        Font="Bold,19"
+                        Clicked="TallennetutKyselytClicked" 
+                        Margin="0,0,0,25"
+                        CornerRadius="15"
+                        HeightRequest="70"/>
 
                 <Button Text="Liity kyselyyn"
-                    Font="Bold,19"
-                    Clicked="LiityKyselyynClicked"
-                    Margin="0,0,0,30"  
-                    CornerRadius="15"
-                    HeightRequest="65" />
+                        ImageSource="emoji5.png"
+                        ContentLayout="Right, 5"
+                        Font="Bold,19"
+                        Clicked="LiityKyselyynClicked"
+                        Margin="0,0,0,30"  
+                        CornerRadius="15"
+                        HeightRequest="70" />
             </StackLayout>
         </StackLayout>
 
@@ -57,28 +64,37 @@
             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                     <StackLayout
                     BackgroundColor="White"
-                    HeightRequest="200"
+                    HeightRequest="175"
                     Orientation="Vertical"
                     WidthRequest="300">
                     <Label Text="Avainkoodi" FontSize="24" TextColor="Black" Margin="20,10,10,0" HorizontalOptions="Center" />
                     <Entry x:Name="entry"
-                          Margin="20,10,20,10" 
+                          Margin="20,10,20,0" 
+              
                            Placeholder="Anna avainkoodi"
                            FontSize="22"/>
                         
-                    <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
+                    <AbsoluteLayout Margin="0,0,0,7"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
                       <Grid Margin="0,0,0,0">
                         <Button Grid.Column="1"
-                              
-                                 CornerRadius="100"
-                                 WidthRequest="130"
-                                 Text="Ok"  
+                                x:Name="OkButton"
+                                TextColor="Gold"
+                                FontAttributes="Bold"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"
+                                CornerRadius="100"
+                                WidthRequest="130"
+                                Text="Ok"  
+                           
                                 Clicked="Ok_Clicked"/>
                         <Button                               
                                 Text="Peruuta" 
-                                BackgroundColor="{StaticResource QuinaryColor}"
+                                TextColor="{StaticResource QuinaryColor}"
+                                FontAttributes="Bold"
                                 CornerRadius="100"
-                                 WidthRequest="130"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"
+                                WidthRequest="130"
                                 Clicked="Peruuta_Clicked" />
                     </Grid>
 
@@ -90,6 +106,8 @@
             </ContentView>
         <!--  Popup Area  ends -->
 
+
+        <!--  Info Popup -->
         <ContentView x:Name="InfoPopUp"
                      Padding="10,0"
                      AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
@@ -101,40 +119,52 @@
                              HeightRequest="200"
                              Orientation="Vertical"
                              WidthRequest="300">
-                    <Label Margin="20,10,10,0" 
+                    <Label Text="OpenMoji"
+                           HorizontalOptions="Center"
+                           Margin="0,15,0,0"
+                           FontSize="22"/>
+                    <!--Hyperlinks-->
+                    <Label Margin="20,5,15,0" 
                            TextColor="Black"
+                           FontSize="18"
                            HorizontalOptions="Center">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="All emojis designed by OpenMoji"/>
-                                <Span Text=" - the open-source emoji and icon project. License: CC BY-SA 4.0"/>
+                                <Span Text="All emojis designed by "/>
+                                <Span Text="OpenMoji"
+                                      TextColor="Blue"
+                                      TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TapCommand}"
+                                          CommandParameter="https://openmoji.org/" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                                <Span Text=" - the open-source emoji and icon project. "/>
+                                <Span Text="License: CC BY-SA 4.0"
+                                      TextColor="Blue"
+                                      TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TapCommand}"
+                                          CommandParameter="https://creativecommons.org/licenses/by-sa/4.0/legalcode" />
+                                    </Span.GestureRecognizers>
+                                </Span>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
+                    
                     <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
-                        <Grid Margin="0, 0, 0, 0">
-                            <Button Grid.Column="0"
-                                    Grid.Row="0"
-                                    Text="OpenMoji"
-                                    FontSize="12"
-                                    BackgroundColor="{StaticResource QuinaryColor}"
-                                    CornerRadius="100"
-                                    Clicked="OpenMojiClicked" />
-                            <Button Grid.Column="2"
-                                    Grid.Row="0"
-                                    Text="License" 
-                                    FontSize="12"
-                                    BackgroundColor="{StaticResource QuinaryColor}"
-                                    CornerRadius="100"
-                                    Clicked="LicenseClicked"/>
-                            <Button Grid.Column="1"
-                                    Grid.Row="1"
-                                    Text="OK"
-                                    FontSize="12"
-                                    BackgroundColor="{StaticResource QuinaryColor}"
-                                    CornerRadius="100"
+                   
+                   
+                            <Button Text="OK"
+                                    TextColor="{StaticResource QuinaryColor}"
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    HeightRequest="43"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Transparent"
+                                    CornerRadius="18"
                                     Clicked="InfoOKClicked" />
-                        </Grid>
+                    
                     </AbsoluteLayout>
                 </StackLayout>
             </StackLayout>

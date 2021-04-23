@@ -24,8 +24,7 @@ namespace Prototype
 
         public void calcVote1Candidates(List<Emoji> emojis, Dictionary<int, int> emojiResults)
         {
-            //for getting a sorted list out of emojiResults
-            //positive, neutral ja negative impact
+            //Creating dictionary for threat ranking and sorted threat ranking
             Dictionary<int, double> ranking = new Dictionary<int, double>();
             Dictionary<int, double> sortedRanking = new Dictionary<int, double>();
             double percentage = 0.0;
@@ -36,6 +35,7 @@ namespace Prototype
             {
                 percentage = (double)answer.Value / totalCount;
                 
+                //assigning tolerance for each answer in emojiResults
                 if (emojis[answer.Key].Impact == "negative")
                 {
                     tolerance = 0;
@@ -49,18 +49,21 @@ namespace Prototype
                     tolerance = 0.5;
                 }
 
+                //Calculation for the threat value
                 threat = percentage - tolerance;
                 Console.WriteLine("key: {0}, percentage: {1}, threat: {2}", answer.Key, percentage, threat);
 
-
+                //Adding each answer to the ranking dictionary
                 ranking.Add(answer.Key, threat);
             }
 
+            //Sorting each item in ranking by threat value (highest threat is at top)
             foreach (KeyValuePair<int, double> item in ranking.OrderByDescending(key => key.Value))
             {
                 sortedRanking.Add(item.Key, item.Value);
             }
             
+            //if top ranking threat is higher than 0 a.k.a. threat is above threshold we add it in the vote1candidates if the threat value is above 0
             if(sortedRanking.Values.ElementAt(0) > 0)
             {
                 foreach (KeyValuePair<int, double> item in sortedRanking)
@@ -71,6 +74,7 @@ namespace Prototype
                     }
                 }
             }
+            // if threat value us 0 or lower add the top 2 to the vote1candidates, top 2 works since the ranking list is practically all emojis
             if(sortedRanking.Values.ElementAt(0) <= 0)
             {
                 for (int i = 0; i < 2; i++)
@@ -80,7 +84,7 @@ namespace Prototype
             }
             vote1Timer = (Const.vote1PerEmojiTime * vote1Candidates.Count) + 10;
         }
-
+        
         public void calcVote2Candidates(Dictionary<(int, string), int> vote1Results)
         {
             //fallback, if nobody votes in phase 1
@@ -111,16 +115,21 @@ namespace Prototype
                 vote2Candidates = vote2Candidates.GetRange(0, 4);
             }
         }
+
+        //get vote1candidates
         public Dictionary<int, IList<string>> GetVote1Candidates() {
             return vote1Candidates;
 		}
+        //set vote1candidates
         public void SetVote1Candidates(Dictionary<int, IList<string>> candidates) {
             vote1Candidates = candidates;
 		}
 
+        //get vote2candidates
         public List<string> GetVote2Candidates() {
             return vote2Candidates;
         }
+        //set vote2candidates
         public void SetVote2Candidates(List<string> candidates)
         {
             vote2Candidates = candidates;
@@ -135,11 +144,14 @@ namespace Prototype
                 return vote2Candidates.ElementAt(0);
 			}
 
+            //creating empty dictionary sorted
             Dictionary<string, int> sorted = new Dictionary<string, int>();
             foreach (KeyValuePair<string, int> item in vote2Results.OrderByDescending(key => key.Value))
             {
                 sorted.Add(item.Key, item.Value);
             }
+
+            //final result is the top from sorted list of vote2results
             finalResult = sorted.Keys.ElementAt(0);
 
             return finalResult;

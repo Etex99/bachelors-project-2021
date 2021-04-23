@@ -81,7 +81,7 @@
                                 />
 
 
-                                <!-- drop down menu placeholder-->
+                                <!-- drop down menu -->
                         
                                 <Frame
                                 Grid.Column="2"
@@ -104,7 +104,6 @@
                                     Orientation="Vertical"
                                     WidthRequest="200">
 
-                                        <!-- binding activities not working yet-->
 
                                         <CollectionView x:Name="Collection" 
                                                         ItemsSource= "{Binding ActivityChoises}"
@@ -126,9 +125,8 @@
                                 </Frame>
 
 
+                                <!-- "Liikennevalot" -->
 
-                                <!-- En ole vielä keksinyt miten itse radiobuttonin värin voisi vaihtaa tai miten sivulle saa aina kyselyn luonnin aikana valitun radiobuttonin-->
-                                <!-- Green-->
                                 <Rectangle Grid.RowSpan="1"
                                            Grid.Row="0"
                                            Grid.Column="1"
@@ -175,7 +173,7 @@
             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                 <StackLayout
                     BackgroundColor="White"
-                    HeightRequest="200"
+                    HeightRequest="165"
                     Orientation="Vertical"
                     WidthRequest="300">
 
@@ -184,14 +182,14 @@
                                   HeightRequest="30"
                                   WidthRequest="30" 
                                   VerticalOptions="Start"
-                                  BackgroundColor="White"
+                                  BackgroundColor="Transparent"
                                   HorizontalOptions="End"
                                   Clicked="X_Clicked"/>
 
                     <Label Text="Poistetaanko kysely?" 
                            FontSize="24" 
                            TextColor="Black" 
-                           Margin="0" 
+                           Margin="0,10,0,0" 
                            HorizontalOptions="Center" 
                            VerticalOptions="CenterAndExpand"/>
 
@@ -199,17 +197,20 @@
 
                     <AbsoluteLayout Margin="20"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
                         <Grid Margin="0,0,0,0">
-                            <Button Grid.Column="1"                              
-                                 CornerRadius="100"
-                                 WidthRequest="130"                                   
-                                 Text="Kyllä"  
-                                Clicked="Kyllä_Clicked"/>
+                            <Button Grid.Column="1"   
+                                     TextColor="Gold"
+                                     FontAttributes="Bold"
+                                     BackgroundColor="Transparent"
+                                     BorderColor="Transparent"                                  
+                                     Text="Kyllä"  
+                                     Clicked="Kyllä_Clicked"/>
                             <Button                               
-                                Text="Ei" 
-                                BackgroundColor="{StaticResource QuinaryColor}"
-                                CornerRadius="100"
-                                 WidthRequest="130"
-                                Clicked="Ei_Clicked" />
+                                     Text="Ei" 
+                                     TextColor="{StaticResource QuinaryColor}"
+                                     FontAttributes="Bold"
+                                     BackgroundColor="Transparent"
+                                     BorderColor="Transparent"     
+                                     Clicked="Ei_Clicked" />
                         </Grid>
 
                     </AbsoluteLayout>

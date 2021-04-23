@@ -10,11 +10,16 @@ namespace Prototype
 {
     public partial class MainPage : ContentPage
     {
+        // Launcher.OpenAsync is provided by Xamarin.Essentials.
+        public ICommand TapCommand => new Command<string>(async (url) => await Launcher.OpenAsync(url));
+
         public MainPage()
         {
             NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
             BindingContext = Main.GetInstance();
+            BindingContext = this;
+
 
 
 
@@ -40,17 +45,7 @@ namespace Prototype
             InfoPopUp.IsVisible = true;
         }
 
-        void OpenMojiClicked(object sender, EventArgs e)
-        {
-            Uri OpenMoji = new Uri("https://openmoji.org/");
-            Launcher.OpenAsync(OpenMoji);
-        }
 
-        void LicenseClicked(object sender, EventArgs e)
-        {
-            Uri License = new Uri("https://creativecommons.org/licenses/by-sa/4.0/legalcode");
-            Launcher.OpenAsync(License);
-        }
 
         void InfoOKClicked(object sender, EventArgs e)
         {
@@ -141,7 +136,7 @@ namespace Prototype
         {
             // Kysytään kyselyn avainkoodi, placeholder(Ei ole mitenkään yhdistetty backendin kanssa)
            popupSelection.IsVisible = true;
-            
+
         }
 
 
@@ -152,12 +147,19 @@ namespace Prototype
 
         async void Ok_Clicked(object sender, EventArgs e)
         {
-            // siirrytään "Liity Kyselyyn" sivulle jos annettu koodi on ok
-            if (await Main.GetInstance().JoinSurvey(entry.Text)) { 
-                await Navigation.PushAsync(new EmojinValinta());
-                popupSelection.IsVisible = false;
+
+            //Jos entry teksti on null, annetaan virhe ilmoitus
+            if (entry != null && !string.IsNullOrEmpty(entry.Text))
+            {
+                // siirrytään "Liity Kyselyyn" sivulle jos annettu koodi on ok
+                if (await Main.GetInstance().JoinSurvey(entry.Text)) {
+
+                    await Navigation.PushAsync(new EmojinValinta());
+                    popupSelection.IsVisible = false;
+                }
             }
             else await DisplayAlert("Virheellinen avainkoodi", "Syöttämälläsi avainkoodilla ei löydy avointa kyselyä", "OK");
+           
         }
     }
     }

@@ -2,21 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Prototype.EmojinValinta"
-             Title="Emoji Äänestys">
+             Title="Vastaa kyselyyn">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Margin="0,0,0,15"
-                Text="{Binding introMessage}"
+        <StackLayout Margin="20">
+            <Label Margin="20,10,0,50"
+                Text="{Binding introMessage }"
+               
                 TextColor="Black"
-                FontSize="20"
-                HorizontalTextAlignment="Center"/>
+                FontSize="22"
+                MinimumWidthRequest="0"
+                MinimumHeightRequest="0"
+                HorizontalOptions="CenterAndExpand"/>
             <Grid Margin="20, 50, 20, 50">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.2*"/>
-                    <RowDefinition Height="0.2*"/>
-                    <RowDefinition Height="0.2*"/>
-                    <RowDefinition Height="0.2*"/>
-                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.01*"/>
+                    <RowDefinition Height="0.01"/>
+                    <RowDefinition Height="0.01*"/>
+                    <RowDefinition Height="0.01"/>
+                    <RowDefinition Height="0.01*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.2*"/>
@@ -88,6 +91,7 @@
                     HeightRequest="65"
                     IsEnabled="False"
                     HorizontalOptions="Center"
+                    VerticalOptions="EndAndExpand"
                     WidthRequest="150"/>
         </StackLayout>
     </ContentPage.Content>
