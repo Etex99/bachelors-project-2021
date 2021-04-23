@@ -22,6 +22,7 @@ namespace Prototype
 
 
 
+
         }
 
         //Device back button navigation test to close the application from the back button 
@@ -135,7 +136,7 @@ namespace Prototype
         {
             // Kysytään kyselyn avainkoodi, placeholder(Ei ole mitenkään yhdistetty backendin kanssa)
            popupSelection.IsVisible = true;
-            
+
         }
 
 
@@ -146,12 +147,19 @@ namespace Prototype
 
         async void Ok_Clicked(object sender, EventArgs e)
         {
-            // siirrytään "Liity Kyselyyn" sivulle jos annettu koodi on ok
-            if (await Main.GetInstance().JoinSurvey(entry.Text)) { 
-                await Navigation.PushAsync(new EmojinValinta());
-                popupSelection.IsVisible = false;
+
+            //Jos entry teksti on null, annetaan virhe ilmoitus
+            if (entry != null && !string.IsNullOrEmpty(entry.Text))
+            {
+                // siirrytään "Liity Kyselyyn" sivulle jos annettu koodi on ok
+                if (await Main.GetInstance().JoinSurvey(entry.Text)) {
+
+                    await Navigation.PushAsync(new EmojinValinta());
+                    popupSelection.IsVisible = false;
+                }
             }
             else await DisplayAlert("Virheellinen avainkoodi", "Syöttämälläsi avainkoodilla ei löydy avointa kyselyä", "OK");
+           
         }
     }
     }
