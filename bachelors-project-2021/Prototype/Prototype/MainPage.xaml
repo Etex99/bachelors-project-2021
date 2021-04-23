@@ -70,22 +70,31 @@
                     <Label Text="Avainkoodi" FontSize="24" TextColor="Black" Margin="20,10,10,0" HorizontalOptions="Center" />
                     <Entry x:Name="entry"
                           Margin="20,10,20,10" 
+              
                            Placeholder="Anna avainkoodi"
                            FontSize="22"/>
                         
                     <AbsoluteLayout Margin="15"  VerticalOptions ="EndAndExpand" HorizontalOptions="CenterAndExpand">
                       <Grid Margin="0,0,0,0">
                         <Button Grid.Column="1"
-                              
-                                 CornerRadius="100"
-                                 WidthRequest="130"
-                                 Text="Ok"  
+                                x:Name="OkButton"
+                                TextColor="Gold"
+                                FontAttributes="Bold"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"
+                                CornerRadius="100"
+                                WidthRequest="130"
+                                Text="Ok"  
+                           
                                 Clicked="Ok_Clicked"/>
                         <Button                               
                                 Text="Peruuta" 
-                                BackgroundColor="{StaticResource QuinaryColor}"
+                                TextColor="{StaticResource QuinaryColor}"
+                                FontAttributes="Bold"
                                 CornerRadius="100"
-                                 WidthRequest="130"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"
+                                WidthRequest="130"
                                 Clicked="Peruuta_Clicked" />
                     </Grid>
 
@@ -110,9 +119,12 @@
                              HeightRequest="200"
                              Orientation="Vertical"
                              WidthRequest="300">
-                    
+                    <Label Text="OpenMoji"
+                           HorizontalOptions="Center"
+                           Margin="0,15,0,0"
+                           FontSize="22"/>
                     <!--Hyperlinks-->
-                    <Label Margin="20,20,15,0" 
+                    <Label Margin="20,5,15,0" 
                            TextColor="Black"
                            FontSize="18"
                            HorizontalOptions="Center">
@@ -144,9 +156,12 @@
                    
                    
                             <Button Text="OK"
+                                    TextColor="{StaticResource QuinaryColor}"
+                                    FontAttributes="Bold"
                                     FontSize="18"
                                     HeightRequest="43"
-                                    BackgroundColor="{StaticResource QuinaryColor}"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Transparent"
                                     CornerRadius="18"
                                     Clicked="InfoOKClicked" />
                     
