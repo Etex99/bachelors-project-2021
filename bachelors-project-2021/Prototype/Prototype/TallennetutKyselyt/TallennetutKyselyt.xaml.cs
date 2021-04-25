@@ -56,16 +56,25 @@ namespace Prototype
                 TButton.IsEnabled = false;
         }
 
+        async void OletusClicked(object sender, EventArgs e)
+		{
+            SurveyManager.GetInstance().SetDefaultSurvey();
+
+            KyselynTarkastelu.canDelete = false;
+            KyselynTarkastelu.canEdit = false;
+            await Navigation.PushAsync(new KyselynTarkastelu());
+        }
+
         async void AvaaClicked(object sender, EventArgs e)
         {
             string surveyName = SelectedSurvey + ".txt";
             SurveyManager manager = SurveyManager.GetInstance();
             manager.LoadSurvey(surveyName);
 
-            Console.WriteLine(surveyName);
+			Console.WriteLine(surveyName);
 
-            KyselynTarkastelu.SetSurveyName(surveyName);
-            //navigoinnissa ei ole vielä mitenkään yhdistetty valittua kyselyä kyselyn tarkastelusivulle
+            KyselynTarkastelu.canDelete = true;
+            KyselynTarkastelu.canEdit = true;
             await Navigation.PushAsync(new KyselynTarkastelu());
 
         }

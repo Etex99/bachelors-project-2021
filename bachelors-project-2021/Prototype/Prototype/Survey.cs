@@ -5,9 +5,10 @@ namespace Prototype
 {
 	public class Survey
 	{
-		public string introMessage { get; set; } = "default";
+		public string introMessage { get; set; }
 		public List<Emoji> emojis { get; set; }
-		public string RoomCode { get; set; } = "default";
+		public string RoomCode { get; set; }
+		public string Name { get; set; }
 		
 		//empty constructor creates blank survey
 		public Survey() {
@@ -23,16 +24,18 @@ namespace Prototype
 			emojis.Add(new Emoji(6, "Itkunauru", "neutral", new List<string>(), "emoji6.png"));
 
 			RoomCode = null;
+			Name = null;
 		}
-		public Survey(string introMessage, List<Emoji> emojis, string RoomCode)
+		public Survey(string introMessage, List<Emoji> emojis, string RoomCode, string Name)
 		{
 			this.introMessage = introMessage;
 			this.emojis = emojis;
 			this.RoomCode = RoomCode;
+			this.Name = Name;
 		}
 
 		//default survey consists of first intro entry, 7 emojis with various impact each with 3 first entries of activities and a random roomcode
-		public Survey GetDefaultSurvey()
+		public static Survey GetDefaultSurvey()
 		{
 			string tempIntro = Const.intros[0];
 			List<Emoji> tempEmojis = new List<Emoji>();
@@ -69,11 +72,11 @@ namespace Prototype
 
 			string TempRoomCode = GenerateRandomCode();
 
-			return new Survey(tempIntro, tempEmojis, TempRoomCode);
+			return new Survey(tempIntro, tempEmojis, TempRoomCode, "Oletus");
 		}
 
 		//generates random room code of 5 numbers
-		private string GenerateRandomCode()
+		private static string GenerateRandomCode()
 		{
 			Random r = new Random();
 			string temp = "";

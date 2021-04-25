@@ -52,6 +52,10 @@ namespace Prototype
             }
             return survey;
         }
+        public void SetDefaultSurvey()
+		{
+            survey = Survey.GetDefaultSurvey();
+		}
         
         //Method for getting the names of all the saved files in the folder
         public List<string> GetTemplates()

@@ -31,6 +31,15 @@
     </NavigationPage.TitleView>
 
     <StackLayout>
+		<Button  Text="Oletuskysely"
+                 Clicked="OletusClicked" 
+                 Margin="20,20,20,20"
+                 CornerRadius="100"
+                 HorizontalOptions="Center"
+                 WidthRequest="300"
+                 HeightRequest="50"
+                 IsEnabled="True"/>
+		
         <CollectionView Margin="20"
                         ItemsSource="{Binding Surveys}"
                         SelectionMode="Single"

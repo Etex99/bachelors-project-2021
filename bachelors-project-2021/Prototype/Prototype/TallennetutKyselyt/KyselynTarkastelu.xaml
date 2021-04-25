@@ -7,8 +7,9 @@
     <!-- poista kysely -nappi-->
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Poista"
-                     Clicked="PoistaClicked" />
+        <ToolbarItem    x:Name="PoistaButton"
+			            Text="Poista"
+                        Clicked="PoistaClicked" />
     </ContentPage.ToolbarItems>
 
     <NavigationPage.TitleView >
@@ -149,7 +150,8 @@
                                     HeightRequest="65"
                                     CornerRadius="100"/>
 
-                            <Button Text="Muokkaa"
+                            <Button x:Name="MuokkaaButton"
+								    Text="Muokkaa"
                                     Clicked="MuokkaaClicked"
                                     BackgroundColor="{StaticResource QuinaryColor}"
                                     HeightRequest="65"

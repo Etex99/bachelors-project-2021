@@ -5,21 +5,17 @@ using Xamarin.Forms.Xaml;
 
 namespace Prototype
 {
-    //joku taitava liittäkööt tämän backendin kanssa
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class KyselynTarkastelu : ContentPage
     {
 
-        public IList<CollectionItem> Emojit { get; private set; } = null;
-        public static string surveyName;
+		public IList<CollectionItem> Emojit { get; private set; } = null;
         public string roomCode { get; set; } = "Roomcode: ";
         public string introMessage { get; set; } = "Intro: ";
 
-        public static void SetSurveyName(string name)
-        {
-            surveyName = name;
-        }
+        public static bool canDelete = true;
+        public static bool canEdit = true;
 
         public class CollectionItem
         {
@@ -33,28 +29,26 @@ namespace Prototype
         {
             InitializeComponent();
 
+            Survey s = SurveyManager.GetInstance().GetSurvey();
+
             //alustetaan emojit kyselyn emojeilla
             Emojit = new List<CollectionItem>();
-            List<Emoji> temp = SurveyManager.GetInstance().GetSurvey().emojis;
-            
-            //Jeesusteippi ratkaisu, joka on kommentoitu poissa (IF ALL ELSE FAILS T: Discord nörtti)
-            /*
-            if (temp.Count > 7)
-            {
-                temp.RemoveRange(7, 7);
-            }
-            */
+            List<Emoji> temp = s.emojis;
 
             //asetetaan otsikoksi kyselyn nimi
-            title.Text = surveyName;
+            title.Text = s.Name;
 
             //asetetaan kyselyn roomCode ja intro
-            roomCode += SurveyManager.GetInstance().GetSurvey().RoomCode;
-            introMessage += SurveyManager.GetInstance().GetSurvey().introMessage;
-            
+            roomCode += s.RoomCode;
+            introMessage += s.introMessage;
 
-            //alustetaan radionappien valinnat
-            //ei saa kyseenalaistaa tätä toteutusta, radionappeihin ei oikeastaan pääse käsiksi collection view layoutin sisältä
+            //asetetaan poista napin tila (oletusta ei voi poistaa)
+            PoistaButton.IsEnabled = canDelete;
+
+            //asetetaan muokkaa napin tila
+            MuokkaaButton.IsEnabled = canEdit;
+
+            //Kuvataan emojien vakavuusasteet
             foreach (var item in temp)
             {
                 CollectionItem i = new CollectionItem();
@@ -125,7 +119,7 @@ namespace Prototype
         { 
 
             //kyselyn Poistaminen!
-            SurveyManager.GetInstance().DeleteSurvey(surveyName);
+            SurveyManager.GetInstance().DeleteSurvey(SurveyManager.GetInstance().GetSurvey().Name + ".txt");
             // siirrytään Tallenetut kyselyt sivulle 
            
              await Navigation.PushAsync(new TallennetutKyselyt());

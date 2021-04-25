@@ -16,11 +16,8 @@ namespace Prototype
         {
             InitializeComponent();
 
-            if (Main.GetInstance().GetMainState() == Main.MainState.Editing)
-            {
-                NameEditor.Text = KyselynTarkastelu.surveyName.Substring(0, KyselynTarkastelu.surveyName.LastIndexOf("."));
-                KeyEditor.Text = SurveyManager.GetInstance().GetSurvey().RoomCode;
-            }
+            NameEditor.Text = SurveyManager.GetInstance().GetSurvey().Name;
+            KeyEditor.Text = SurveyManager.GetInstance().GetSurvey().RoomCode;
         }
         async void TallennaJaPoistuClicked(object sender, EventArgs e)
         {
@@ -28,8 +25,9 @@ namespace Prototype
             {
 
                 SurveyManager man = SurveyManager.GetInstance();
-                //save survey code
+                //save survey code and name
                 man.GetSurvey().RoomCode = KeyEditor.Text;
+                man.GetSurvey().Name = NameEditor.Text;
                 //save survey
                 man.SaveSurvey(NameEditor.Text + ".txt");
 
@@ -105,6 +103,7 @@ namespace Prototype
             SurveyManager man = SurveyManager.GetInstance();
             //save survey code
             man.GetSurvey().RoomCode = KeyEditor.Text;
+            man.GetSurvey().Name = NameEditor.Text;
             //save survey
             man.SaveSurvey(NameEditor.Text + ".txt");
 
