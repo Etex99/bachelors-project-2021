@@ -93,7 +93,7 @@
                     WidthRequest="300">
 
                     <!--  X button placeholder -->
-                    <ImageButton Source="https://www.rawshorts.com/freeicons/wp-content/uploads/2017/01/black_prodpictxmark_1484336297-1.png"
+                    <ImageButton Source="XBtn.png"
                                   HeightRequest="30"
                                   WidthRequest="30" 
                                   VerticalOptions="Start"
