@@ -35,7 +35,7 @@ namespace Prototype
                 //host survey ended in a fatal unexpected error, aborting survey.
                 //pop to root and display error
                 await Navigation.PopToRootAsync();
-                await DisplayAlert("Kysely suljettiin automaattisesti", "Tapahtui virhe.", "OK");
+                await DisplayAlert("Kysely suljettiin automaattisesti", "Tapahtui odottamaton virhe.", "OK");
             }
         }
 
