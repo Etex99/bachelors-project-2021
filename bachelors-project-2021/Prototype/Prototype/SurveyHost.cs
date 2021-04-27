@@ -23,7 +23,8 @@ namespace Prototype
 
 		private Survey survey;
         public SurveyData data { get; private set; }
-		
+
+		public int clientCount { get; private set; }
 		private List<TcpClient> clients;
 		private List<IPAddress> clientHistory;
 
@@ -39,6 +40,7 @@ namespace Prototype
 		public SurveyHost() {
 			data = new SurveyData();
 			survey = SurveyManager.GetInstance().GetSurvey();
+			clientCount = 0;
 			clients = new List<TcpClient>();
 			clientHistory = new List<IPAddress>();
 			cancellableTasks = new List<Task>();
@@ -483,7 +485,8 @@ namespace Prototype
 			}
 		}
 		public void DestroyHost() {
-			
+			//cancel tasks
+			tokenSource.Cancel();
 			//close all connections
 			foreach (var item in clients)
 			{

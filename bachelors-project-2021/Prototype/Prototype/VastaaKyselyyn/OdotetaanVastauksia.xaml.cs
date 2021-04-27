@@ -27,6 +27,14 @@ namespace Prototype
 
         private async void JatkaTuloksiin(object sender, EventArgs e)
         {
+			//Back to main and error, if nobody joined the survey!
+			if (Main.GetInstance().host.clientCount == 0)
+			{
+                Main.GetInstance().host.DestroyHost();
+                await Navigation.PopToRootAsync();
+                await DisplayAlert("Kysely suljettiin automaattisesti", "Kyselyyn ei saatu yhtään vastausta", "OK");
+            }
+
             await Main.GetInstance().host.CloseSurvey();
             await Navigation.PushAsync(new TabbedViewHost());
         }
