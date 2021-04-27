@@ -12,7 +12,6 @@ namespace Prototype
 	public class SurveyClient
 	{
 		private TcpClient client = null;
-		public Survey survey { get; private set; } = null;
 		public SurveyData summary { get; private set; } = null;
 
 		public Dictionary<int, IList<string>> voteCandidates1 { get; private set; } = null;
@@ -66,21 +65,10 @@ namespace Prototype
 						{	
 							//attempt to connect
 							client = new TcpClient();
-							client.Connect(new IPEndPoint(reply.Result.RemoteEndPoint.Address, Const.Network.ServerTCPListenerPort));							
-
-							//receive survey as json string
-							NetworkStream ns = client.GetStream();
-							byte[] buffer = new byte[8192];
-							Task<int> bytesRead = ns.ReadAsync(buffer, 0, buffer.Length);
-							await bytesRead;
-							Console.WriteLine($"Bytes read: {bytesRead.Result}");
-							survey = JsonConvert.DeserializeObject<Survey>(Encoding.Unicode.GetString(buffer, 0 ,bytesRead.Result));
-							Console.WriteLine("Received survey successfully!");
-							Console.WriteLine(survey.ToString());
+							client.Connect(new IPEndPoint(reply.Result.RemoteEndPoint.Address, Const.Network.ServerTCPListenerPort));
 
 							//if no error occurs return success
 							return true;
-	
 
 						}
 						catch (JsonException e) {

@@ -33,7 +33,7 @@ namespace Prototype
             }
             foreach (int key in sorted.Keys)
             {
-                resultImages.Add(Main.GetInstance().client.survey.emojis[key].ImageSource);
+                resultImages.Add("emoji" + key.ToString() + ".png");
             }
             foreach (int value in sorted.Values)
             {

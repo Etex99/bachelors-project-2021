@@ -221,24 +221,11 @@ namespace Prototype
 		}
 		private async void ServeNewClient(TcpClient client, CancellationToken token)
 		{
-			//prepare message for sending survey
-			string message = JsonConvert.SerializeObject(survey);
-			Console.WriteLine($"DEBUG: message: {message}");
-			byte[] bytes = Encoding.Unicode.GetBytes(message);
-
 			try
 			{
+				//wait for emoji from client, expecting 1 int
 				NetworkStream ns = client.GetStream();
-
-				//if we cant write to networkstream we don't want this client anymore
-				if (!ns.CanWrite) return;
-
-				//send message
-				ns.Write(bytes, 0, bytes.Length);
-				Console.WriteLine($"Sent {bytes.Length} bytes worth of survey");
-
-				//try get reply
-				byte[] buffer = new byte[128];
+				byte[] buffer = new byte[4];
 				Task<int> emojiReply = ns.ReadAsync(buffer, 0, buffer.Length);
 
 				//allow cancellation of task here.
@@ -280,7 +267,6 @@ namespace Prototype
 				Console.WriteLine($"Something went wrong in first communication with client: {client.Client.RemoteEndPoint}");
 				Console.WriteLine(e);
 				client.Close();
-				return;
 			}
 		}
 
