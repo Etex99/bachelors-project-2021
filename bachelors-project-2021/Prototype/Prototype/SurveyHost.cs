@@ -49,20 +49,28 @@ namespace Prototype
 		}
 
 		//Main sequence of running the survey
-		public void RunSurvey()
+		public async Task<bool> RunSurvey()
 		{
 
 			//Phase 1 - making client connections and collecting emojis
-			Task task1 = ReplyBroadcast();
-			Task task2 = AcceptClient();
+			Task<bool> task1 = ReplyBroadcast();
+			Task<bool> task2 = AcceptClient();
 			cancellableTasks.Add(task1);
 			cancellableTasks.Add(task2);
-			Task.WaitAll(cancellableTasks.ToArray());
+
+			await Task.WhenAll(cancellableTasks.ToArray());
+			if (task1.Result == false || task2.Result == false)
+			{
+				//Fatal unexpected error do something...
+				return false;
+			}
 
 			//Phase 2 - time after the survey has concluded in which users view results
 			Console.WriteLine($"Results: {data}");
 			Console.WriteLine("Sending results to clients");
 			SendToAllClients(data);
+
+			return true;
 		}
 
 		//Main sequence of running activity vote
@@ -112,7 +120,7 @@ namespace Prototype
 		}
 
 		//replies to broadcasts in the network which contain the correct roomCode
-		private async Task ReplyBroadcast() {
+		private async Task<bool> ReplyBroadcast() {
 
 			try
 			{
@@ -168,17 +176,25 @@ namespace Prototype
 			}
 			catch (OperationCanceledException)
 			{
-				Console.WriteLine("ReplyBroadcast task was cancelled");
-				return;
+				Console.WriteLine("ReplyBroadcast task was cancelled gracefully");
+				return true;
+			}
+			catch (ObjectDisposedException e)
+			{
+				Console.WriteLine(e);
 			}
 			catch (SocketException e)
 			{
-				Console.WriteLine("Socket exception occured in ReplyBroadcast...");
 				Console.WriteLine(e);
 			}
+
+			//handle unexpected errors
+			Console.WriteLine("Fatal error occured, aborting survey.");
+			tokenSource.Cancel();
+			return false;
 		}
 
-		private async Task AcceptClient() {
+		private async Task<bool> AcceptClient() {
 
 			try
 			{
@@ -208,14 +224,22 @@ namespace Prototype
 			}
 			catch (OperationCanceledException)
 			{
-				Console.WriteLine("AcceptClient task was cancelled");
-				return;
+				Console.WriteLine("AcceptClient task was cancelled gracefully");
+				return true;
+			}
+			catch (InvalidOperationException e)
+			{
+				Console.WriteLine(e);
 			}
 			catch (SocketException e)
 			{
-				Console.WriteLine("Socket exception occured in AcceptClient...");
 				Console.WriteLine(e);
 			}
+
+			//handle unexpected errors
+			Console.WriteLine("Fatal error occured, aborting survey.");
+			tokenSource.Cancel();
+			return false;
 		}
 		private async void ServeNewClient(TcpClient client, CancellationToken token)
 		{

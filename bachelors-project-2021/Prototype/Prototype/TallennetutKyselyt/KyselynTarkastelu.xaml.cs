@@ -85,8 +85,6 @@ namespace Prototype
         {
             //siirrytään OdotetaanVastauksia sivulle
             await Navigation.PushAsync(new OdotetaanVastauksia());
-            //Jaetaan kysely 
-            Main.GetInstance().HostSurvey();
         }
         async void MuokkaaClicked(object sender, EventArgs e)
         {

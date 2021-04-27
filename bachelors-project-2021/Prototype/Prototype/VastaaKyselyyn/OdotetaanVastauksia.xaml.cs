@@ -23,6 +23,20 @@ namespace Prototype
 
             //Ei enää mahdollista päästä takaisin kysleyn luontiin painamalla navigoinnin backbuttonia 
             NavigationPage.SetHasBackButton(this, false);
+
+            //actually run the survey
+            Host();
+        }
+
+        private async void Host()
+		{
+            if (!await Main.GetInstance().HostSurvey())
+            {
+                //host survey ended in a fatal unexpected error, aborting survey.
+                //pop to root and display error
+                await Navigation.PopToRootAsync();
+                await DisplayAlert("Kysely suljettiin automaattisesti", "Tapahtui virhe.", "OK");
+            }
         }
 
         private async void JatkaTuloksiin(object sender, EventArgs e)
@@ -33,6 +47,7 @@ namespace Prototype
                 Main.GetInstance().host.DestroyHost();
                 await Navigation.PopToRootAsync();
                 await DisplayAlert("Kysely suljettiin automaattisesti", "Kyselyyn ei saatu yhtään vastausta", "OK");
+                return;
             }
 
             await Main.GetInstance().host.CloseSurvey();

@@ -91,8 +91,7 @@ namespace Prototype
         async void Ei_Clicked(object sender, EventArgs e)
         {
             // siirrytään OdotettaanVastauksia, ei tallenneta kyselyä
-            await Navigation.PushAsync(new OdotetaanVastauksia()); ;
-            Main.GetInstance().HostSurvey();
+            await Navigation.PushAsync(new OdotetaanVastauksia());
         }
 
         async void Kyllä_Clicked(object sender, EventArgs e)
@@ -109,9 +108,6 @@ namespace Prototype
 
             // siirrytään OdotettaanVastauksia sivulle 
             await Navigation.PushAsync(new OdotetaanVastauksia());
-            Main.GetInstance().HostSurvey();
-
-
         }
     }
 }

@@ -53,11 +53,11 @@ namespace Prototype
 			return success;
 		}	
 
-		public void HostSurvey() {
+		public async Task<bool> HostSurvey() {
 			Console.WriteLine($"DEBUG: Creating new host instance with selected survey");
 			state = MainState.Hosting;
 			host = new SurveyHost();
-			Task.Run(() => host.RunSurvey());
+			return await host.RunSurvey();
 		}
 
 		public MainState GetMainState() {
