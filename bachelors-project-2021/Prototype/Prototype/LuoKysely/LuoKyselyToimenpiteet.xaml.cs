@@ -101,6 +101,13 @@ namespace Prototype
 
         async void JatkaButtonClicked(object sender, EventArgs e)
         {
+			//error if not all emojis have at least 1 selected activity
+			if (!ActivitiesSet())
+			{
+                await DisplayAlert("Kaikkia valintoja ei ole tehty", "Sinun on valittava jokaiselle mielialalle vähintään yksi aktiviteetti", "OK");
+                return;
+            }
+
             //asetetaan emojit survey olioon
             List<Emoji> tempEmojis = new List<Emoji>();
 			foreach (var item in Items)
@@ -118,5 +125,19 @@ namespace Prototype
             // siirrytään "Luo kysely -lopetus" sivulle 
             await Navigation.PushAsync(new LuoKyselyLopetus()); ;
         }
+
+        //function which checks whether the user has selected at least 1 activity for each emoji.
+        private bool ActivitiesSet()
+		{
+			foreach (var item in Items)
+			{
+				if (item.Selected.Count == 0)
+				{
+                    return false;
+				}
+			}
+
+            return true;
+		}
     }
 }
