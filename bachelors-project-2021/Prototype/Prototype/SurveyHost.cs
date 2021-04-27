@@ -114,11 +114,11 @@ namespace Prototype
 		//replies to broadcasts in the network which contain the correct roomCode
 		private async Task ReplyBroadcast() {
 
-			UdpClient listener = new UdpClient(Const.Network.ServerUDPClientPort);
-			Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
 			try
 			{
+				UdpClient listener = new UdpClient(Const.Network.ServerUDPClientPort);
+				Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
 				//loop to serve all broadcasts
 				while (true)
 				{
@@ -134,7 +134,7 @@ namespace Prototype
 							s.Close();
 							token.ThrowIfCancellationRequested();
 						}
-						await Task.Delay(1000);
+						await Task.WhenAny(new Task[] { Task.Delay(1000), broadcast });
 					} while (broadcast.Status != TaskStatus.RanToCompletion);
 
 					//message received
@@ -169,17 +169,12 @@ namespace Prototype
 			catch (OperationCanceledException)
 			{
 				Console.WriteLine("ReplyBroadcast task was cancelled");
+				return;
 			}
 			catch (SocketException e)
 			{
 				Console.WriteLine("Socket exception occured in ReplyBroadcast...");
 				Console.WriteLine(e);
-				throw;
-			}
-			finally
-			{
-				listener.Close();
-				s.Close();
 			}
 		}
 
@@ -214,6 +209,7 @@ namespace Prototype
 			catch (OperationCanceledException)
 			{
 				Console.WriteLine("AcceptClient task was cancelled");
+				return;
 			}
 			catch (SocketException e)
 			{
