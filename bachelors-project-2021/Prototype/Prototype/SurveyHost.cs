@@ -25,7 +25,7 @@ namespace Prototype
         public SurveyData data { get; private set; }
 		
 		private List<TcpClient> clients;
-		private List<IPAddress> clientAddresses;
+		private List<IPAddress> clientHistory;
 
 		//Threading
 		private List<Task> cancellableTasks;
@@ -40,7 +40,7 @@ namespace Prototype
 			data = new SurveyData();
 			survey = SurveyManager.GetInstance().GetSurvey();
 			clients = new List<TcpClient>();
-			clientAddresses = new List<IPAddress>();
+			clientHistory = new List<IPAddress>();
 			cancellableTasks = new List<Task>();
 			tokenSource = new CancellationTokenSource();
 			token = tokenSource.Token;
@@ -97,11 +97,6 @@ namespace Prototype
 			return;
 		}
 
-		//End survey for good
-		public void EndSurvey() {
-			
-		}
-
 		//Continue survey to activity voting
 		public void StartActivityVote() {
 			State = HostState.AwaitingVotes1;
@@ -147,13 +142,21 @@ namespace Prototype
 
 					if (message == survey.RoomCode)
 					{
-						//prepare message and destination
-						byte[] sendbuf = Encoding.Unicode.GetBytes("Connect please");
-						IPEndPoint ep = new IPEndPoint(broadcast.Result.RemoteEndPoint.Address, Const.Network.ClientUDPClientPort);
+						//has this client answered the survey already?
+						if (!clientHistory.Contains(broadcast.Result.RemoteEndPoint.Address))
+						{
+							//prepare message and destination
+							byte[] sendbuf = Encoding.Unicode.GetBytes("Connect please");
+							IPEndPoint ep = new IPEndPoint(broadcast.Result.RemoteEndPoint.Address, Const.Network.ClientUDPClientPort);
 
-						//reply
-						Console.WriteLine($"Replying... EP: {ep}");
-						s.SendTo(sendbuf, ep);
+							//reply
+							Console.WriteLine($"Replying... EP: {ep}");
+							s.SendTo(sendbuf, ep);
+
+						} else
+						{
+							Console.WriteLine("Old client tried to connect again");
+						}
 					}
 					else
 					{
@@ -218,10 +221,6 @@ namespace Prototype
 		}
 		private async void ServeNewClient(TcpClient client, CancellationToken token)
 		{
-
-			//check if client has already been served before
-			
-
 			//prepare message for sending survey
 			string message = JsonConvert.SerializeObject(survey);
 			Console.WriteLine($"DEBUG: message: {message}");
@@ -270,6 +269,7 @@ namespace Prototype
 
 				//add this client to list of clients
 				clients.Add(client);
+				clientHistory.Add(((IPEndPoint)client.Client.RemoteEndPoint).Address);
 			}
 			catch (OperationCanceledException)
 			{
