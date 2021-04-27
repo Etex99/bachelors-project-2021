@@ -21,23 +21,19 @@ namespace Prototype
 		public IList<CollectionItem> Items { get; set; }
 		public class CollectionItem
 		{
-			public Emoji Emoji { get; set; }
+			public int ID;
+			public string ImageSource { get; set; }
 			public IList<string> ActivityChoises { get; set; }
-			public string Selected { get; set; } = null;
+			public string Selected { get; set; }
 
 
 
-			public CollectionItem(Emoji emoji, IList<string> activities)
+			public CollectionItem(int ID, string ImageSource, IList<string> ActivityChoises)
 			{
-				Emoji = emoji;
-				ActivityChoises = activities;
-
-				foreach (var item in emoji.activities)
-				{
-					Console.WriteLine("Item: {0}", item);
-				}
-
-
+				this.ID = ID;
+				this.ImageSource = ImageSource;
+				this.ActivityChoises = ActivityChoises;
+				this.Selected = null;
 			}
 		}
 
@@ -45,16 +41,17 @@ namespace Prototype
 		{
 			NavigationPage.SetHasBackButton(this, false);
 			InitializeComponent();
-			//alustus
-			List<Emoji> Emojis = Main.GetInstance().client.survey.emojis;
-			Items = new List<CollectionItem>();
 
+			//alustus
+			Items = new List<CollectionItem>();
+			string img;
+
+			Console.WriteLine("Setting vote 1 page content");
 			foreach (var item in Main.GetInstance().client.voteCandidates1)
 			{
-				Console.WriteLine("Key: {0}, Value: {1}", item.Key, Emojis[item.Key].activities);
-				Items.Add(new CollectionItem(Emojis[item.Key], Emojis[item.Key].activities));
-
-
+				Console.WriteLine("Key: {0}, Value: {1}", item.Key, item.Value);
+				img = "emoji" + item.Key.ToString() + ".png";
+				Items.Add(new CollectionItem(item.Key, img, item.Value));
 			}
 
 			BindingContext = this;
@@ -146,8 +143,7 @@ namespace Prototype
 
 		async void SendVote1()
 		{
-			//Copy and Paste
-			//asetetaan emojit survey olioon
+			//prepare answer to host
 			Dictionary<int, string> answer = new Dictionary<int, string>();
 			foreach (var item in Items)
 			{
@@ -155,8 +151,9 @@ namespace Prototype
 				{
 					break;
 				}
-				answer.Add(item.Emoji.ID, item.Selected);
+				answer.Add(item.ID, item.Selected);
 			}
+			//avoid sending empty answer
 			if (answer.Count != 0)
 			{
 				await Main.GetInstance().client.SendVote1Result(answer);
