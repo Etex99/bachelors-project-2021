@@ -173,7 +173,7 @@ namespace Prototype
                 value += "]";
                 value += "\n";
             }
-            /*
+            
 
             foreach(var item in vote2Candidates)
             {
@@ -183,7 +183,7 @@ namespace Prototype
             
 
             value += finalResult;
-            */
+            
             return value;
         }
     }
