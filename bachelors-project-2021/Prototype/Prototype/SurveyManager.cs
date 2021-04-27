@@ -78,7 +78,7 @@ namespace Prototype
         {
             try
             {
-                string path = Path.Combine(folder, name);
+                string path = Path.Combine(folder, name.ToLower());
                 File.Delete(path);
             }
             catch (FileNotFoundException)

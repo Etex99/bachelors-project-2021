@@ -39,16 +39,16 @@ namespace Prototype
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            b0.BorderColor = Color.Transparent;
-            b1.BorderColor = Color.Transparent;
-            b2.BorderColor = Color.Transparent;
-            b3.BorderColor = Color.Transparent;
-            b4.BorderColor = Color.Transparent;
-            b5.BorderColor = Color.Transparent;
-            b6.BorderColor = Color.Transparent;
+            b0.Scale = 1;
+            b1.Scale = 1;
+            b2.Scale = 1;
+            b3.Scale = 1;
+            b4.Scale = 1;
+            b5.Scale = 1;
+            b6.Scale = 1;
 
             Button emoji = sender as Button;
-            emoji.BorderColor = Color.Gold;
+            emoji.Scale = 1.75;
             answer = int.Parse(emoji.ClassId.ToString());
             Console.WriteLine(answer);
             Vastaus.IsEnabled = true;

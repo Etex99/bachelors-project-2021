@@ -11,8 +11,8 @@
        
         
         <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-            <ImageButton Source="https://www.seekpng.com/png/full/28-284369_ic-back-android-comments-android-back-arrow-png.png"
-                         BackgroundColor="{StaticResource AppPrimaryColor}"
+            <ImageButton Source="backBtn.png"
+                         BackgroundColor="Transparent"
                          HorizontalOptions="Start"
                          Clicked="BackBtnClicked"
                          Margin="0"
