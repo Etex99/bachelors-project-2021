@@ -277,6 +277,7 @@ namespace Prototype
 				data.AddEmojiResults(int.Parse(reply));
 
 				//add this client to list of clients
+				clientCount++;
 				clients.Add(client);
 				clientHistory.Add(((IPEndPoint)client.Client.RemoteEndPoint).Address);
 			}
