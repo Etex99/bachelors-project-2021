@@ -9,8 +9,6 @@ namespace Prototype
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EmojinValinta : ContentPage
     {
-        public IList<Emoji> Emojis { get; set; }
-        public IList<string> Images { get; set; }
         public string introMessage { get; set; }
         private int answer;
 
@@ -19,13 +17,7 @@ namespace Prototype
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
 
-            Emojis = SurveyManager.GetInstance().GetSurvey().emojis; //Change to survey provided by host
-            introMessage = SurveyManager.GetInstance().GetSurvey().introMessage;
-            Images = new List<string>();
-            foreach(Emoji emoji in Emojis)
-            {
-                Images.Add(emoji.ImageSource);
-            }
+            introMessage = Main.GetInstance().client.intro;
 
             BindingContext = this;
         }

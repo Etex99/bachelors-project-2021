@@ -28,21 +28,21 @@
                     <ColumnDefinition Width="0.2*"/>
                     <ColumnDefinition Width="0.2*"/>
                 </Grid.ColumnDefinitions>
-                <Button ImageSource="{Binding Images[0]}"
+                <Button ImageSource="emoji0.png"
                         Clicked="Button_Clicked"
                         ClassId="0"
                         x:Name="b0"
                         Grid.Column="1"
                         BackgroundColor="Transparent"
                         BorderColor="Transparent"/>
-                <Button ImageSource="{Binding Images[1]}"
+				<Button ImageSource="emoji1.png"
                         Clicked="Button_Clicked"
                         ClassId="1"
                         x:Name="b1"
                         Grid.Column="3"
                         BackgroundColor="Transparent"
                         BorderColor="Transparent"/>
-                <Button ImageSource="{Binding Images[2]}"
+				<Button ImageSource="emoji2.png"
                         Clicked="Button_Clicked"
                         ClassId="2"
                         x:Name="b2"
@@ -50,7 +50,7 @@
                         Grid.Row="2"
                         BackgroundColor="Transparent"
                         BorderColor="Transparent"/>
-                <Button ImageSource="{Binding Images[3]}"
+				<Button ImageSource="emoji3.png"
                         Clicked="Button_Clicked"
                         ClassId="3"
                         x:Name="b3"
@@ -58,7 +58,7 @@
                         Grid.Row="2"
                         BackgroundColor="Transparent"
                         BorderColor="Transparent"/>
-                <Button ImageSource="{Binding Images[4]}"
+				<Button ImageSource="emoji4.png"
                         Clicked="Button_Clicked"
                         ClassId="4"
                         x:Name="b4"
@@ -66,7 +66,7 @@
                         Grid.Row="2"
                         BackgroundColor="Transparent"
                         BorderColor="Transparent"/>
-                <Button ImageSource="{Binding Images[5]}"
+				<Button ImageSource="emoji5.png"
                         Clicked="Button_Clicked"
                         ClassId="5"
                         x:Name="b5"
@@ -74,7 +74,7 @@
                         Grid.Row="4"
                         BackgroundColor="Transparent"
                         BorderColor="Transparent"/>
-                <Button ImageSource="{Binding Images[6]}"
+				<Button ImageSource="emoji6.png"
                         Clicked="Button_Clicked"
                         ClassId="6"
                         x:Name="b6"

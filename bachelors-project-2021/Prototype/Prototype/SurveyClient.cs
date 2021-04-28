@@ -12,6 +12,7 @@ namespace Prototype
 	public class SurveyClient
 	{
 		private TcpClient client = null;
+		public string intro { get; private set; } = "";
 		public SurveyData summary { get; private set; } = null;
 
 		public Dictionary<int, IList<string>> voteCandidates1 { get; private set; } = null;
@@ -67,13 +68,21 @@ namespace Prototype
 							client = new TcpClient();
 							client.Connect(new IPEndPoint(reply.Result.RemoteEndPoint.Address, Const.Network.ServerTCPListenerPort));
 
+							//receive intro message
+							NetworkStream ns = client.GetStream();
+							byte[] readBuffer = new byte[128];
+							int bytesRead = await ns.ReadAsync(readBuffer, 0, readBuffer.Length);
+
+							if (bytesRead == 0)
+							{
+								Console.WriteLine("Somehow we just read something from disconnected network, this is fine.");
+								return false;
+							}
+							intro = Encoding.Unicode.GetString(readBuffer, 0, bytesRead);
+
 							//if no error occurs return success
 							return true;
 
-						}
-						catch (JsonException e) {
-							Console.WriteLine("Received bad Json");
-							Console.WriteLine(e);
 						}
 						catch (ObjectDisposedException e)
 						{

@@ -245,8 +245,12 @@ namespace Prototype
 		{
 			try
 			{
-				//wait for emoji from client, expecting 1 int
+				//send intro message
+				byte[] sendBuffer = Encoding.Unicode.GetBytes(survey.introMessage);
 				NetworkStream ns = client.GetStream();
+				await ns.WriteAsync(sendBuffer, 0, sendBuffer.Length);
+
+				//wait for emoji from client, expecting 1 int
 				byte[] buffer = new byte[4];
 				Task<int> emojiReply = ns.ReadAsync(buffer, 0, buffer.Length);
 
