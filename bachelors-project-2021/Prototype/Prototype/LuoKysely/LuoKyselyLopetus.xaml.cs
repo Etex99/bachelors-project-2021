@@ -21,7 +21,7 @@ namespace Prototype
         }
         async void TallennaJaPoistuClicked(object sender, EventArgs e)
         {
-            if (NameEditor.Text != null && KeyEditor.Text != null)
+            if (NameEditor != null && !string.IsNullOrEmpty(NameEditor.Text) && KeyEditor != null && !string.IsNullOrEmpty(KeyEditor.Text) )
             {
 
                 SurveyManager man = SurveyManager.GetInstance();
