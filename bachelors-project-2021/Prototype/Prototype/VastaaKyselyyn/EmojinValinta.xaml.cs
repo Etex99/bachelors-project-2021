@@ -39,7 +39,7 @@ namespace Prototype
             b5.Scale = 1;
             b6.Scale = 1;
 
-            Button emoji = sender as Button;
+            ImageButton emoji = sender as ImageButton;
             emoji.Scale = 1.75;
             answer = int.Parse(emoji.ClassId.ToString());
             Console.WriteLine(answer);
