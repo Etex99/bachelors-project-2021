@@ -41,7 +41,7 @@
                         HeightRequest="70"/>
 
                 <Button Text="Liity kyselyyn"
-                        ImageSource="emoji5.png"
+                        ImageSource="emoji_main3.png"
                         ContentLayout="Right, 5"
                         Font="Bold,19"
                         Clicked="LiityKyselyynClicked"
