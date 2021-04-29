@@ -9,30 +9,96 @@ using System.Threading;
 
 namespace Prototype
 {
+	/// <summary>
+	/// Provides functionality to communicate with a survey host in order to answer a survey
+	/// </summary>
+	
+	// DISCLAIMER!
+	// Throughout this project I was *learning* networking nearly from the ground up
+	// I cannot guarantee the safety of this code and I apologize for the amount of duplicate code
+	// Many of the functions here can be converted to generic ReceiveData and SendData functions to improve efficiency and error tolerance
+
 	public class SurveyClient
 	{
+		/// <value>
+		/// Instance of TcpClient object connected to a node hosting the survey in the local network
+		/// </value>
 		private TcpClient client = null;
+
+		/// <value>
+		/// Attended survey's intro message
+		/// </value>
 		public string intro { get; private set; } = "";
+
+		/// <value>
+		/// Instance of SurveyData object containing the concluded survey's results
+		/// </value>
 		public SurveyData summary { get; private set; } = null;
 
+		/// <value>
+		/// Dictionary of candidates in the first phase of vote. Key: emojiID, Value: list of activity choises
+		/// </value>
 		public Dictionary<int, IList<string>> voteCandidates1 { get; private set; } = null;
-		public int vote1Time = 0;
+
+		/// <value>
+		/// Integer value containing seconds for the first phase of vote timer
+		/// </value>
+		public int vote1Time { get; private set; } = 0;
+
+		/// <value>
+		/// List of candidates in the second phase of vote
+		/// </value>
 		public List<string> voteCandidates2 { get; private set; } = null;
+
+		/// <value>
+		///  Integer value containing seconds for the second phase of vote timer
+		/// </value>
 		public int vote2Time = 0;
+
+		/// <value>
+		/// Attended survey's final vote result
+		/// </value>
 		public string voteResult = null;
 
-		//Threading
+		/// <value>
+		/// List of running Task instances which can be cancelled
+		/// </value>
 		private List<Task> cancellableTasks;
+
+		/// <value>
+		/// Instance of CancellationTokenSource to call for cancellation of tasks in the cancellableTasks list
+		/// </value>
 		private CancellationTokenSource tokenSource;
+
+		/// <value>
+		/// Instance of CancellationToken fed to the Tasks in the cancellableTasks list
+		/// </value>
 		private CancellationToken token;
 
+		/// <summary>
+		/// Default constructor
+		/// <remarks>
+		/// The created instance does not start running any tasks or connect to a host automatically
+		/// </remarks>
+		/// </summary>
 		public SurveyClient() {
 			cancellableTasks = new List<Task>();
 			tokenSource = new CancellationTokenSource();
 			token = tokenSource.Token;
 		}
-		
-		//async look for host returns a task which when completed indicates whether connection to the host was built.
+
+		/// <summary>
+		/// Tries to find a host in the local network which hosts a survey with the given room code
+		/// </summary>
+		/// <remarks>
+		/// Upon success the SurveyClient receives values for class parameters client and intro
+		/// </remarks>
+		/// <param name="RoomCode">
+		/// The room code of the hosted survey the client intends to join
+		/// </param>
+		/// <returns>
+		/// Task object resulting in a boolean indicating whether connection to a host was built
+		/// </returns>
 		public async Task<bool> LookForHost(string RoomCode) {
 
 			try
@@ -114,8 +180,16 @@ namespace Prototype
 
 			return false;
 		}
-	
-		//Async send result returning success of operation
+
+		/// <summary>
+		/// Tries to send emoji answer to host
+		/// </summary>
+		/// <param name="emojiID">
+		/// Integer ID of the emoji sent to the host
+		/// </param>
+		/// <returns>
+		/// Task object resulting in a boolean indicating whether message was sent successfully
+		/// </returns>
 		public async Task<bool> SendResult(string emojiID) {
 
 			try
@@ -144,6 +218,15 @@ namespace Prototype
 			return false;
 		}
 
+		/// <summary>
+		/// Tries to send an answer to the first phase of the vote to the host
+		/// </summary>
+		/// <param name="answer">
+		/// Dictionary containing the answer. Key: emojiID, Value: the chosen activity
+		/// </param>
+		/// <returns>
+		/// Task object resulting in a boolean indicating whether message was sent successfully
+		/// </returns>
 		public async Task<bool> SendVote1Result(Dictionary<int, string> answer)
 		{
 
@@ -173,6 +256,15 @@ namespace Prototype
 			return false;
 		}
 
+		/// <summary>
+		/// Tries to send an answer to the second phase of the vote to the host
+		/// </summary>
+		/// <param name="answer">
+		/// The chosen activity
+		/// </param>
+		/// <returns>
+		/// Task object resulting in a boolean indicating whether the message was sent successfully
+		/// </returns>
 		public async Task<bool> SendVote2Result(string answer)
 		{
 
@@ -202,6 +294,12 @@ namespace Prototype
 			return false;
 		}
 
+		/// <summary>
+		/// Tries to receive and parse a JSON string containing the summary of the concluded survey
+		/// </summary>
+		/// <returns>
+		/// Task resulting in a boolean indicating whether the message was received successfully
+		/// </returns>
 		public async Task<bool> ReceiveSurveyDataAsync() {
 
 			try
@@ -238,6 +336,13 @@ namespace Prototype
 
 			return false;
 		}
+
+		/// <summary>
+		/// Tries to receive and parse a JSON string containing candidates for the first phase of the vote
+		/// </summary>
+		/// <returns>
+		/// Task resulting in a boolean indicating whether the message was received successfully
+		/// </returns>
 		public async Task<bool> ReceiveVote1Candidates()  {
 
 			try
@@ -310,6 +415,13 @@ namespace Prototype
 			return false;
 
 		}
+
+		/// <summary>
+		/// Tries to receive and parse a JSON string containing candidates for the second phase of the vote
+		/// </summary>
+		/// <returns>
+		/// Task resulting in a boolean indicating whether the message was received successfully
+		/// </returns>
 		public async Task<bool> ReceiveVote2Candidates()
 		{
 
@@ -374,6 +486,12 @@ namespace Prototype
 
 		}
 
+		/// <summary>
+		/// Tries to receive a message containing the final result of the vote
+		/// </summary>
+		/// <returns>
+		/// Task resulting in a boolean indicating whether the message was received successfully
+		/// </returns>
 		public async Task<bool> ReceiveVoteResult()
 		{
 
@@ -413,7 +531,9 @@ namespace Prototype
 
 		}
 
-		//this is as sophisticated as it gets
+		/// <summary>
+		/// Sufficiently terminates the client instance by closing the TCP connection and cancelling cancellable tasks
+		/// </summary>
 		public async void DestroyClient() {
 
 			//cancel all cancellable tasks
