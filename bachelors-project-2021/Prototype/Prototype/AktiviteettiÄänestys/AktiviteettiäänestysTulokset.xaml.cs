@@ -39,11 +39,33 @@ namespace Prototype
         }
 
 
-        //Device back button disabled
+        // Device back button navigation 
         protected override bool OnBackButtonPressed()
         {
+
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                if (await DisplayAlert("Poistutaanko tulosten tarkastelusta ? ","","Kyllä", "Ei"))
+                {
+                    base.OnBackButtonPressed();
+                    if (Main.GetInstance().state == Main.MainState.Participating)
+                    {
+                        Main.GetInstance().client.DestroyClient();
+                    }
+                    else
+                    {
+                        Main.GetInstance().host.DestroyHost();
+                    }
+                    await Navigation.PushAsync(new MainPage());
+                }
+              
+            });
+
             return true;
 
+
+        
+       
         }
     }
 }
