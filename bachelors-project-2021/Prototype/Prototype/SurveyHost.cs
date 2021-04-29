@@ -9,18 +9,11 @@ using Newtonsoft.Json;
 
 namespace Prototype
 {
+	/// <summary>
+	/// Provides functionality to communicate with clients in order to host a survey
+	/// </summary>
 	public class SurveyHost
 	{
-		public enum HostState
-		{
-			AwaitingAnswers = 0,
-			Results = 1,
-			AwaitingVotes1 = 2,
-			AwaitingVotes2 = 3,
-			VoteResult = 4
-		}
-		public HostState State { get; private set; } = HostState.AwaitingAnswers;
-
 		private Survey survey;
         public SurveyData data { get; private set; }
 
@@ -101,7 +94,6 @@ namespace Prototype
 
 		//Transition from awaiting emojis to summary
 		public async Task CloseSurvey() {
-			State = HostState.Results;
 			tokenSource.Cancel();
 			await Task.WhenAll(cancellableTasks.ToArray());
 			return;
@@ -109,7 +101,6 @@ namespace Prototype
 
 		//Continue survey to activity voting
 		public void StartActivityVote() {
-			State = HostState.AwaitingVotes1;
 			//prepare first vote
 			voteCalc = new ActivityVote();
 			voteCalc.calcVote1Candidates(survey.emojis, data.GetEmojiResults());
