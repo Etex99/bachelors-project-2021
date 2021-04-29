@@ -39,11 +39,25 @@ namespace Prototype
         }
 
 
-        //Device back button disabled
+        // Device back button navigation 
         protected override bool OnBackButtonPressed()
         {
+
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                if (await DisplayAlert("", "Poistutaanko tulsoten tarkastelusta ? ", "Kyllä", "Ei"))
+                {
+                    base.OnBackButtonPressed();
+
+                    await Navigation.PushAsync(new MainPage());
+                }
+            });
+
             return true;
 
+
+        
+       
         }
     }
 }
