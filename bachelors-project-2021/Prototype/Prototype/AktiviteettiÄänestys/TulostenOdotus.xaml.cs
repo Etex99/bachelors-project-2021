@@ -32,7 +32,7 @@ namespace Prototype
 
                  timer.Text = _countSeconds.ToString();
 
-				if (Main.GetInstance().host.voteTask.IsCompleted)
+				if (Main.GetInstance().host.isVoteConcluded)
 				{
                     Navigation.PushAsync(new AktiviteettiäänestysTulokset());
                     return false;

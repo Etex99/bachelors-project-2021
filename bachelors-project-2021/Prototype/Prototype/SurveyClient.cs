@@ -12,10 +12,11 @@ namespace Prototype
 	/// <summary>
 	/// Provides functionality to communicate with a survey host in order to answer a survey
 	/// </summary>
-	
+
 	// DISCLAIMER!
-	// Throughout this project I was *learning* networking nearly from the ground up
+	// Throughout this project I was *learning* networking and async programming nearly from the ground up
 	// I cannot guarantee the safety of this code and I apologize for the amount of duplicate code
+	// No sensitive data is exchanged luckily!
 	// Many of the functions here can be converted to generic ReceiveData and SendData functions to improve efficiency and error tolerance
 
 	public class SurveyClient
@@ -51,7 +52,7 @@ namespace Prototype
 		public List<string> voteCandidates2 { get; private set; } = null;
 
 		/// <value>
-		///  Integer value containing seconds for the second phase of vote timer
+		/// Integer value containing seconds for the second phase of vote timer
 		/// </value>
 		public int vote2Time = 0;
 

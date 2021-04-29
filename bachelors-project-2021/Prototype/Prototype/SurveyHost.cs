@@ -12,24 +12,71 @@ namespace Prototype
 	/// <summary>
 	/// Provides functionality to communicate with clients in order to host a survey
 	/// </summary>
+
+	// DISCLAIMER!
+	// Throughout this project I was *learning* networking and async programming nearly from the ground up
+	// I cannot guarantee the safety of this code and I apologize for any bad approaches
+	// No sensitive data is exchanged luckily!
+	// Many of the functions here can be converted to generic ReceiveData and SendData functions to improve efficiency and error tolerance
+
 	public class SurveyHost
 	{
+		/// <value>
+		/// Instance of Survey containing the details of the hosted survey
+		/// </value>
 		private Survey survey;
-        public SurveyData data { get; private set; }
 
+		/// <value>
+		/// Instance of SurveyData containing the data of the survey results
+		/// </value>
+		public SurveyData data { get; private set; }
+
+		/// <value>
+		/// Integer value depicting how many clients are currently connected
+		/// </value>
 		public int clientCount { get; private set; }
+
+		/// <value>
+		/// List of TcpClient instances for each connected client
+		/// </value>
 		private List<TcpClient> clients;
+
+		/// <value>
+		/// List of IP adresses which have joined the survey. Entries remain even if the client in question disconnects.
+		/// </value>
 		private List<IPAddress> clientHistory;
 
-		//Threading
+		/// <value>
+		/// List of running Tasks which can be cancelled
+		/// </value>
 		private List<Task> cancellableTasks;
+
+		/// <value>
+		/// Instance of CancellationTokenSource which can be used to call cancellation of tasks in the cancellableTasks list
+		/// </value>
 		private CancellationTokenSource tokenSource;
+
+		/// <value>
+		/// Instance of CancellationToken fed to the cancellable tasks
+		/// </value>
 		private CancellationToken token;
 
-		//vote
+		/// <value>
+		/// Instance of ActivityVote to serve activity voting
+		/// </value>
 		public ActivityVote voteCalc { get; private set; } = null;
-		public Task voteTask { get; private set; } = null;
 
+		/// <value>
+		/// Boolean indicating whether the voting has concluded
+		/// </value>
+		public bool isVoteConcluded { get; private set; } = false;
+
+		/// <summary>
+		/// Default constructor
+		/// <remarks>
+		/// The instance created does not start running any tasks automatically
+		/// </remarks>
+		/// </summary>
 		public SurveyHost() {
 			data = new SurveyData();
 			survey = SurveyManager.GetInstance().GetSurvey();
@@ -41,7 +88,15 @@ namespace Prototype
 			token = tokenSource.Token;
 		}
 
-		//Main sequence of running the survey
+		/// <summary>
+		/// The main sequence of running a survey
+		/// </summary>
+		/// <remarks>
+		/// CloseSurvey method must be called to advance this task from the initial phase of accepting new clients
+		/// </remarks>
+		/// <returns>
+		/// Task object resulting in a boolean indicating whether a fatal error occured in the process terminating hosting as a whole
+		/// </returns>
 		public async Task<bool> RunSurvey()
 		{
 
@@ -66,7 +121,12 @@ namespace Prototype
 			return true;
 		}
 
-		//Main sequence of running activity vote
+		/// <summary>
+		/// The main sequence of running activity vote after running the survey
+		/// </summary>
+		/// <returns>
+		/// Task object of the running process
+		/// </returns>
 		public async Task RunActivityVote()
 		{
 			//send first vote to all candidates
@@ -90,27 +150,46 @@ namespace Prototype
 			string result = voteCalc.calcFinalResult(data.GetVote2Results());
 			data.voteResult = result;
 			SendToAllClients(result);
+
+			isVoteConcluded = true;
 		}
 
-		//Transition from awaiting emojis to summary
+		/// <summary>
+		/// Blocks further clients from entering and answering the survey
+		/// <remarks>
+		/// Call after the RunSurvey Task has been started to move on in the process
+		/// </remarks>
+		/// </summary>
+		/// <returns></returns>
 		public async Task CloseSurvey() {
 			tokenSource.Cancel();
 			await Task.WhenAll(cancellableTasks.ToArray());
 			return;
 		}
 
-		//Continue survey to activity voting
+		/// <summary>
+		/// Starts activity vote with the connected clients
+		/// </summary>
+		/// <remarks>
+		/// RunSurvey task must have been concluded before starting this task
+		/// </remarks>
 		public void StartActivityVote() {
 			//prepare first vote
+			isVoteConcluded = false;
 			voteCalc = new ActivityVote();
 			voteCalc.calcVote1Candidates(survey.emojis, data.GetEmojiResults());
 			Task.Run(() =>
 			{
-				voteTask = RunActivityVote();
+				Task voteTask = RunActivityVote();
 			});
 		}
 
-		//replies to broadcasts in the network which contain the correct roomCode
+		/// <summary>
+		/// Looping task replying to server discovery broadcasts from the clients so that they can learn the host's address
+		/// </summary>
+		/// <returns>
+		/// Task resulting in a boolean indicating whether the task ended in a fatal error
+		/// </returns>
 		private async Task<bool> ReplyBroadcast() {
 
 			try
@@ -185,6 +264,15 @@ namespace Prototype
 			return false;
 		}
 
+		/// <summary>
+		/// Looping task allowing new tcp connections to be built to the host
+		/// </summary>
+		/// <remarks>
+		/// Clients are not permanently added to the list of connected clients unless an answer to the survey is received before CloseSurvey call
+		/// </remarks>
+		/// <returns>
+		/// Task object resulting in a boolean indicating whether the task ended in a fatal error
+		/// </returns>
 		private async Task<bool> AcceptClient() {
 
 			try
@@ -232,6 +320,16 @@ namespace Prototype
 			tokenSource.Cancel();
 			return false;
 		}
+
+		/// <summary>
+		/// Services a freshly joined client by sending initial data and waiting for their emoji answer
+		/// </summary>
+		/// <param name="client">
+		/// The client to serve
+		/// </param>
+		/// <param name="token">
+		/// The cancellation token
+		/// </param>
 		private async void ServeNewClient(TcpClient client, CancellationToken token)
 		{
 			try
@@ -288,6 +386,15 @@ namespace Prototype
 			}
 		}
 
+		/// <summary>
+		/// Tries to read the first phase vote answers from each of the clients in the clients list
+		/// </summary>
+		/// <remarks>
+		/// Not all clients send a full answer, or an answer at all
+		/// </remarks>
+		/// <returns>
+		/// Task representing the work
+		/// </returns>
 		private async Task AcceptVotes1() {
 
 			//listen to each client for their answer
@@ -359,6 +466,16 @@ namespace Prototype
 			Console.WriteLine("Stopped accepting votes in phase 1");
 			return;
 		}
+
+		/// <summary>
+		/// Tries to read the second phase vote answers from each of the clients in the clients list
+		/// </summary>
+		/// <remarks>
+		/// Not all clients send a full answer, or an answer at all
+		/// </remarks>
+		/// <returns>
+		/// Task representing the work
+		/// </returns>
 		private async Task AcceptVotes2() {
 			//listen to each client for their answer
 			List<Task> clientVotes = new List<Task>();
@@ -429,6 +546,12 @@ namespace Prototype
 			return;
 		}
 
+		/// <summary>
+		/// Sends all clients a serialized JSON string of an object
+		/// </summary>
+		/// <param name="obj">
+		/// The object representing the data to be sent
+		/// </param>
 		private void SendToAllClients(object obj) {
 
 			//prepare data for transmission
@@ -465,6 +588,13 @@ namespace Prototype
 				}
 			}
 		}
+
+		/// <summary>
+		/// Sends all clients a message
+		/// </summary>
+		/// <param name="text">
+		/// The message to be sent
+		/// </param>
 		private void SendToAllClients(string text)
 		{
 
@@ -500,6 +630,10 @@ namespace Prototype
 				}
 			}
 		}
+
+		/// <summary>
+		/// Sufficiently terminates the host processes and client connections when the survey concludes or is aborted
+		/// </summary>
 		public void DestroyHost() {
 			//cancel tasks
 			tokenSource.Cancel();
