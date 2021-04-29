@@ -45,12 +45,20 @@ namespace Prototype
 
             Device.BeginInvokeOnMainThread(async () =>
             {
-                if (await DisplayAlert("", "Poistutaanko tulsoten tarkastelusta ? ", "Kyllä", "Ei"))
+                if (await DisplayAlert("Poistutaanko tulosten tarkastelusta ? ","","Kyllä", "Ei"))
                 {
                     base.OnBackButtonPressed();
-
+                    if (Main.GetInstance().state == Main.MainState.Participating)
+                    {
+                        Main.GetInstance().client.DestroyClient();
+                    }
+                    else
+                    {
+                        Main.GetInstance().host.DestroyHost();
+                    }
                     await Navigation.PushAsync(new MainPage());
                 }
+              
             });
 
             return true;
