@@ -160,7 +160,9 @@ namespace Prototype
 		/// Call after the RunSurvey Task has been started to move on in the process
 		/// </remarks>
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>
+		/// Task object representing the work
+		/// </returns>
 		public async Task CloseSurvey() {
 			tokenSource.Cancel();
 			await Task.WhenAll(cancellableTasks.ToArray());
