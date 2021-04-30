@@ -50,7 +50,6 @@
                                 WidthRequest="60" />
 
 						<Button Grid.Column="1"
-                                x:Name="VBtn"
                                 Margin="10,10,10,0"
                                 VerticalOptions="Center"
                                 HorizontalOptions="CenterAndExpand"

@@ -101,11 +101,6 @@ namespace Prototype
 
 		void btnPopupButton_Clicked(object sender, EventArgs e)
 		{
-		
-		    	
-			
-
-					
 			// Edelleen :DDD
 			if (sender is Button b && b.Parent is Grid g && g.Children[2] is Frame f)
 			{
@@ -124,17 +119,8 @@ namespace Prototype
 				}
 
 				// change the text of the button to the answer
-
-				foreach (var item in Items)
-				{
-					if (item.Selected != null)
-					{
-						(sender as Button).Text = item.Selected;
-						(sender as Button).FontSize = 15;
-				
-					}
-
-				}
+				CollectionView view = (f.Children[0] as StackLayout).Children[0] as CollectionView;
+				b.Text = view.SelectedItem as string;
 			}
 		}
 
