@@ -104,15 +104,22 @@ namespace Prototype
                 Console.WriteLine("key: {0}, value: {1}", item.Key, item.Value);
                 sorted.Add(item.Key, item.Value);
             }
-            
-            //adding each sorted key (previously voted activities) to vote2Candidates list
-            foreach (var key in sorted.Keys)
+
+            //temporary list for parsing the sorted list from duplicate IDs leaving the most voted activity per emoji
+            Dictionary<int, string> tempList = new Dictionary<int, string>();
+            foreach(var key in sorted.Keys)
             {
-                vote2Candidates.Add(key.Item2);
+                if (!tempList.ContainsKey(key.Item1))
+                {
+                    Console.WriteLine("keyItem1: {0}, KeyItem2: {1}", key.Item1, key.Item2);
+                    tempList.Add(key.Item1, key.Item2);
+                }
             }
-            if(vote2Candidates.Count > 4)
+
+            //adding each sorted key (previously voted activities) to vote2Candidates list
+            foreach (var item in tempList.Values)
             {
-                vote2Candidates = vote2Candidates.GetRange(0, 4);
+                vote2Candidates.Add(item);
             }
         }
 
