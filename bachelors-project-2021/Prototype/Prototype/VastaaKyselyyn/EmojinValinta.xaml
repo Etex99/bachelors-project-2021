@@ -7,13 +7,12 @@
         <StackLayout Margin="20">
             <Label Margin="20,10,10,50"
                 Text="{Binding introMessage }"
-               
+                VerticalOptions="StartAndExpand"
                 TextColor="Black"
                 FontSize="22"
-                MinimumWidthRequest="0"
-                MinimumHeightRequest="0"
+                
                 HorizontalOptions="CenterAndExpand"/>
-            <Grid Margin="20, 30, 20, 70">
+            <Grid Margin="20, 0, 20, 70">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.2*"/>
                     <RowDefinition Height="0.2"/>
