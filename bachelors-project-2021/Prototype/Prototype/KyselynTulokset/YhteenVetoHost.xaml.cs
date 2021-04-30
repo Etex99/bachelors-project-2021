@@ -31,7 +31,7 @@ namespace Prototype
 
             foreach (int key in sorted.Keys)
             {
-                resultImages.Add(SurveyManager.GetInstance().GetSurvey().emojis[key].ImageSource);
+                resultImages.Add("emoji" + key.ToString() + ".png");
             }
 
             if (count == 0)
