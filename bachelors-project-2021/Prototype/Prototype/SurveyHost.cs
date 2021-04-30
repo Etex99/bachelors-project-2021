@@ -133,18 +133,59 @@ namespace Prototype
 			SendToAllClients(voteCalc.GetVote1Candidates());
 			SendToAllClients(voteCalc.vote1Timer.ToString());
 
-			//for first vote duration wait for clients to reply
+			//after first vote duration try get replies
 			await Task.Delay(1000 * (voteCalc.vote1Timer + voteCalc.coolDown));
-			await AcceptVotes1();
+			//listen to each client for their answer
+			List<Task<Dictionary<int, string>>> clientVotes1 = new List<Task<Dictionary<int, string>>>();
+			foreach (var client in clients)
+			{
+				clientVotes1.Add(
+					AcceptVote1(client)
+				);
+			}
+			//wait for all tasks to complete before returning
+			await Task.WhenAll(clientVotes1);
+			Console.WriteLine("Stopped accepting votes in phase 1");
+
+			//record all answers
+			foreach (var item in clientVotes1)
+			{
+				if (item.Result != null)
+				{
+					data.AddVote1Results(item.Result);
+				}
+			}
 
 			//prepare second vote and send it to all clients
 			voteCalc.calcVote2Candidates(data.GetVote1Results());
 			SendToAllClients(voteCalc.GetVote2Candidates());
 			SendToAllClients(voteCalc.vote2Timer.ToString());
 
-			//for vote 2 duration wait for clients to reply
+			//after vote 2 duration try get replies
 			await Task.Delay(1000 * (voteCalc.vote2Timer + voteCalc.coolDown));
-			await AcceptVotes2();
+
+			//listen to each client for their answer
+			List<Task<string>> clientVotes2 = new List<Task<string>>();
+			foreach (var client in clients)
+			{
+				clientVotes2.Add(
+					AcceptVote2(client)
+				);
+			}
+			//wait for all tasks to complete before returning
+			await Task.WhenAll(clientVotes2);
+
+			//record all answers
+			foreach (var item in clientVotes2)
+			{
+				if (item.Result != null)
+				{
+					data.AddVote2Results(item.Result);
+				}
+			}
+
+
+			Console.WriteLine("Stopped accepting votes in phase 2");
 
 			//prepare result and send it to all clients
 			string result = voteCalc.calcFinalResult(data.GetVote2Results());
@@ -389,163 +430,131 @@ namespace Prototype
 		}
 
 		/// <summary>
-		/// Tries to read the first phase vote answers from each of the clients in the clients list
+		/// Tries to read the first phase vote answer from a client
 		/// </summary>
 		/// <remarks>
 		/// Not all clients send a full answer, or an answer at all
 		/// </remarks>
+		/// <param name="client">
+		/// The client to try get the answer from
+		/// </param>
 		/// <returns>
 		/// Task representing the work
 		/// </returns>
-		private async Task AcceptVotes1() {
+		private async Task<Dictionary<int, string>> AcceptVote1(TcpClient client) {
 
-			//listen to each client for their answer
-			List<Task> clientVotes = new List<Task>();
-			foreach (var client in clients)
+			try
 			{
-				clientVotes.Add(
+				//waiting for vote for limited time by setting network stream read timeout
+				byte[] buffer = new byte[2048];
+				NetworkStream ns = client.GetStream();
+				int bytesRead = 0;
+				Console.WriteLine("Waiting for client vote 1");
 
-					//task for one client
-					Task.Run(() =>
-					{
+				//if client does not reply anything, data is not available.
+				if (!ns.DataAvailable)
+				{
+					return null;
+				}
 
-						try
-						{
-							//waiting for vote for limited time by setting network stream read timeout
-							byte[] buffer = new byte[2048];
-							NetworkStream ns = client.GetStream();
-							int bytesRead = 0;
-							Console.WriteLine("Waiting for client vote 1");
+				bytesRead = await ns.ReadAsync(buffer, 0, buffer.Length);
 
-							//if client does not reply anything, data is not available.
-							if (!ns.DataAvailable)
-							{
-								return;
-							}
+				Console.WriteLine($"DEBUG: AcceptVotes 1 read {bytesRead} bytes from: {client}");
 
-							bytesRead = ns.Read(buffer, 0, buffer.Length);
+				//if client has exited read results in 0 bytes read
+				if (bytesRead <= 0)
+				{
+					return null;
+				}
 
-							Console.WriteLine($"DEBUG: AcceptVotes 1 read {bytesRead} bytes from: {client}");
+				//read was successful, expecting JSON string containing Dictionary<int, string>
+				return JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.Unicode.GetString(buffer, 0, bytesRead));
 
-							//if client has exited read results in 0 bytes read
-							if (bytesRead <= 0)
-							{
-								return;
-							}
-
-							//read was successful, expecting JSON string containing Dictionary<int, string> 
-							data.AddVote1Results(JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.Unicode.GetString(buffer, 0, bytesRead)));
-							Console.WriteLine("Added voting 1 answer to surveydata");
-							return;
-
-						}
-						catch (JsonException e)
-						{
-							Console.WriteLine("Received bad JSON");
-							Console.WriteLine(e);
-							//so... you have chosen death
-							clients.Remove(client);
-						}
-						catch (ObjectDisposedException e)
-						{
-							Console.WriteLine("Connection lost to client");
-							Console.WriteLine(e);
-							//long live the king
-							clients.Remove(client);
-						}
-						catch (System.IO.IOException e)
-						{
-							Console.WriteLine("Error reading socket or network");
-							Console.WriteLine(e);
-						}
-
-					})
-				);
+			}
+			catch (JsonException e)
+			{
+				Console.WriteLine("Received bad JSON");
+				Console.WriteLine(e);
+				//so... you have chosen death
+				clients.Remove(client);
+			}
+			catch (ObjectDisposedException e)
+			{
+				Console.WriteLine("Connection lost to client");
+				Console.WriteLine(e);
+				//long live the king
+				clients.Remove(client);
+			}
+			catch (System.IO.IOException e)
+			{
+				Console.WriteLine("Error reading socket or network");
+				Console.WriteLine(e);
 			}
 
-			//wait for all tasks to complete before returning
-			await Task.WhenAll(clientVotes);
-			Console.WriteLine("Stopped accepting votes in phase 1");
-			return;
+			return null;
 		}
 
 		/// <summary>
-		/// Tries to read the second phase vote answers from each of the clients in the clients list
+		/// Tries to read the second phase vote answer from the client
 		/// </summary>
 		/// <remarks>
 		/// Not all clients send a full answer, or an answer at all
 		/// </remarks>
+		/// <param name="client">
+		/// The client to try get the answer from
+		/// </param>
 		/// <returns>
 		/// Task representing the work
 		/// </returns>
-		private async Task AcceptVotes2() {
-			//listen to each client for their answer
-			List<Task> clientVotes = new List<Task>();
-			foreach (var client in clients)
+		private async Task<string> AcceptVote2(TcpClient client) {
+			try
 			{
-				clientVotes.Add(
+				//waiting for vote for limited time by setting network stream read timeout
+				byte[] buffer = new byte[128];
+				NetworkStream ns = client.GetStream();
+				int bytesRead = 0;
+				Console.WriteLine("Waiting for client vote 2");
 
-					//task for one client
-					Task.Run(() =>
-					{
+				//if client does not reply anything, data is not available.
+				if (!ns.DataAvailable)
+				{
+					return null;
+				}
 
-						try
-						{
-							//waiting for vote for limited time by setting network stream read timeout
-							byte[] buffer = new byte[128];
-							NetworkStream ns = client.GetStream();
-							int bytesRead = 0;
-							Console.WriteLine("Waiting for client vote 2");
+				bytesRead = await ns.ReadAsync(buffer, 0, buffer.Length);
+				Console.WriteLine($"DEBUG: AcceptVotes 2 read {bytesRead} bytes from: {client}");
 
-							//if client does not reply anything, data is not available.
-							if (!ns.DataAvailable)
-							{
-								return;
-							}
+				//if client has exited read results in 0 bytes read
+				if (bytesRead == 0)
+				{
+					return null;
+				}
 
-							bytesRead = ns.Read(buffer, 0, buffer.Length);
-							Console.WriteLine($"DEBUG: AcceptVotes 2 read {bytesRead} bytes from: {client}");
+				//read was successful, expecting string containing final activity vote
+				return Encoding.Unicode.GetString(buffer, 0, bytesRead);
 
-							//if client has exited read results in 0 bytes read
-							if (bytesRead == 0)
-							{
-								return;
-							}
-
-							//read was successful, expecting string containing final activity vote
-							data.AddVote2Results(Encoding.Unicode.GetString(buffer, 0, bytesRead));
-							Console.WriteLine("Added voting 2 answer to surveydata");
-							return;
-
-						}
-						catch (JsonException e)
-						{
-							Console.WriteLine("Received bad JSON");
-							Console.WriteLine(e);
-							//we don't do that here
-							clients.Remove(client);
-						}
-						catch (ObjectDisposedException e)
-						{
-							Console.WriteLine("Connection lost to client");
-							Console.WriteLine(e);
-							//this is sparta
-							clients.Remove(client);
-						}
-						catch (System.IO.IOException e)
-						{
-							Console.WriteLine("Error reading socket or network");
-							Console.WriteLine(e);
-						}
-
-					})
-				);
+			}
+			catch (JsonException e)
+			{
+				Console.WriteLine("Received bad JSON");
+				Console.WriteLine(e);
+				//we don't do that here
+				clients.Remove(client);
+			}
+			catch (ObjectDisposedException e)
+			{
+				Console.WriteLine("Connection lost to client");
+				Console.WriteLine(e);
+				//this is sparta
+				clients.Remove(client);
+			}
+			catch (System.IO.IOException e)
+			{
+				Console.WriteLine("Error reading socket or network");
+				Console.WriteLine(e);
 			}
 
-			//wait for all tasks to complete before returning
-			await Task.WhenAll(clientVotes);
-			Console.WriteLine("Stopped accepting votes in phase 2");
-			return;
+			return null;
 		}
 
 		/// <summary>
