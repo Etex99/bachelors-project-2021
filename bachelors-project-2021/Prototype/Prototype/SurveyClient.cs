@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Net.Sockets;
@@ -332,6 +333,10 @@ namespace Prototype
 			catch (NotSupportedException e)
 			{
 				Console.WriteLine("Stream does not support that operation");
+				Console.WriteLine(e);
+			}
+			catch (IOException e)
+			{
 				Console.WriteLine(e);
 			}
 
