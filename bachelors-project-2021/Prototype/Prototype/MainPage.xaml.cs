@@ -77,7 +77,7 @@ namespace Prototype
 
             /*
             Dictionary<int, string> dict1 = new Dictionary<int, string>();
-            dict1.Add(0,"foo");
+            dict1.Add(0,"fii");
             dict1.Add(1, "bar");
             dict1.Add(2, "heh");
             dict1.Add(3, "this");
@@ -86,16 +86,23 @@ namespace Prototype
             dict2.Add(1, "bar");
             dict2.Add(2, "heh");
             dict2.Add(3, "that");
+            Dictionary<int, string> dict3 = new Dictionary<int, string>();
+            dict3.Add(0, "fii");
+            dict3.Add(1, "bor");
+            dict3.Add(2, "hah");
+            dict3.Add(3, "that");
             Main.GetInstance().host.data.AddVote1Results(dict1);
             Main.GetInstance().host.data.AddVote1Results(dict2);
-            
+            Main.GetInstance().host.data.AddVote1Results(dict3);
+
 
             Console.WriteLine(Main.GetInstance().host.data.ToString());
 
             ActivityVote aVote = new ActivityVote();
             aVote.calcVote2Candidates(Main.GetInstance().host.data.GetVote1Results());
             Console.WriteLine(aVote.ToString());
-            
+            */
+            /*
             Main.GetInstance().host.data.AddVote2Results("Tunti ulkona");
             Main.GetInstance().host.data.AddVote2Results("Tunti ulkona");
             Main.GetInstance().host.data.AddVote2Results("5 min tauko");
