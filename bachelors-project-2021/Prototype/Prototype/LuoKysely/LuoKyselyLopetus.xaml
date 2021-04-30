@@ -29,23 +29,24 @@
                        FontSize="20"/>
 
                 <Entry x:Name="NameEditor"
-                            Margin="0,0,0,35"
-                            BackgroundColor="WhiteSmoke"
-                            Placeholder="Nimi"
-                            HeightRequest="50" />
+                       Margin="0,0,0,35"
+                       BackgroundColor="WhiteSmoke"
+                       Placeholder="Nimi"
+                       HeightRequest="50"
+                       TextChanged="OnEntryTextChanged"/>
 
                 <Label Margin="0,10,0,15"
-                           Text="Aseta avainkoodi"
-                           TextColor="Black"
-                           FontSize="20"/>
+                       Text="Aseta avainkoodi"
+                       TextColor="Black"
+                       FontSize="20"/>
 
 
                 <Entry x:Name="KeyEditor"
-                            Margin="0,0,0,10"
-                            BackgroundColor="WhiteSmoke"
-                            Placeholder="Avainkoodi"
-                            HeightRequest="50" />
-
+                       Margin="0,0,0,10"
+                       BackgroundColor="WhiteSmoke"
+                       Placeholder="Avainkoodi"
+                       HeightRequest="50"
+                       TextChanged="OnEntryTextChanged"/>
 
 
                 <Grid HorizontalOptions="Center"

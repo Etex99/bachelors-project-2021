@@ -109,5 +109,17 @@ namespace Prototype
             // siirrytään OdotettaanVastauksia sivulle 
             await Navigation.PushAsync(new OdotetaanVastauksia());
         }
+        private static void OnEntryTextChanged(object sender, TextChangedEventArgs args)
+        {
+            // jos tekstikenttä ei ole tyhjä
+            if (!string.IsNullOrWhiteSpace(args.NewTextValue))
+            {
+                //isValid bool true/false arvo tarkastetaan käymällä läpi syötetyt characterit, että onko ne kirjaimia tai numeroita
+                bool isValid = args.NewTextValue.ToCharArray().All(x => char.IsLetterOrDigit(x));
+                
+                //jos isValid on false, niin poistetaan kirjain heti, kun se kirjoitetaan
+                ((Entry)sender).Text = isValid ? args.NewTextValue : args.NewTextValue.Remove(args.NewTextValue.Length - 1);
+            }
+        }
     }
 }
