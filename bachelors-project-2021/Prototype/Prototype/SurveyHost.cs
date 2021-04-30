@@ -135,7 +135,7 @@ namespace Prototype
 
 			//after first vote duration try get replies
 			await Task.Delay(1000 * (voteCalc.vote1Timer + voteCalc.coolDown));
-			//listen to each client for their answer
+			//read each client for their answer
 			List<Task<Dictionary<int, string>>> clientVotes1 = new List<Task<Dictionary<int, string>>>();
 			foreach (var client in clients)
 			{
@@ -164,7 +164,7 @@ namespace Prototype
 			//after vote 2 duration try get replies
 			await Task.Delay(1000 * (voteCalc.vote2Timer + voteCalc.coolDown));
 
-			//listen to each client for their answer
+			//read each client for their answer
 			List<Task<string>> clientVotes2 = new List<Task<string>>();
 			foreach (var client in clients)
 			{
@@ -174,6 +174,7 @@ namespace Prototype
 			}
 			//wait for all tasks to complete before returning
 			await Task.WhenAll(clientVotes2);
+			Console.WriteLine("Stopped reading votes in phase 2");
 
 			//record all answers
 			foreach (var item in clientVotes2)
@@ -185,7 +186,7 @@ namespace Prototype
 			}
 
 
-			Console.WriteLine("Stopped accepting votes in phase 2");
+			Console.WriteLine("Stopped reading votes in phase 2");
 
 			//prepare result and send it to all clients
 			string result = voteCalc.calcFinalResult(data.GetVote2Results());
@@ -449,7 +450,7 @@ namespace Prototype
 				byte[] buffer = new byte[2048];
 				NetworkStream ns = client.GetStream();
 				int bytesRead = 0;
-				Console.WriteLine("Waiting for client vote 1");
+				Console.WriteLine("Reading client vote 1");
 
 				//if client does not reply anything, data is not available.
 				if (!ns.DataAvailable)
@@ -475,15 +476,12 @@ namespace Prototype
 			{
 				Console.WriteLine("Received bad JSON");
 				Console.WriteLine(e);
-				//so... you have chosen death
-				clients.Remove(client);
+				
 			}
 			catch (ObjectDisposedException e)
 			{
 				Console.WriteLine("Connection lost to client");
 				Console.WriteLine(e);
-				//long live the king
-				clients.Remove(client);
 			}
 			catch (System.IO.IOException e)
 			{
@@ -491,6 +489,9 @@ namespace Prototype
 				Console.WriteLine(e);
 			}
 
+			//so... you have chosen death
+			clients.Remove(client);
+			clientCount--;
 			return null;
 		}
 
@@ -513,7 +514,7 @@ namespace Prototype
 				byte[] buffer = new byte[128];
 				NetworkStream ns = client.GetStream();
 				int bytesRead = 0;
-				Console.WriteLine("Waiting for client vote 2");
+				Console.WriteLine("Reading client vote 2");
 
 				//if client does not reply anything, data is not available.
 				if (!ns.DataAvailable)
@@ -538,21 +539,23 @@ namespace Prototype
 			{
 				Console.WriteLine("Received bad JSON");
 				Console.WriteLine(e);
-				//we don't do that here
-				clients.Remove(client);
+				
 			}
 			catch (ObjectDisposedException e)
 			{
 				Console.WriteLine("Connection lost to client");
 				Console.WriteLine(e);
-				//this is sparta
-				clients.Remove(client);
+				
 			}
 			catch (System.IO.IOException e)
 			{
 				Console.WriteLine("Error reading socket or network");
 				Console.WriteLine(e);
 			}
+
+			//we don't do that here
+			clients.Remove(client);
+			clientCount--;
 
 			return null;
 		}
@@ -579,23 +582,24 @@ namespace Prototype
 				{
 					NetworkStream ns = client.GetStream();
 
-					if (!ns.CanWrite)
+					if (ns.CanWrite)
 					{
-						return;
+						ns.Write(message, 0, message.Length);
 					}
-
-					ns.Write(message, 0, message.Length);
 				}
 				catch (ObjectDisposedException e)
 				{
 					Console.WriteLine($"Connection lost with client: {client.Client.RemoteEndPoint}. Dropping client");
 					Console.WriteLine(e);
 					clients.Remove(client);
+					clientCount--;
 				}
 				catch (System.IO.IOException e)
 				{
 					Console.WriteLine("Error reading socket or network");
 					Console.WriteLine(e);
+					clients.Remove(client);
+					clientCount--;
 				}
 			}
 		}
@@ -621,23 +625,24 @@ namespace Prototype
 				{
 					NetworkStream ns = client.GetStream();
 
-					if (!ns.CanWrite)
+					if (ns.CanWrite)
 					{
-						return;
+						ns.Write(message, 0, message.Length);
 					}
-
-					ns.Write(message, 0, message.Length);
 				}
 				catch (ObjectDisposedException e)
 				{
 					Console.WriteLine($"Connection lost with client: {client.Client.RemoteEndPoint}. Dropping client");
 					Console.WriteLine(e);
 					clients.Remove(client);
+					clientCount--;
 				}
 				catch (System.IO.IOException e)
 				{
 					Console.WriteLine("Error reading socket or network");
 					Console.WriteLine(e);
+					clients.Remove(client);
+					clientCount--;
 				}
 			}
 		}
