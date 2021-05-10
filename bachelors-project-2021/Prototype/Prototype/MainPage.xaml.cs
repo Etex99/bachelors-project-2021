@@ -150,6 +150,7 @@ namespace Prototype
         void Peruuta_Clicked(object sender, EventArgs e)
         {
             popupSelection.IsVisible = false;
+            entry.Text = null;
         }
 
         async void Ok_Clicked(object sender, EventArgs e)
@@ -165,6 +166,9 @@ namespace Prototype
                 
             }
             else await DisplayAlert("Virheellinen avainkoodi", "Syöttämälläsi avainkoodilla ei löydy avointa kyselyä", "OK");
+
+            //clear entry text
+            entry.Text = null;
            
         }
     }
